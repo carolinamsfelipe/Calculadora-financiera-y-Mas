@@ -165,7 +165,9 @@
       display: block;
       margin-top: 4px;
     }
-        .amort-table {
+
+    /* Tabla amortización */
+    .amort-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
@@ -189,6 +191,52 @@
       border-top: 1px solid #4b5563;
     }
 
+    /* Índice a lo “programa” */
+    .index-card {
+      grid-column: 1 / -1;
+    }
+
+    .index-card ol {
+      padding-left: 18px;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    .index-card li {
+      margin-bottom: 6px;
+    }
+
+    .index-card ul {
+      margin-top: 4px;
+      margin-bottom: 10px;
+      padding-left: 18px;
+      list-style: disc;
+      color: #d1d5db;
+    }
+
+    .pill-soon {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      font-size: 0.7rem;
+      margin-left: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #fbbf24;
+    }
+
+    .pill-ready {
+      display: inline-block;
+      padding: 1px 8px;
+      border-radius: 999px;
+      border: 1px solid #22c55e;
+      font-size: 0.7rem;
+      margin-left: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #22c55e;
+    }
   </style>
 </head>
 <body>
@@ -196,14 +244,77 @@
     <header>
       <h1>Calculadora Financiera</h1>
       <div class="subtitle">
-        Laboratorio de valor del dinero en el tiempo, tasas y cuotas
+        Laboratorio de valor del dinero en el tiempo, tasas, cuotas y proyectos
         <span class="tag">beta</span>
       </div>
       <div class="brand">by Carolina Sinead Felipe</div>
     </header>
 
     <div class="cards">
-    
+      <!-- ÍNDICE DE MÓDULOS -->
+      <div class="card index-card">
+        <h2>Índice de módulos</h2>
+        <small>Elegí según el tipo de usuario o necesidad.</small>
+
+        <ol>
+          <li>
+            <strong>Para inversionistas y ahorristas comunes</strong>
+            <ul>
+              <li>
+                <strong>1) Comparador de Plazo Fijo tradicional vs UVA</strong>
+                <span class="pill-soon">Próximamente</span><br/>
+                Ingresan: monto, TNA, inflación estimada, días.  
+                Resultado: cuál conviene → monto final real (muy usado en Argentina).
+              </li>
+              <li>
+                <strong>2) Simulador de interés compuesto con aportes variables</strong>
+                <span class="pill-ready">Versión básica lista</span><br/>
+                Versión actual: aportes fijos por período.  
+                Próximo upgrade: meses sin aportar, aportes distintos y retiradas parciales.
+              </li>
+              <li>
+                <strong>3) Plan de ahorro para objetivos</strong>
+                <span class="pill-soon">Próximamente</span><br/>
+                Ej: “Quiero juntar USD 10.000 en 3 años”.  
+                Responde: cuánto aportar por mes, a qué tasa mínima y muestra el progreso.
+              </li>
+              <li>
+                <strong>4) Calculadora de tipo de cambio</strong>
+                <span class="pill-soon">Próximamente</span><br/>
+                Oficial, MEP, CCL, Solidario, Tarjeta, etc.
+              </li>
+            </ul>
+          </li>
+
+          <li>
+            <strong>Para analistas financieros / corporativos</strong>
+            <ul>
+              <li>
+                <strong>5) VAN y TIR (Flujos de caja)</strong>
+                <span class="pill-soon">Próximamente</span><br/>
+                Ingresan una serie de flujos (ej: [-100000, 30000, 30000, 30000, 30000]).  
+                Resultado: Valor Actual Neto, Tasa Interna de Retorno, ROI.
+              </li>
+              <li>
+                <strong>6) Duración y Duration modificada (bonos)</strong>
+                <span class="pill-soon">Próximamente</span><br/>
+                Precio, cupón, vencimiento, rendimiento, duración y riesgo de tasa.
+              </li>
+              <li>
+                <strong>7) Curva de bonos simple</strong>
+                <span class="pill-soon">Próximamente</span><br/>
+                Se cargan varios bonos y se grafica Duration, Yield y Precio.
+              </li>
+              <li>
+                <strong>8) Cálculo de paridad de bonos</strong>
+                <span class="pill-soon">Próximamente</span><br/>
+                Ideal Argentina: precio, valor técnico, cupón, TIR y paridad %.
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </div>
+
       <!-- CARD CONVERSOR DE TASAS -->
       <div class="card">
         <h2>Conversor de tasas</h2>
@@ -261,9 +372,8 @@
           Ingresá los datos para ver el valor futuro y cuánto aportaste en total.
         </div>
       </div>
-    </div>
 
-    <!-- CARD FV -->
+      <!-- CARD FV -->
       <div class="card">
         <h2>Valor Futuro (FV)</h2>
         <small>¿Cuánto voy a tener al final si invierto hoy un monto a una tasa fija?</small>
@@ -355,7 +465,6 @@
           </div>
         </div>
 
-
         <button id="btn-pmt">Calcular cuota</button>
 
         <div class="result" id="pmt-result">
@@ -397,6 +506,8 @@
 
         <div id="loan-table-wrapper"></div>
       </div>
+    </div>
+
     <div class="footer-note">
       <span class="formula">FV = PV · (1 + i)<sup>n</sup></span>
       <span class="formula">PV = FV / (1 + i)<sup>n</sup></span>
@@ -539,7 +650,6 @@
       let tem, tea, tna;
 
       if (type === "tna") {
-        // suponemos TNA con 12 períodos: TEM aproximada = TNA / 12
         tna = r;
         tem = tna / 12;
         tea = Math.pow(1 + tem, 12) - 1;
@@ -548,7 +658,6 @@
         tem = Math.pow(1 + tea, 1 / 12) - 1;
         tna = tem * 12;
       } else {
-        // TEM
         tem = r;
         tea = Math.pow(1 + tem, 12) - 1;
         tna = tem * 12;
@@ -615,7 +724,8 @@
         formatMoney(totalAportado) +
         " (capital inicial + aportes) </span>";
     });
-        // ---- CRÉDITOS Y TABLA DE AMORTIZACIÓN ----
+
+    // ---- CRÉDITOS Y TABLA DE AMORTIZACIÓN ----
     document.getElementById("btn-loan").addEventListener("click", function () {
       const amount = parseFloat(document.getElementById("loan-amount").value);
       const ratePercent = parseFloat(document.getElementById("loan-rate").value);
@@ -639,7 +749,6 @@
       let totalIntereses = 0;
 
       if (system === "frances") {
-        // Cuota constante (mismo PMT que en el módulo de cuotas)
         if (i === 0) {
           cuota = amount / n;
         } else {
@@ -664,7 +773,6 @@
         }
 
       } else if (system === "aleman") {
-        // Amortización (capital) constante
         const amortizacionConstante = amount / n;
 
         for (let k = 1; k <= n; k++) {
@@ -685,7 +793,6 @@
         }
 
       } else if (system === "americano") {
-        // Sólo intereses hasta el último período; al final se paga todo el capital
         const interesPer = saldo * i;
 
         for (let k = 1; k <= n; k++) {
@@ -715,7 +822,6 @@
         }
       }
 
-      // Render de la tabla
       if (rows.length === 0) {
         resultDiv.innerHTML = "No se pudo generar la tabla.";
         tableWrapper.innerHTML = "";
@@ -758,7 +864,6 @@
 
       tableWrapper.innerHTML = html;
     });
-
   </script>
 </body>
 </html>
