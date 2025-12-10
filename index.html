@@ -203,7 +203,67 @@
     </header>
 
     <div class="cards">
-      <!-- CARD FV -->
+    
+      <!-- CARD CONVERSOR DE TASAS -->
+      <div class="card">
+        <h2>Conversor de tasas</h2>
+        <small>TNA, TEA y TEM suponiendo capitalización mensual (12 períodos al año).</small>
+
+        <label for="rate-type">Tipo de tasa conocida</label>
+        <select id="rate-type">
+          <option value="tna">TNA (nominal anual)</option>
+          <option value="tea">TEA (efectiva anual)</option>
+          <option value="tem">TEM (efectiva mensual)</option>
+        </select>
+
+        <label for="rate-input">Valor de la tasa (%)</label>
+        <input id="rate-input" type="number" step="0.0001" placeholder="Ej: 97 (TNA) ó 8 (TEM)" />
+
+        <button id="btn-rate-convert">Convertir</button>
+
+        <div class="result" id="rate-result">
+          Ingresá una tasa y convertí entre TNA, TEA y TEM (mensual).
+        </div>
+      </div>
+
+      <!-- CARD SIMULADOR DE INVERSIÓN -->
+      <div class="card">
+        <h2>Simulador inversión con aportes</h2>
+        <small>Capital inicial + aporte fijo por período, con interés compuesto.</small>
+
+        <label for="sim-pv">Capital inicial (opcional)</label>
+        <input id="sim-pv" type="number" placeholder="Ej: 50000 (podés dejar en blanco)" />
+
+        <label for="sim-pmt">Aporte por período</label>
+        <input id="sim-pmt" type="number" placeholder="Ej: 20000" />
+
+        <label for="sim-rate">Tasa por período (%)</label>
+        <input id="sim-rate" type="number" step="0.0001" placeholder="Ej: 5 (significa 5%)" />
+
+        <div class="row">
+          <div>
+            <label for="sim-n">Cantidad de períodos (n)</label>
+            <input id="sim-n" type="number" placeholder="Ej: 12" />
+          </div>
+          <div>
+            <label for="sim-period">Período</label>
+            <select id="sim-period">
+              <option value="mensual">Mensual</option>
+              <option value="anual">Anual</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btn-sim">Calcular inversión</button>
+
+        <div class="result" id="sim-result">
+          Ingresá los datos para ver el valor futuro y cuánto aportaste en total.
+        </div>
+      </div>
+    </div>
+
+    <!-- CARD FV -->
       <div class="card">
         <h2>Valor Futuro (FV)</h2>
         <small>¿Cuánto voy a tener al final si invierto hoy un monto a una tasa fija?</small>
@@ -294,6 +354,15 @@
             </select>
           </div>
         </div>
+
+
+        <button id="btn-pmt">Calcular cuota</button>
+
+        <div class="result" id="pmt-result">
+          Ingresá los datos y calculá la cuota periódica.
+        </div>
+      </div>
+
       <!-- CARD CRÉDITOS Y TABLA DE AMORTIZACIÓN -->
       <div class="card">
         <h2>Créditos y tabla de amortización</h2>
@@ -328,73 +397,6 @@
 
         <div id="loan-table-wrapper"></div>
       </div>
-
-        <button id="btn-pmt">Calcular cuota</button>
-
-        <div class="result" id="pmt-result">
-          Ingresá los datos y calculá la cuota periódica.
-        </div>
-      </div>
-
-      <!-- CARD CONVERSOR DE TASAS -->
-      <div class="card">
-        <h2>Conversor de tasas</h2>
-        <small>TNA, TEA y TEM suponiendo capitalización mensual (12 períodos al año).</small>
-
-        <label for="rate-type">Tipo de tasa conocida</label>
-        <select id="rate-type">
-          <option value="tna">TNA (nominal anual)</option>
-          <option value="tea">TEA (efectiva anual)</option>
-          <option value="tem">TEM (efectiva mensual)</option>
-        </select>
-
-        <label for="rate-input">Valor de la tasa (%)</label>
-        <input id="rate-input" type="number" step="0.0001" placeholder="Ej: 97 (TNA) ó 8 (TEM)" />
-
-        <button id="btn-rate-convert">Convertir</button>
-
-        <div class="result" id="rate-result">
-          Ingresá una tasa y convertí entre TNA, TEA y TEM (mensual).
-        </div>
-      </div>
-
-      <!-- CARD SIMULADOR DE INVERSIÓN -->
-      <div class="card">
-        <h2>Simulador inversión con aportes</h2>
-        <small>Capital inicial + aporte fijo por período, con interés compuesto.</small>
-
-        <label for="sim-pv">Capital inicial (opcional)</label>
-        <input id="sim-pv" type="number" placeholder="Ej: 50000 (podés dejar en blanco)" />
-
-        <label for="sim-pmt">Aporte por período</label>
-        <input id="sim-pmt" type="number" placeholder="Ej: 20000" />
-
-        <label for="sim-rate">Tasa por período (%)</label>
-        <input id="sim-rate" type="number" step="0.0001" placeholder="Ej: 5 (significa 5%)" />
-
-        <div class="row">
-          <div>
-            <label for="sim-n">Cantidad de períodos (n)</label>
-            <input id="sim-n" type="number" placeholder="Ej: 12" />
-          </div>
-          <div>
-            <label for="sim-period">Período</label>
-            <select id="sim-period">
-              <option value="mensual">Mensual</option>
-              <option value="anual">Anual</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
-
-        <button id="btn-sim">Calcular inversión</button>
-
-        <div class="result" id="sim-result">
-          Ingresá los datos para ver el valor futuro y cuánto aportaste en total.
-        </div>
-      </div>
-    </div>
-
     <div class="footer-note">
       <span class="formula">FV = PV · (1 + i)<sup>n</sup></span>
       <span class="formula">PV = FV / (1 + i)<sup>n</sup></span>
