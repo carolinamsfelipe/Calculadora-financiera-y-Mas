@@ -205,6 +205,53 @@
     .index-card li {
       margin-bottom: 6px;
     }
+
+    /* Botones del índice desplegable */
+    .index-item {
+      background: none;
+      border: none;
+      color: #e5e7eb;
+      padding: 2px 0;
+      text-align: left;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .index-item:hover {
+      color: #38bdf8;
+    }
+
+    .index-detail {
+      display: none;
+      margin-top: 4px;
+      margin-bottom: 8px;
+      padding-left: 8px;
+      font-size: 0.85rem;
+      color: #d1d5db;
+    }
+
+    .index-detail span.estado {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+    }
+
+    .estado-ok {
+      border-color: #22c55e;
+      color: #22c55e;
+    }
+
+    .estado-pend {
+      border-color: #f97316;
+      color: #f97316;
+    }
   </style>
 </head>
 <body>
@@ -219,44 +266,62 @@
     </header>
 
     <div class="cards">
-      <!-- ÍNDICE DE MÓDULOS -->
+      <!-- ÍNDICE DE MÓDULOS (DESPLEGABLE) -->
       <div class="card index-card">
         <h2>Índice de módulos</h2>
-        <small>Mapa de herramientas pensadas para distintos perfiles financieros.</small>
+        <small>Mapa de herramientas pensadas para distintos perfiles financieros. Hacé click en cada título para ver los detalles.</small>
 
         <ol>
           <li>
             <strong>1 - Para inversionistas y ahorristas comunes</strong>
             <ol>
               <li>
-                <strong>1) Comparador de Plazo Fijo tradicional vs UVA</strong><br>
-                Ingresan: monto, TNA, inflación estimada, días.<br>
-                Resultado: cuál conviene → monto final real.<br>
-                Altísima demanda en Argentina.
+                <button class="index-item" data-target="idx-1">
+                  1) Comparador de Plazo Fijo tradicional vs UVA
+                </button>
+                <div class="index-detail" id="idx-1">
+                  Ingresan: monto, TNA, inflación estimada, días.<br>
+                  Resultado: cuál conviene → monto final real.<br>
+                  Altísima demanda en Argentina.<br>
+                  <span class="estado estado-ok">Funcionalidad disponible debajo (módulo "Comparador PF vs UVA")</span>
+                </div>
               </li>
               <li>
-                <strong>2) Simulador de interés compuesto con aportes variables</strong><br>
-                Tu versión actual tiene aportes fijos →<br>
-                Pero la gente quiere:<br>
-                • meses sin aportar<br>
-                • aportes distintos<br>
-                • retiradas parciales
+                <button class="index-item" data-target="idx-2">
+                  2) Simulador de interés compuesto con aportes variables
+                </button>
+                <div class="index-detail" id="idx-2">
+                  Tu versión actual trabaja con aportes fijos por período.<br>
+                  Versión futura: permitir meses sin aportar, aportes distintos y retiradas parciales.<br>
+                  <span class="estado estado-ok">Funcionalidad básica disponible debajo (módulo "Simulador inversión con aportes")</span>
+                </div>
               </li>
               <li>
-                <strong>3) Plan de ahorro para objetivos</strong><br>
-                Ej: “Quiero juntar USD 10.000 en 3 años”.<br>
-                La herramienta responde:<br>
-                • cuánto aportar por mes<br>
-                • a qué tasa mínima<br>
-                • gráfico del progreso
+                <button class="index-item" data-target="idx-3">
+                  3) Plan de ahorro para objetivos
+                </button>
+                <div class="index-detail" id="idx-3">
+                  Ejemplo: “Quiero juntar USD 10.000 en 3 años”.<br>
+                  La herramienta debería responder:<br>
+                  • cuánto aportar por mes<br>
+                  • a qué tasa mínima<br>
+                  • gráfico del progreso<br>
+                  <span class="estado estado-pend">Funcionalidad pendiente</span>
+                </div>
               </li>
               <li>
-                <strong>4) Calculadora de tipo de cambio</strong><br>
-                Oficial<br>
-                MEP<br>
-                CCL<br>
-                Solidario<br>
-                Tarjeta
+                <button class="index-item" data-target="idx-4">
+                  4) Calculadora de tipo de cambio
+                </button>
+                <div class="index-detail" id="idx-4">
+                  Tipos de cambio a considerar:<br>
+                  • Oficial<br>
+                  • MEP<br>
+                  • CCL<br>
+                  • Solidario<br>
+                  • Tarjeta<br>
+                  <span class="estado estado-pend">Funcionalidad pendiente</span>
+                </div>
               </li>
             </ol>
           </li>
@@ -265,40 +330,49 @@
             <strong>2 - Para analistas financieros / corporativos</strong>
             <ol start="5">
               <li>
-                <strong>5) VAN y TIR (Flujos de caja)</strong><br>
-                Ingresan una serie de flujos: [-100000, 30000, 30000, 30000, 30000].<br>
-                Resultado:<br>
-                • Valor Actual Neto (VAN)<br>
-                • Tasa Interna de Retorno (TIR)<br>
-                • ROI<br>
-                Es de las herramientas más pedidas.
+                <button class="index-item" data-target="idx-5">
+                  5) VAN y TIR (Flujos de caja)
+                </button>
+                <div class="index-detail" id="idx-5">
+                  Ingresan una serie de flujos: [-100000, 30000, 30000, 30000, 30000].<br>
+                  Resultado esperado:<br>
+                  • Valor Actual Neto (VAN)<br>
+                  • Tasa Interna de Retorno (TIR)<br>
+                  • ROI<br>
+                  <span class="estado estado-pend">Funcionalidad pendiente</span>
+                </div>
               </li>
               <li>
-                <strong>6) Duración y Duration modificada (bonos)</strong><br>
-                Para quienes analizan bonos, súper útil:<br>
-                • Precio<br>
-                • Cupón<br>
-                • Vencimiento<br>
-                • Rendimiento<br>
-                • Duración<br>
-                • Riesgo de tasa
+                <button class="index-item" data-target="idx-6">
+                  6) Duración y Duration modificada (bonos)
+                </button>
+                <div class="index-detail" id="idx-6">
+                  Para analizar sensibilidad a tasas de interés en bonos.<br>
+                  Datos: precio, cupón, vencimiento, rendimiento, duración y riesgo de tasa.<br>
+                  <span class="estado estado-pend">Funcionalidad pendiente</span>
+                </div>
               </li>
               <li>
-                <strong>7) Curva de bonos simple</strong><br>
-                Ingresan varios bonos →<br>
-                La herramienta grafica:<br>
-                • Duration<br>
-                • Yield<br>
-                • Precio
+                <button class="index-item" data-target="idx-7">
+                  7) Curva de bonos simple
+                </button>
+                <div class="index-detail" id="idx-7">
+                  Ingresan varios bonos y se grafica:<br>
+                  • Duration<br>
+                  • Yield<br>
+                  • Precio<br>
+                  <span class="estado estado-pend">Funcionalidad pendiente</span>
+                </div>
               </li>
               <li>
-                <strong>8) Cálculo de paridad de bonos</strong><br>
-                Ideal para Argentina:<br>
-                • Precio<br>
-                • Valor técnico<br>
-                • Cupón<br>
-                • TIR<br>
-                • Paridad %
+                <button class="index-item" data-target="idx-8">
+                  8) Cálculo de paridad de bonos
+                </button>
+                <div class="index-detail" id="idx-8">
+                  Ideal para Argentina.<br>
+                  Datos: precio, valor técnico, cupón, TIR y paridad %.<br>
+                  <span class="estado estado-pend">Funcionalidad pendiente</span>
+                </div>
               </li>
             </ol>
           </li>
@@ -547,6 +621,17 @@
       if (isNaN(value)) return "-";
       return (value * 100).toFixed(2) + "%";
     }
+
+    // ---- ÍNDICE DESPLEGABLE ----
+    document.querySelectorAll(".index-item").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.target;
+        const panel = document.getElementById(id);
+        if (!panel) return;
+        const visible = panel.style.display === "block";
+        panel.style.display = visible ? "none" : "block";
+      });
+    });
 
     // ---- COMPARADOR PF TRADICIONAL VS UVA ----
     document.getElementById("btn-pf-uva").addEventListener("click", function () {
@@ -941,4 +1026,5 @@
   </script>
 </body>
 </html>
+
 
