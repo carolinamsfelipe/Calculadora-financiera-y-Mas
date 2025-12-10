@@ -205,7 +205,6 @@
     .index-card li {
       margin-bottom: 6px;
     }
-
   </style>
 </head>
 <body>
@@ -304,6 +303,33 @@
             </ol>
           </li>
         </ol>
+      </div>
+
+      <!-- CARD COMPARADOR PF TRADICIONAL VS UVA -->
+      <div class="card">
+        <h2>Comparador PF tradicional vs UVA</h2>
+        <small>Ingresá tu escenario y compará cuál rinde más, en términos nominales y reales.</small>
+
+        <label for="pf-monto">Monto a invertir</label>
+        <input id="pf-monto" type="number" placeholder="Ej: 100000" />
+
+        <label for="pf-tna">TNA Plazo Fijo tradicional (%)</label>
+        <input id="pf-tna" type="number" step="0.01" placeholder="Ej: 110" />
+
+        <label for="pf-inflacion">Inflación esperada anual (%)</label>
+        <input id="pf-inflacion" type="number" step="0.01" placeholder="Ej: 180" />
+
+        <label for="pf-plus">Plus real UVA sobre inflación (opcional, % anual)</label>
+        <input id="pf-plus" type="number" step="0.01" placeholder="Ej: 0 ó 5" />
+
+        <label for="pf-dias">Plazo en días</label>
+        <input id="pf-dias" type="number" placeholder="Ej: 30, 60, 90, 180" />
+
+        <button id="btn-pf-uva">Comparar PF vs UVA</button>
+
+        <div class="result" id="pf-uva-result">
+          Ingresá los datos y te muestro cuánto terminarías con PF tradicional vs UVA, y quién gana en términos reales.
+        </div>
       </div>
 
       <!-- CARD CONVERSOR DE TASAS -->
@@ -521,6 +547,63 @@
       if (isNaN(value)) return "-";
       return (value * 100).toFixed(2) + "%";
     }
+
+    // ---- COMPARADOR PF TRADICIONAL VS UVA ----
+    document.getElementById("btn-pf-uva").addEventListener("click", function () {
+      const monto = parseFloat(document.getElementById("pf-monto").value);
+      const tnaPF = parseFloat(document.getElementById("pf-tna").value);
+      const inflAnual = parseFloat(document.getElementById("pf-inflacion").value);
+      const plusReal = parseFloat(document.getElementById("pf-plus").value || "0");
+      const dias = parseFloat(document.getElementById("pf-dias").value);
+      const resultDiv = document.getElementById("pf-uva-result");
+
+      if (isNaN(monto) || isNaN(tnaPF) || isNaN(inflAnual) || isNaN(dias) || dias <= 0) {
+        resultDiv.innerHTML = "👀 Completá monto, TNA, inflación y días (el plus UVA puede quedar vacío).";
+        return;
+      }
+
+      const tnaPFDecimal = tnaPF / 100;
+      const inflAnualDec = inflAnual / 100;
+      const plusRealDec = plusReal / 100;
+
+      // PF tradicional: interés simple proporcional a los días
+      const interesPF = tnaPFDecimal * (dias / 365);
+      const montoPF = monto * (1 + interesPF);
+
+      // Inflación del período (compuesta)
+      const inflPeriodo = Math.pow(1 + inflAnualDec, dias / 365) - 1;
+
+      // UVA: inflación + plus real, compuesto
+      const tasaUVAAnual = (1 + inflAnualDec) * (1 + plusRealDec) - 1;
+      const tasaUVAPeriodo = Math.pow(1 + tasaUVAAnual, dias / 365) - 1;
+      const montoUVA = monto * (1 + tasaUVAPeriodo);
+
+      // Valores reales (descontando inflación del período)
+      const factorInfl = 1 + inflPeriodo;
+      const realPF = montoPF / factorInfl;
+      const realUVA = montoUVA / factorInfl;
+
+      let ganadorNominal = "";
+      if (montoPF > montoUVA) ganadorNominal = "Plazo Fijo tradicional gana en términos nominales.";
+      else if (montoUVA > montoPF) ganadorNominal = "El Plazo Fijo UVA gana en términos nominales.";
+      else ganadorNominal = "Ambos rinden igual en términos nominales (según supuestos).";
+
+      let ganadorReal = "";
+      if (realPF > realUVA) ganadorReal = "Plazo Fijo tradicional gana en términos reales (descontando inflación).";
+      else if (realUVA > realPF) ganadorReal = "El Plazo Fijo UVA gana en términos reales (descontando inflación).";
+      else ganadorReal = "Ambos rinden igual en términos reales (según supuestos).";
+
+      resultDiv.innerHTML =
+        "<strong>Comparación PF tradicional vs UVA (" + dias + " días):</strong>" +
+        "<br>PF tradicional: " + formatMoney(montoPF) +
+        "<br>PF UVA (estimado): " + formatMoney(montoUVA) +
+        "<br><br><strong>Ajustado por inflación del período (" + (inflPeriodo * 100).toFixed(2) + "%):</strong>" +
+        "<br>PF tradicional en términos reales: " + formatMoney(realPF) +
+        "<br>PF UVA en términos reales: " + formatMoney(realUVA) +
+        "<br><br>" +
+        "<span style='font-size:0.85rem;color:#9ca3af'>" + ganadorNominal + "<br>" + ganadorReal +
+        "<br>Supuesto: inflación y TNA constantes durante el período.</span>";
+    });
 
     // ---- FV ----
     document.getElementById("btn-fv").addEventListener("click", function () {
