@@ -191,7 +191,7 @@
       border-top: 1px solid #4b5563;
     }
 
-    /* Índice a lo “programa” */
+    /* Índice ocupa todo el ancho */
     .index-card {
       grid-column: 1 / -1;
     }
@@ -206,37 +206,6 @@
       margin-bottom: 6px;
     }
 
-    .index-card ul {
-      margin-top: 4px;
-      margin-bottom: 10px;
-      padding-left: 18px;
-      list-style: disc;
-      color: #d1d5db;
-    }
-
-    .pill-soon {
-      display: inline-block;
-      padding: 1px 8px;
-      border-radius: 999px;
-      border: 1px solid #4b5563;
-      font-size: 0.7rem;
-      margin-left: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #fbbf24;
-    }
-
-    .pill-ready {
-      display: inline-block;
-      padding: 1px 8px;
-      border-radius: 999px;
-      border: 1px solid #22c55e;
-      font-size: 0.7rem;
-      margin-left: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: #22c55e;
-    }
   </style>
 </head>
 <body>
@@ -254,63 +223,85 @@
       <!-- ÍNDICE DE MÓDULOS -->
       <div class="card index-card">
         <h2>Índice de módulos</h2>
-        <small>Elegí según el tipo de usuario o necesidad.</small>
+        <small>Mapa de herramientas pensadas para distintos perfiles financieros.</small>
 
         <ol>
           <li>
-            <strong>Para inversionistas y ahorristas comunes</strong>
-            <ul>
+            <strong>1 - Para inversionistas y ahorristas comunes</strong>
+            <ol>
               <li>
-                <strong>1) Comparador de Plazo Fijo tradicional vs UVA</strong>
-                <span class="pill-soon">Próximamente</span><br/>
-                Ingresan: monto, TNA, inflación estimada, días.  
-                Resultado: cuál conviene → monto final real (muy usado en Argentina).
+                <strong>1) Comparador de Plazo Fijo tradicional vs UVA</strong><br>
+                Ingresan: monto, TNA, inflación estimada, días.<br>
+                Resultado: cuál conviene → monto final real.<br>
+                Altísima demanda en Argentina.
               </li>
               <li>
-                <strong>2) Simulador de interés compuesto con aportes variables</strong>
-                <span class="pill-ready">Versión básica lista</span><br/>
-                Versión actual: aportes fijos por período.  
-                Próximo upgrade: meses sin aportar, aportes distintos y retiradas parciales.
+                <strong>2) Simulador de interés compuesto con aportes variables</strong><br>
+                Tu versión actual tiene aportes fijos →<br>
+                Pero la gente quiere:<br>
+                • meses sin aportar<br>
+                • aportes distintos<br>
+                • retiradas parciales
               </li>
               <li>
-                <strong>3) Plan de ahorro para objetivos</strong>
-                <span class="pill-soon">Próximamente</span><br/>
-                Ej: “Quiero juntar USD 10.000 en 3 años”.  
-                Responde: cuánto aportar por mes, a qué tasa mínima y muestra el progreso.
+                <strong>3) Plan de ahorro para objetivos</strong><br>
+                Ej: “Quiero juntar USD 10.000 en 3 años”.<br>
+                La herramienta responde:<br>
+                • cuánto aportar por mes<br>
+                • a qué tasa mínima<br>
+                • gráfico del progreso
               </li>
               <li>
-                <strong>4) Calculadora de tipo de cambio</strong>
-                <span class="pill-soon">Próximamente</span><br/>
-                Oficial, MEP, CCL, Solidario, Tarjeta, etc.
+                <strong>4) Calculadora de tipo de cambio</strong><br>
+                Oficial<br>
+                MEP<br>
+                CCL<br>
+                Solidario<br>
+                Tarjeta
               </li>
-            </ul>
+            </ol>
           </li>
 
-          <li>
-            <strong>Para analistas financieros / corporativos</strong>
-            <ul>
+          <li style="margin-top:10px;">
+            <strong>2 - Para analistas financieros / corporativos</strong>
+            <ol start="5">
               <li>
-                <strong>5) VAN y TIR (Flujos de caja)</strong>
-                <span class="pill-soon">Próximamente</span><br/>
-                Ingresan una serie de flujos (ej: [-100000, 30000, 30000, 30000, 30000]).  
-                Resultado: Valor Actual Neto, Tasa Interna de Retorno, ROI.
+                <strong>5) VAN y TIR (Flujos de caja)</strong><br>
+                Ingresan una serie de flujos: [-100000, 30000, 30000, 30000, 30000].<br>
+                Resultado:<br>
+                • Valor Actual Neto (VAN)<br>
+                • Tasa Interna de Retorno (TIR)<br>
+                • ROI<br>
+                Es de las herramientas más pedidas.
               </li>
               <li>
-                <strong>6) Duración y Duration modificada (bonos)</strong>
-                <span class="pill-soon">Próximamente</span><br/>
-                Precio, cupón, vencimiento, rendimiento, duración y riesgo de tasa.
+                <strong>6) Duración y Duration modificada (bonos)</strong><br>
+                Para quienes analizan bonos, súper útil:<br>
+                • Precio<br>
+                • Cupón<br>
+                • Vencimiento<br>
+                • Rendimiento<br>
+                • Duración<br>
+                • Riesgo de tasa
               </li>
               <li>
-                <strong>7) Curva de bonos simple</strong>
-                <span class="pill-soon">Próximamente</span><br/>
-                Se cargan varios bonos y se grafica Duration, Yield y Precio.
+                <strong>7) Curva de bonos simple</strong><br>
+                Ingresan varios bonos →<br>
+                La herramienta grafica:<br>
+                • Duration<br>
+                • Yield<br>
+                • Precio
               </li>
               <li>
-                <strong>8) Cálculo de paridad de bonos</strong>
-                <span class="pill-soon">Próximamente</span><br/>
-                Ideal Argentina: precio, valor técnico, cupón, TIR y paridad %.
+                <strong>8) Cálculo de paridad de bonos</strong><br>
+                Ideal para Argentina:<br>
+                • Precio<br>
+                • Valor técnico<br>
+                • Cupón<br>
+                • TIR<br>
+                • Paridad %
               </li>
-            </ul>
+            </ol>
           </li>
         </ol>
       </div>
@@ -573,11 +564,11 @@
       }
 
       const i = ratePercent / 100;
-      const pv = fv / Math.pow(1 + i, n);
+      const pvCalc = fv / Math.pow(1 + i, n);
 
       resultDiv.innerHTML =
         "<strong>Valor presente necesario:</strong>" +
-        formatMoney(pv) +
+        formatMoney(pvCalc) +
         "<br><span style='font-size:0.85rem;color:#9ca3af'>Asumiendo capitalización " +
         period +
         " y tasa fija del " +
@@ -867,3 +858,4 @@
   </script>
 </body>
 </html>
+
