@@ -23,17 +23,7 @@
       --warning: #f97316;
       --success: #22c55e;
       --outline: #4b5563;
-    }
-
-    /* Modo claro opcional (activalo con body.light) */
-    .light {
-      --bg: #f6f7fb;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --brand: #6d28d9;
-      --border: rgba(17, 24, 39, 0.12);
-      --outline: #e5e7eb;
+      --flash: rgba(250, 204, 21, 0.18);
     }
 
     body {
@@ -53,14 +43,8 @@
       padding: 24px 16px 40px;
     }
 
-    header {
-      margin-bottom: 16px;
-    }
-
-    h1 {
-      text-align: center;
-      margin-bottom: 4px;
-    }
+    header { margin-bottom: 16px; }
+    h1 { text-align: center; margin-bottom: 4px; }
 
     .subtitle {
       text-align: center;
@@ -103,17 +87,8 @@
       border: 1px solid var(--border);
     }
 
-    .card h2 {
-      margin-top: 0;
-      margin-bottom: 6px;
-      font-size: 1.05rem;
-    }
-
-    .card small {
-      display: block;
-      margin-bottom: 12px;
-      color: var(--muted);
-    }
+    .card h2 { margin-top: 0; margin-bottom: 6px; font-size: 1.05rem; }
+    .card small { display: block; margin-bottom: 12px; color: var(--muted); }
 
     label {
       display: block;
@@ -123,7 +98,7 @@
       color: #d1d5db;
     }
 
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 8px 10px;
       border-radius: 10px;
@@ -134,12 +109,9 @@
       outline: none;
     }
 
-    .light input, .light select {
-      background: #f9fafb;
-      color: #111827;
-    }
+    textarea { min-height: 72px; resize: vertical; }
 
-    input:focus, select:focus {
+    input:focus, select:focus, textarea:focus {
       border-color: var(--accent1);
       box-shadow: 0 0 0 1px rgba(56,189,248,0.4);
     }
@@ -163,9 +135,7 @@
       cursor: pointer;
     }
 
-    button:hover {
-      filter: brightness(1.05);
-    }
+    button:hover { filter: brightness(1.05); }
 
     .result {
       margin-top: 10px;
@@ -192,10 +162,7 @@
       line-height: 1.4;
     }
 
-    .formula {
-      display: block;
-      margin-top: 4px;
-    }
+    .formula { display: block; margin-top: 4px; }
 
     /* Tabla amortización */
     .amort-table {
@@ -205,88 +172,56 @@
       font-size: 0.8rem;
     }
 
-    .amort-table th,
-    .amort-table td {
+    .amort-table th, .amort-table td {
       border-bottom: 1px solid #1f2937;
       padding: 4px 6px;
       text-align: right;
     }
 
-    .amort-table th:first-child,
-    .amort-table td:first-child {
-      text-align: center;
-    }
-
-    .amort-table tfoot td {
-      font-weight: 600;
-      border-top: 1px solid #4b5563;
-    }
+    .amort-table th:first-child, .amort-table td:first-child { text-align: center; }
+    .amort-table tfoot td { font-weight: 600; border-top: 1px solid #4b5563; }
 
     /* Índice ocupa todo el ancho */
-    .index-card {
-      grid-column: 1 / -1;
-    }
-
-    .index-card ol {
-      padding-left: 18px;
-      margin: 0;
-      font-size: 0.9rem;
-    }
-
-    .index-card li {
-      margin-bottom: 6px;
-    }
+    .index-card { grid-column: 1 / -1; }
+    .index-card ol { padding-left: 18px; margin: 0; font-size: 0.9rem; }
+    .index-card li { margin-bottom: 6px; }
 
     /* Botones del índice desplegable */
     .index-item {
-      background: none;
-      border: none;
-      color: var(--text);
-      padding: 2px 0;
-      text-align: left;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      width: 100%;
+      background: none; border: none; color: var(--text);
+      padding: 2px 0; text-align: left; font-size: 0.9rem; font-weight: 600;
+      cursor: pointer; width: 100%;
     }
-
-    .index-item:hover {
-      color: var(--accent1);
-    }
+    .index-item:hover { color: var(--accent1); }
 
     .index-detail {
-      margin-top: 4px;
-      margin-bottom: 8px;
-      padding-left: 8px;
-      font-size: 0.85rem;
-      color: #d1d5db;
+      margin-top: 4px; margin-bottom: 8px;
+      padding-left: 8px; font-size: 0.85rem; color: #d1d5db;
     }
 
     .index-detail span.estado {
-      display: inline-block;
-      margin-top: 4px;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 2px 6px;
-      border-radius: 999px;
-      border: 1px solid var(--outline);
+      display: inline-block; margin-top: 4px;
+      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
+      padding: 2px 6px; border-radius: 999px; border: 1px solid var(--outline);
     }
 
-    .estado-ok {
-      border-color: var(--success);
-      color: var(--success);
-    }
-
-    .estado-pend {
-      border-color: var(--warning);
-      color: var(--warning);
-    }
+    .estado-ok { border-color: var(--success); color: var(--success); }
+    .estado-pend { border-color: var(--warning); color: var(--warning); }
 
     /* Errores de input */
     .input-error {
       border-color: #ef4444 !important;
       box-shadow: 0 0 0 1px rgba(239,68,68,0.4) !important;
+    }
+
+    /* Flash highlight al navegar desde el índice */
+    .flash {
+      animation: flashBg 1.6s ease-out;
+    }
+    @keyframes flashBg {
+      0% { box-shadow: 0 0 0 0 var(--flash); }
+      30% { box-shadow: 0 0 0 8px var(--flash); }
+      100% { box-shadow: 0 0 0 0 transparent; }
     }
   </style>
 </head>
@@ -305,7 +240,7 @@
       <!-- ÍNDICE DE MÓDULOS (DESPLEGABLE) -->
       <section class="card index-card" aria-label="Índice de módulos">
         <h2>Índice de módulos</h2>
-        <small>Mapa de herramientas pensadas para distintos perfiles financieros. Hacé click en cada título para ver los detalles.</small>
+        <small>Hacé click en cada título para ver y usar la herramienta. 👇</small>
 
         <ol>
           <li>
@@ -317,52 +252,24 @@
             <div id="panel-inversores" class="index-detail" hidden>
               <ol>
                 <li>
-                  <button class="index-item" aria-expanded="false" aria-controls="panel-pf-uva" data-panel="panel-pf-uva">
+                  <button class="index-item go-card" data-target="pf-uva-card">
                     Comparador de Plazo Fijo tradicional vs UVA
                   </button>
-                  <div id="panel-pf-uva" class="index-detail" hidden>
-                    Ingresar: monto, TNA, inflación estimada, días.<br />
-                    Resultado: Cuál conviene → monto final real.<br />
-                    Altísima demanda en Argentina!<br />
-                    <span class="estado estado-ok">Funcionalidad disponible - módulo "Comparador PF vs UVA"</span>
-                  </div>
                 </li>
                 <li>
-                  <button class="index-item" aria-expanded="false" aria-controls="panel-sim-aportes" data-panel="panel-sim-aportes">
+                  <button class="index-item go-card" data-target="simulador-card">
                     Simulador de interés compuesto con aportes variables
                   </button>
-                  <div id="panel-sim-aportes" class="index-detail" hidden>
-                    Tu versión actual trabaja con aportes fijos por período.<br />
-                    Versión futura: permitir meses sin aportar, aportes distintos y retiradas parciales.<br />
-                    <span class="estado estado-ok">Funcionalidad básica disponible - "Simulador inversión con aportes"</span>
-                  </div>
                 </li>
                 <li>
-                  <button class="index-item" aria-expanded="false" aria-controls="panel-objetivos" data-panel="panel-objetivos">
+                  <button class="index-item go-card" data-target="objetivos-card">
                     Plan de ahorro para objetivos
                   </button>
-                  <div id="panel-objetivos" class="index-detail" hidden>
-                    Ejemplo: “Quiero juntar USD 10.000 en 3 años”.<br />
-                    La herramienta debería responder:<br />
-                    • cuánto aportar por mes<br />
-                    • a qué tasa mínima<br />
-                    • gráfico del progreso<br />
-                    <span class="estado estado-pend">Funcionalidad pendiente</span>
-                  </div>
                 </li>
                 <li>
-                  <button class="index-item" aria-expanded="false" aria-controls="panel-tipo-cambio" data-panel="panel-tipo-cambio">
+                  <button class="index-item go-card" data-target="tc-card">
                     Calculadora de tipo de cambio
                   </button>
-                  <div id="panel-tipo-cambio" class="index-detail" hidden>
-                    Tipos de cambio a considerar:<br />
-                    • Oficial<br />
-                    • MEP<br />
-                    • CCL<br />
-                    • Solidario<br />
-                    • Tarjeta<br />
-                    <span class="estado estado-pend">Funcionalidad pendiente</span>
-                  </div>
                 </li>
               </ol>
             </div>
@@ -389,8 +296,6 @@
                   Duración y Duration modificada (bonos)
                 </button>
                 <div id="panel-duration" class="index-detail" hidden>
-                  Para analizar sensibilidad a tasas de interés en bonos.<br />
-                  Datos: precio, cupón, vencimiento, rendimiento, duración y riesgo de tasa.<br />
                   <span class="estado estado-pend">Funcionalidad pendiente</span>
                 </div>
               </li>
@@ -399,10 +304,6 @@
                   Curva de bonos simple
                 </button>
                 <div id="panel-curva-bonos" class="index-detail" hidden>
-                  Ingresan varios bonos y se grafica:<br />
-                  • Duration<br />
-                  • Yield<br />
-                  • Precio<br />
                   <span class="estado estado-pend">Funcionalidad pendiente</span>
                 </div>
               </li>
@@ -411,8 +312,6 @@
                   Cálculo de paridad de bonos
                 </button>
                 <div id="panel-paridad-bonos" class="index-detail" hidden>
-                  Ideal para Argentina.<br />
-                  Datos: precio, valor técnico, cupón, TIR y paridad %. <br />
                   <span class="estado estado-pend">Funcionalidad pendiente</span>
                 </div>
               </li>
@@ -422,7 +321,7 @@
       </section>
 
       <!-- COMPARADOR PF TRADICIONAL VS UVA -->
-      <section class="card" id="pf-uva">
+      <section class="card" id="pf-uva-card">
         <h2>Comparador PF tradicional vs UVA</h2>
         <small>Ingresá tu escenario y compará cuál rinde más, en términos nominales y reales.</small>
 
@@ -449,7 +348,7 @@
       </section>
 
       <!-- CONVERSOR DE TASAS -->
-      <section class="card">
+      <section class="card" id="tasas-card">
         <h2>Conversor de tasas</h2>
         <small>TNA, TEA y TEM suponiendo capitalización mensual (12 períodos al año).</small>
 
@@ -470,16 +369,19 @@
         </div>
       </section>
 
-      <!-- SIMULADOR DE INVERSIÓN CON APORTES -->
-      <section class="card">
-        <h2>Simulador inversión con aportes</h2>
-        <small>Capital inicial + aporte fijo por período, con interés compuesto.</small>
+      <!-- SIMULADOR DE INVERSIÓN CON APORTES VARIABLES -->
+      <section class="card" id="simulador-card">
+        <h2>Simulador inversión con aportes variables</h2>
+        <small>Capital inicial + aportes por período con interés compuesto. Podés usar aporte fijo o lista variable.</small>
 
         <label for="sim-pv">Capital inicial (opcional)</label>
         <input id="sim-pv" type="number" inputmode="decimal" placeholder="Ej: 50000 (podés dejar en blanco)" />
 
-        <label for="sim-pmt">Aporte por período</label>
+        <label for="sim-pmt">Aporte fijo por período (opcional)</label>
         <input id="sim-pmt" type="number" inputmode="decimal" placeholder="Ej: 20000" />
+
+        <label for="sim-aportes">Aportes variables (opcional, separados por comas o líneas)</label>
+        <textarea id="sim-aportes" placeholder="Ej: 20000, 0, 15000, 50000"></textarea>
 
         <label for="sim-rate">Tasa por período (%)</label>
         <input id="sim-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5 (significa 5%)" />
@@ -487,7 +389,7 @@
         <div class="row">
           <div>
             <label for="sim-n">Cantidad de períodos (n)</label>
-            <input id="sim-n" type="number" inputmode="numeric" placeholder="Ej: 12" />
+            <input id="sim-n" type="number" inputmode="numeric" placeholder="Ej: 12 (si cargas lista, se ignora)" />
           </div>
           <div>
             <label for="sim-period">Período</label>
@@ -502,12 +404,87 @@
         <button id="btn-sim">Calcular inversión</button>
 
         <div class="result" id="sim-result">
-          Ingresá los datos para ver el valor futuro y cuánto aportaste en total.
+          Cargá tasa, aportes (fijos o variables) y te muestro el valor futuro y cuánto aportaste en total.
         </div>
       </section>
 
-      <!-- VALOR FUTURO -->
-      <section class="card">
+      <!-- PLAN DE AHORRO PARA OBJETIVOS -->
+      <section class="card" id="objetivos-card">
+        <h2>Plan de ahorro para objetivos</h2>
+        <small>Calculá el aporte periódico necesario para alcanzar un objetivo.</small>
+
+        <label for="obj-fv">Objetivo a alcanzar (FV objetivo)</label>
+        <input id="obj-fv" type="number" inputmode="decimal" placeholder="Ej: 1000000" />
+
+        <label for="obj-pv">Capital inicial (PV, opcional)</label>
+        <input id="obj-pv" type="number" inputmode="decimal" placeholder="Ej: 50000 (podés dejarlo vacío)" />
+
+        <label for="obj-rate">Tasa por período (%)</label>
+        <input id="obj-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 4 (significa 4%)" />
+
+        <div class="row">
+          <div>
+            <label for="obj-n">Cantidad de períodos (n)</label>
+            <input id="obj-n" type="number" inputmode="numeric" placeholder="Ej: 36" />
+          </div>
+          <div>
+            <label for="obj-period">Período</label>
+            <select id="obj-period">
+              <option value="mensual">Mensual</option>
+              <option value="anual">Anual</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+        </div>
+
+        <button id="btn-obj">Calcular aporte necesario</button>
+
+        <div class="result" id="obj-result">
+          Ingresá objetivo, tasa y períodos para calcular el aporte por período requerido.
+        </div>
+      </section>
+
+      <!-- CALCULADORA DE TIPO DE CAMBIO -->
+      <section class="card" id="tc-card">
+        <h2>Calculadora de tipo de cambio</h2>
+        <small>Convertí entre ARS y USD según el tipo de cambio elegido (ingresá vos la cotización).</small>
+
+        <label for="tc-monto">Monto</label>
+        <input id="tc-monto" type="number" inputmode="decimal" placeholder="Ej: 100000" />
+
+        <div class="row">
+          <div>
+            <label for="tc-direccion">Dirección</label>
+            <select id="tc-direccion">
+              <option value="ars-usd">ARS → USD</option>
+              <option value="usd-ars">USD → ARS</option>
+            </select>
+          </div>
+          <div>
+            <label for="tc-tipo">Tipo de cambio</label>
+            <select id="tc-tipo">
+              <option value="oficial">Oficial</option>
+              <option value="mep">MEP</option>
+              <option value="ccl">CCL</option>
+              <option value="solidario">Solidario</option>
+              <option value="tarjeta">Tarjeta</option>
+              <option value="custom">Personalizado</option>
+            </select>
+          </div>
+        </div>
+
+        <label for="tc-cotizacion">Cotización seleccionada (ARS por USD)</label>
+        <input id="tc-cotizacion" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 1200" />
+
+        <button id="btn-tc">Convertir</button>
+
+        <div class="result" id="tc-result">
+          Ingresá el monto, elegí dirección y tipo de cambio, y colocá la cotización.
+        </div>
+      </section>
+
+      <!-- VALOR FUTURO (FV) -->
+      <section class="card" id="fv-card">
         <h2>Valor Futuro (FV)</h2>
         <small>¿Cuánto voy a tener al final si invierto hoy un monto a una tasa fija?</small>
 
@@ -539,8 +516,8 @@
         </div>
       </section>
 
-      <!-- VALOR PRESENTE -->
-      <section class="card">
+      <!-- VALOR PRESENTE (PV) -->
+      <section class="card" id="pv-card">
         <h2>Valor Presente (PV)</h2>
         <small>¿Cuánto necesito hoy para alcanzar un monto futuro deseado?</small>
 
@@ -573,7 +550,7 @@
       </section>
 
       <!-- CUOTA PMT -->
-      <section class="card">
+      <section class="card" id="pmt-card">
         <h2>Cuota (PMT)</h2>
         <small>Préstamo o inversión con pagos iguales (sistema francés clásico).</small>
 
@@ -606,7 +583,7 @@
       </section>
 
       <!-- CRÉDITOS Y TABLA DE AMORTIZACIÓN -->
-      <section class="card">
+      <section class="card" id="loan-card">
         <h2>Créditos y tabla de amortización</h2>
         <small>Generá el cuadro de cuotas según sistema Francés, Alemán o Americano.</small>
 
@@ -633,10 +610,7 @@
 
         <button id="btn-loan">Generar tabla</button>
 
-        <div class="result" id="loan-result">
-          Completá los datos y generá la tabla de amortización.
-        </div>
-
+        <div class="result" id="loan-result">Completá los datos y generá la tabla de amortización.</div>
         <div id="loan-table-wrapper" aria-live="polite"></div>
       </section>
     </div>
@@ -649,7 +623,7 @@
     </div>
   </div>
 
-  <!-- JS: todo separado por "módulos" en un solo archivo -->
+  <!-- JS: módulos (namespaces) en un solo archivo -->
   <script type="module">
     /* ========== Utilidades (Util) ========== */
     const Util = (() => {
@@ -658,14 +632,15 @@
         return document.getElementById(idOrSelector);
       };
 
-      function formatMoney(value) {
+      function formatMoneyARS(value) {
         if (isNaN(value)) return "-";
-        return value.toLocaleString("es-AR", {
-          style: "currency",
-          currency: "ARS",
-          maximumFractionDigits: 2
-        });
+        return value.toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 2 });
       }
+      function formatMoneyUSD(value) {
+        if (isNaN(value)) return "-";
+        return value.toLocaleString("es-AR", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
+      }
+      function formatMoney(value) { return formatMoneyARS(value); }
 
       function formatPercent(value) {
         if (isNaN(value)) return "-";
@@ -693,7 +668,15 @@
         node.innerHTML = html;
       }
 
-      return { $, formatMoney, formatPercent, getNumber, markError, setResult };
+      function scrollToCard(cardId) {
+        const el = document.getElementById(cardId);
+        if (!el) return;
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        el.classList.add("flash");
+        setTimeout(() => el.classList.remove("flash"), 1600);
+      }
+
+      return { $, formatMoney, formatPercent, formatMoneyARS, formatMoneyUSD, getNumber, markError, setResult, scrollToCard };
     })();
 
     /* ========== Fórmulas financieras (Finance) ========== */
@@ -701,7 +684,19 @@
       const fv = (pv, i, n) => pv * Math.pow(1 + i, n);
       const pv = (fvVal, i, n) => fvVal / Math.pow(1 + i, n);
       const pmt = (pvVal, i, n) => (i === 0 ? pvVal / n : (pvVal * i) / (1 - Math.pow(1 + i, -n)));
-      return { fv, pv, pmt };
+
+      // FV de aportes variables: suma pmt_t · (1+i)^(n - t) para t=1..n (pagos al final del período)
+      const fvAportesVariables = (aportes, i) => {
+        const n = aportes.length;
+        let total = 0;
+        for (let t = 1; t <= n; t++) {
+          const pmt_t = aportes[t - 1] || 0;
+          total += pmt_t * Math.pow(1 + i, n - t);
+        }
+        return total;
+      };
+
+      return { fv, pv, pmt, fvAportesVariables };
     })();
 
     /* ========== PF tradicional vs UVA (PFUVA) ========== */
@@ -711,19 +706,15 @@
         const inflAnualDec = inflacion / 100;
         const plusRealDec = plus / 100;
 
-        // PF tradicional: interés simple proporcional a los días
         const interesPF = tnaPFDecimal * (dias / 365);
         const montoPF = monto * (1 + interesPF);
 
-        // Inflación del período (compuesta)
         const inflPeriodo = Math.pow(1 + inflAnualDec, dias / 365) - 1;
 
-        // UVA: inflación + plus real, compuesto
         const tasaUVAAnual = (1 + inflAnualDec) * (1 + plusRealDec) - 1;
         const tasaUVAPeriodo = Math.pow(1 + tasaUVAAnual, dias / 365) - 1;
         const montoUVA = monto * (1 + tasaUVAPeriodo);
 
-        // Valores reales (descontando inflación)
         const factorInfl = 1 + inflPeriodo;
         const realPF = montoPF / factorInfl;
         const realUVA = montoUVA / factorInfl;
@@ -779,11 +770,112 @@
           tea = Math.pow(1 + tem, 12) - 1;
           tna = tem * 12;
         }
-
         return { tem, tea, tna };
       }
-
       return { convertir };
+    })();
+
+    /* ========== Simulador con aportes variables (Simulador) ========== */
+    const Simulador = (() => {
+      function parseAportes(raw) {
+        if (!raw || !raw.trim()) return [];
+        return raw
+          .split(/[\n,;]+/g)
+          .map(s => parseFloat(s.trim()))
+          .filter(v => !isNaN(v));
+      }
+
+      function calcular({ pvInicial, aporteFijo, aportesVars, ratePercent, n }) {
+        const i = ratePercent / 100;
+
+        // Si hay aportes variables, usamos su longitud como n
+        let lista = parseAportes(aportesVars);
+        let nFinal = n;
+        if (lista.length > 0) {
+          nFinal = lista.length;
+        } else {
+          // si no hay lista, usamos aporte fijo y n
+          lista = Array.from({ length: nFinal }, () => aporteFijo || 0);
+        }
+
+        const fvInicial = pvInicial > 0 ? Finance.fv(pvInicial, i, nFinal) : 0;
+        const fvAportes = i === 0
+          ? lista.reduce((acc, v) => acc + v, 0)
+          : Finance.fvAportesVariables(lista, i);
+
+        const fvTotal = fvInicial + fvAportes;
+        const totalAportado = (pvInicial || 0) + lista.reduce((acc, v) => acc + v, 0);
+
+        return { fvTotal, totalAportado, nFinal, i, usóVariables: parseAportes(aportesVars).length > 0 };
+      }
+
+      function render(out, node, period, ratePercent) {
+        const { formatMoney } = Util;
+        const { fvTotal, totalAportado, nFinal, usóVariables } = out;
+
+        node.innerHTML =
+          `<strong>Valor futuro estimado:</strong>${formatMoney(fvTotal)}
+           <br><span style='font-size:0.85rem;color:#9ca3af'>
+           Período ${period}, tasa del ${ratePercent}%, ${nFinal} período(s). ${usóVariables ? "Aportes variables" : "Aporte fijo"}.
+           </span>
+           <br><span style='font-size:0.85rem;color:#9ca3af'>Total aportado: ${formatMoney(totalAportado)} (capital inicial + aportes)</span>`;
+      }
+
+      return { calcular };
+    })();
+
+    /* ========== Plan de ahorro para objetivos (Objetivos) ========== */
+    const Objetivos = (() => {
+      // Aporte necesario para alcanzar FV dado PV, i, n
+      // FV = PV*(1+i)^n + PMT * [((1+i)^n - 1) / i]  => PMT = (FV - PV*(1+i)^n) * i / ((1+i)^n - 1)
+      function calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n }) {
+        const i = ratePercent / 100;
+        if (n <= 0) return { pmtNecesario: NaN, i, n };
+
+        const fvInicial = pvInicial > 0 ? Finance.fv(pvInicial, i, n) : 0;
+        if (i === 0) {
+          const resto = fvObj - fvInicial;
+          const pmtNecesario = resto / n;
+          return { pmtNecesario, i, n };
+        }
+        const numerador = (fvObj - fvInicial) * i;
+        const denominador = Math.pow(1 + i, n) - 1;
+        const pmtNecesario = numerador / denominador;
+        return { pmtNecesario, i, n };
+      }
+
+      function render({ pmtNecesario }, node, period, ratePercent, n) {
+        node.innerHTML =
+          `<strong>Aporte por período necesario:</strong>${Util.formatMoney(pmtNecesario)}
+           <br><span style='font-size:0.85rem;color:#9ca3af'>
+           Para alcanzar el objetivo en ${n} período(s), con capitalización ${period} y tasa del ${ratePercent}%.
+           </span>`;
+      }
+
+      return { calcularPMTObjetivo, render };
+    })();
+
+    /* ========== Calculadora de tipo de cambio (TipoCambio) ========== */
+    const TipoCambio = (() => {
+      function convertir({ monto, direccion, cotizacion }) {
+        if (direccion === "ars-usd") {
+          const usd = cotizacion > 0 ? (monto / cotizacion) : NaN;
+          return { origen: "ARS", destino: "USD", result: usd };
+        } else {
+          const ars = cotizacion > 0 ? (monto * cotizacion) : NaN;
+          return { origen: "USD", destino: "ARS", result: ars };
+        }
+      }
+
+      function render(out, node) {
+        const { origen, destino, result } = out;
+        const fmt = destino === "USD" ? Util.formatMoneyUSD : Util.formatMoneyARS;
+        node.innerHTML =
+          `<strong>Conversión ${origen} → ${destino}:</strong>${fmt(result)}
+           <br><span style='font-size:0.85rem;color:#9ca3af'>Resultado estimado según tu cotización ingresada.</span>`;
+      }
+
+      return { convertir, render };
     })();
 
     /* ========== Valor Futuro (FV) ========== */
@@ -872,14 +964,7 @@
             const amortizacion = cuota - interes;
             saldo = saldo - amortizacion;
 
-            rows.push({
-              periodo: k,
-              cuota: cuota,
-              interes: interes,
-              amortizacion: amortizacion,
-              saldo: Math.max(saldo, 0)
-            });
-
+            rows.push({ periodo: k, cuota, interes, amortizacion, saldo: Math.max(saldo, 0) });
             totalCuotas += cuota;
             totalIntereses += interes;
           }
@@ -891,14 +976,7 @@
             const cuotaPer = amortizacionConstante + interes;
             saldo = saldo - amortizacionConstante;
 
-            rows.push({
-              periodo: k,
-              cuota: cuotaPer,
-              interes: interes,
-              amortizacion: amortizacionConstante,
-              saldo: Math.max(saldo, 0)
-            });
-
+            rows.push({ periodo: k, cuota: cuotaPer, interes, amortizacion: amortizacionConstante, saldo: Math.max(saldo, 0) });
             totalCuotas += cuotaPer;
             totalIntereses += interes;
           }
@@ -919,14 +997,7 @@
               saldo = 0;
             }
 
-            rows.push({
-              periodo: k,
-              cuota: cuotaPer,
-              interes: interes,
-              amortizacion: amortizacion,
-              saldo: Math.max(saldo, 0)
-            });
-
+            rows.push({ periodo: k, cuota: cuotaPer, interes, amortizacion, saldo: Math.max(saldo, 0) });
             totalCuotas += cuotaPer;
             totalIntereses += interes;
           }
@@ -951,17 +1022,13 @@
 
         let html = `<table class="amort-table">
             <thead><tr>
-              <th>#</th>
-              <th>Cuota</th>
-              <th>Interés</th>
-              <th>Amortización</th>
-              <th>Saldo</th>
+              <th>#</th><th>Cuota</th><th>Interés</th><th>Amortización</th><th>Saldo</th>
             </tr></thead><tbody>`;
 
         rows.forEach(r => {
           html += `<tr>
             <td>${r.periodo}</td>
-            <td>${Util.formatMoney(r.cuota)}</td>
+            <td>${Util.formatMoney(resumen.totalCuotas ? r.cuota : 0)}</td>
             <td>${Util.formatMoney(r.interes)}</td>
             <td>${Util.formatMoney(r.amortizacion)}</td>
             <td>${Util.formatMoney(r.saldo)}</td>
@@ -984,7 +1051,7 @@
 
     /* ========== Orquestación de eventos (App) ========== */
     const App = (() => {
-      const { $, getNumber, markError, setResult, formatPercent } = Util;
+      const { $, getNumber, markError, setResult, formatPercent, scrollToCard } = Util;
 
       // Índice desplegable accesible
       document.querySelectorAll(".index-item[data-panel]").forEach(btn => {
@@ -995,6 +1062,14 @@
           const abrir = panel.hasAttribute("hidden");
           panel.toggleAttribute("hidden", !abrir);
           btn.setAttribute("aria-expanded", String(abrir));
+        });
+      });
+
+      // Navegación: al tocar un item del índice, ir al card y resaltar
+      document.querySelectorAll(".index-item.go-card").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.target;
+          if (target) scrollToCard(target);
         });
       });
 
@@ -1014,8 +1089,7 @@
         if (isNaN(dias) || dias <= 0) invalid.push("pf-dias");
         if (invalid.length) {
           invalid.forEach(markError);
-          setResult(resultDiv, "👀 Completá monto, TNA, inflación y días (el plus UVA puede quedar vacío).");
-          return;
+          return setResult(resultDiv, "👀 Completá monto, TNA, inflación y días (el plus UVA puede quedar vacío).");
         }
 
         const out = PFUVA.comparar({ monto, tnaPF, inflacion, plus, dias });
@@ -1041,6 +1115,72 @@
            <br>TEM (mensual) = ${formatPercent(conv.tem)}
            <br><span style='font-size:0.8rem;color:#9ca3af'>Supuesto: 12 períodos al año y capitalización mensual.</span>`
         );
+      });
+
+      // Simulador (aportes variables)
+      $("#btn-sim")?.addEventListener("click", () => {
+        const pvInicial = getNumber("sim-pv");
+        const aporteFijo = getNumber("sim-pmt", true) || 0;
+        const ratePercent = getNumber("sim-rate");
+        const n = getNumber("sim-n", true) || 0;
+        const period = $("#sim-period").value;
+        const aportesVars = $("#sim-aportes").value;
+        const resultDiv = $("#sim-result");
+
+        if (isNaN(ratePercent)) {
+          markError("sim-rate");
+          return setResult(resultDiv, "👀 Completá la tasa por período.");
+        }
+        if (!aportesVars.trim() && (isNaN(aporteFijo) || isNaN(n) || n <= 0)) {
+          markError("sim-pmt"); markError("sim-n");
+          return setResult(resultDiv, "👀 Cargá aporte fijo y cantidad de períodos, o una lista de aportes variables.");
+        }
+        if (isNaN(pvInicial)) {
+          markError("sim-pv");
+          return setResult(resultDiv, "👀 El capital inicial debe ser un número válido o dejarse vacío.");
+        }
+
+        const out = Simulador.calcular({ pvInicial: pvInicial || 0, aporteFijo, aportesVars, ratePercent, n });
+        Simulador.render(out, resultDiv, period, ratePercent);
+      });
+
+      // Objetivos (aporte necesario)
+      $("#btn-obj")?.addEventListener("click", () => {
+        const fvObj = getNumber("obj-fv");
+        const pvInicial = getNumber("obj-pv", true) || 0;
+        const ratePercent = getNumber("obj-rate");
+        const n = getNumber("obj-n");
+        const period = $("#obj-period").value;
+        const resultDiv = $("#obj-result");
+
+        const invalid = [];
+        if (isNaN(fvObj)) invalid.push("obj-fv");
+        if (isNaN(ratePercent)) invalid.push("obj-rate");
+        if (isNaN(n) || n <= 0) invalid.push("obj-n");
+
+        if (invalid.length) {
+          invalid.forEach(markError);
+          return setResult(resultDiv, "👀 Completá objetivo (FV), tasa y cantidad de períodos.");
+        }
+
+        const out = Objetivos.calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n });
+        Objetivos.render(out, resultDiv, period, ratePercent, n);
+      });
+
+      // Tipo de cambio
+      $("#btn-tc")?.addEventListener("click", () => {
+        const monto = getNumber("tc-monto");
+        const direccion = $("#tc-direccion").value;
+        const tipo = $("#tc-tipo").value;
+        const cotizacion = getNumber("tc-cotizacion");
+        const resultDiv = $("#tc-result");
+
+        if (isNaN(monto)) { markError("tc-monto"); return setResult(resultDiv, "👀 Ingresá un monto."); }
+        if (isNaN(cotizacion) || cotizacion <= 0) { markError("tc-cotizacion"); return setResult(resultDiv, "👀 Ingresá una cotización válida (ARS por USD)."); }
+
+        // Nota: 'tipo' está para semántica (elegís cuál estás usando), la cotización la ingresás vos.
+        const out = TipoCambio.convertir({ monto, direccion, cotizacion });
+        TipoCambio.render(out, resultDiv);
       });
 
       // FV
@@ -1117,3 +1257,4 @@
   </script>
 </body>
 </html>
+
