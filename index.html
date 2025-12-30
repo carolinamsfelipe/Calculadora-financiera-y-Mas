@@ -19,13 +19,26 @@
       display: flex; justify-content: center; align-items: flex-start; min-height: 100vh;
     }
 
+    body.light {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --brand: #6d28d9;
+      --border: rgba(17, 24, 39, 0.12);
+      --outline: #e5e7eb;
+    }
+
     .app { width: 100%; max-width: 1100px; padding: 24px 16px 40px; }
     header { margin-bottom: 16px; }
     h1 { text-align: center; margin-bottom: 4px; }
 
     .subtitle { text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 8px; }
     .brand { text-align: center; font-size: 0.8rem; color: var(--brand); letter-spacing: 0.12em; text-transform: uppercase; }
+
     .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, 0.5); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; }
+
+    #theme-toggle { margin: 10px auto; display: block; max-width: 220px; }
 
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
     .card { background: var(--card); border-radius: 16px; padding: 16px 18px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid var(--border); }
@@ -47,20 +60,16 @@
     .footer-note { margin-top: 24px; text-align: center; font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
     .formula { display: block; margin-top: 4px; }
 
-    /* Tabla amortización */
     .amort-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; }
     .amort-table th, .amort-table td { border-bottom: 1px solid #1f2937; padding: 4px 6px; text-align: right; }
     .amort-table th:first-child, .amort-table td:first-child { text-align: center; }
     .amort-table tfoot td { font-weight: 600; border-top: 1px solid #4b5563; }
 
-    /* Índice ocupa todo el ancho */
     .index-card { grid-column: 1 / -1; }
     .index-card ol { padding-left: 18px; margin: 0; font-size: 0.9rem; }
     .index-card li { margin-bottom: 8px; }
-
     .index-item { background: none; border: none; color: var(--text); padding: 2px 0; text-align: left; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; }
     .index-item:hover { color: var(--accent1); }
-
     .index-detail { margin-top: 6px; margin-bottom: 10px; padding-left: 8px; font-size: 0.85rem; color: #d1d5db; }
     .mount-slot { margin-top: 8px; }
 
@@ -69,9 +78,16 @@
     .flash { animation: flashBg 1.6s ease-out; }
     @keyframes flashBg { 0% { box-shadow: 0 0 0 0 var(--flash); } 30% { box-shadow: 0 0 0 8px var(--flash); } 100% { box-shadow: 0 0 0 0 transparent; } }
 
-    .chart { width: 100%; height: 220px; border: 1px dashed rgba(148,163,184,0.35); border-radius: 8px; background: rgba(2,6,23,0.35); margin-top: 10px; }
-    .chart text { fill: #9ca3af; font-size: 10px; }
-    .chip { display:inline-block; padding:2px 6px; border-radius:8px; border:1px solid rgba(148,163,184,0.45); font-size:0.75rem; color:#9ca3af; margin-right:6px; }
+    .chart {
+      width: 100%;
+      height: 240px;
+      border: 1px dashed rgba(148,163,184,0.35);
+      border-radius: 8px;
+      background: rgba(2,6,23,0.35);
+      margin-top: 10px;
+    }
+    .chart text { fill: var(--muted); font-size: 11px; }
+    #theme-toggle { margin: 10px auto; display:block; max-width: 220px; }
   </style>
 </head>
 <body>
@@ -83,13 +99,16 @@
         <span class="tag">beta</span>
       </div>
       <div class="brand">by Carolina Sinead Felipe</div>
+
+      <!-- Botón tema -->
+      <button id="theme-toggle">🌗 Cambiar tema (claro/oscuro)</button>
     </header>
 
     <div class="cards">
       <!-- ÍNDICE DE MÓDULOS -->
       <section class="card index-card" aria-label="Índice de módulos">
         <h2>Índice de módulos</h2>
-        <small>Hacé click en cada título para usar la herramienta **acá mismo** o verla en la grilla.</small>
+        <small>Hacé click en cada título para usar la herramienta acá mismo o verla en la grilla.</small>
 
         <ol>
           <!-- Panel Inversores -->
@@ -164,6 +183,7 @@
         <label for="pf-dias">Plazo en días</label><input id="pf-dias" type="number" inputmode="numeric" placeholder="Ej: 30, 60, 90, 180" />
         <button id="btn-pf-uva">Comparar PF vs UVA</button>
         <div class="result" id="pf-uva-result">Ingresá los datos…</div>
+        <svg id="pf-uva-chart" class="chart" aria-label="Gráfico PF vs UVA"></svg>
       </section>
 
       <!-- Conversor de tasas -->
@@ -191,6 +211,7 @@
         </div>
         <button id="btn-sim">Calcular inversión</button>
         <div class="result" id="sim-result">Cargá tasa, aportes…</div>
+        <svg id="sim-chart" class="chart" aria-label="Evolución de aportes"></svg>
       </section>
 
       <!-- Objetivos -->
@@ -208,10 +229,10 @@
         <div class="result" id="obj-result">Ingresá objetivo, tasa y n…</div>
       </section>
 
-      <!-- Tipo de cambio (ACTUALIZADO con BNA auto) -->
+      <!-- Tipo de cambio (ACTUALIZADO con todos los tipos auto) -->
       <section class="card" id="tc-card">
         <h2>Calculadora de tipo de cambio</h2>
-        <small>Convertí entre ARS y USD según el tipo de cambio elegido (ingresá vos la cotización o traela del BNA).</small>
+        <small>Convertí entre ARS y USD según el tipo de cambio elegido (manual o auto de BNA/MEP/CCL/Blue/Mayorista/Solidario/Tarjeta/Cripto).</small>
 
         <label for="tc-monto">Monto</label>
         <input id="tc-monto" type="number" inputmode="decimal" placeholder="Ej: 10000" />
@@ -220,20 +241,23 @@
           <div>
             <label for="tc-direccion">Dirección</label>
             <select id="tc-direccion">
-              <option value="ars-usd">ARS → USD</option>
-              <option value="usd-ars" selected>USD → ARS</option>
+              <option value="ars-usd">ARS → USD (usará venta)</option>
+              <option value="usd-ars" selected>USD → ARS (usará compra)</option>
             </select>
           </div>
           <div>
             <label for="tc-tipo">Tipo de cambio</label>
             <select id="tc-tipo">
               <option value="oficial">Oficial (manual)</option>
-              <option value="bna-auto">Oficial (BNA auto)</option> <!-- NUEVO -->
-              <option value="mep">MEP</option>
-              <option value="ccl">CCL</option>
-              <option value="solidario">Solidario</option>
-              <option value="tarjeta">Tarjeta</option>
-              <option value="custom">Personalizado</option>
+              <option value="bna-auto">Oficial (BNA auto)</option>
+              <option value="mep-auto">MEP (auto)</option>
+              <option value="ccl-auto">CCL (auto)</option>
+              <option value="blue-auto">Blue (auto)</option>
+              <option value="mayorista-auto">Mayorista (auto)</option>
+              <option value="solidario-auto">Solidario (auto)</option>
+              <option value="tarjeta-auto">Tarjeta (auto)</option>
+              <option value="cripto-auto">Cripto (auto)</option>
+              <option value="custom">Personalizado (manual)</option>
             </select>
           </div>
         </div>
@@ -241,13 +265,11 @@
         <label for="tc-cotizacion">Cotización seleccionada (ARS por USD)</label>
         <input id="tc-cotizacion" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 1475" />
 
-        <!-- NUEVO: botón para consultar BNA -->
-        <button id="btn-tc-bna" style="display:none">Traer cotización BNA</button>
-
+        <button id="btn-tc-auto" style="display:none">Traer cotización</button>
         <button id="btn-tc">Convertir</button>
 
         <div class="result" id="tc-result">
-          Ingresá el monto, elegí dirección y tipo de cambio, y colocá la cotización o traela del BNA.
+          Elegí tipo de cambio, traé (o ingresá) la cotización y convertí.
         </div>
       </section>
 
@@ -260,6 +282,7 @@
         <textarea id="cf-lista" placeholder="Ej: -100000, 30000, 35000, 40000, 45000"></textarea>
         <button id="btn-van-tir">Calcular VAN y TIR</button>
         <div class="result" id="van-tir-result">Ingresá tasa y flujos…</div>
+        <svg id="van-chart" class="chart" aria-label="VAN vs tasa"></svg>
       </section>
 
       <!-- Duración y Duration modificada -->
@@ -494,7 +517,7 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       return { fv, pv, pmt, fvAportesVariables, npv, irr, bondPrice, bondYieldFromPrice, bondDuration, bondConvexityAnnual, dv01FromModified };
     })();
 
-    /* ========== PF tradicional vs UVA ========== */
+    /* ========== PF vs UVA ========== */
     const PFUVA = (() => {
       function comparar({ monto, tnaPF, inflacion, plus, dias }) {
         const tnaPFDecimal=tnaPF/100, inflAnualDec=inflacion/100, plusRealDec=plus/100;
@@ -546,7 +569,7 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
         const fvAportes=i===0 ? lista.reduce((a,v)=>a+v,0) : Finance.fvAportesVariables(lista, i);
         const fvTotal=fvInicial+fvAportes;
         const totalAportado=(pvInicial||0)+lista.reduce((a,v)=>a+v,0);
-        return { fvTotal, totalAportado, nFinal, i, usóVariables: parseAportes(aportesVars).length>0 };
+        return { fvTotal, totalAportado, nFinal, i, usóVariables: (lista.length>0 && aportesVars?.trim()?.length>0) };
       }
       function render(out, node, period, ratePercent) {
         node.innerHTML =
@@ -574,7 +597,7 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       return { calcularPMTObjetivo, render };
     })();
 
-    /* ========== Tipo de cambio (con soporte BNA auto) ========== */
+    /* ========== Tipo de cambio (multi auto) ========== */
     const TipoCambio = (() => {
       function convertir({ monto, direccion, cotizacion }) {
         if (direccion==="ars-usd") return { origen:"ARS", destino:"USD", result: cotizacion>0 ? (monto/cotizacion) : NaN };
@@ -582,22 +605,21 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       }
       function render({ origen, destino, result }, node) {
         const fmt = destino==="USD" ? Util.formatMoneyUSD : Util.formatMoneyARS;
-        node.innerHTML = `<strong>Conversión ${origen} → ${destino}:</strong>${fmt(result)}<br><span style='font-size:0.85rem;color:#9ca3af'>Según cotización ingresada.</span>`;
+        node.innerHTML = `<strong>Conversión ${origen} → ${destino}:</strong>${fmt(result)}<br><span style='font-size:0.85rem;color:#9ca3af'>Según cotización.</span>`;
       }
       return { convertir, render };
     })();
 
-    /* === Fuente oficial BNA: helper para traer cotización === */
+    /* === Fetch BNA oficial (venta/compra) === */
     async function fetchBNAOficialHoy() {
-      // 1) ArgentinaDatos (oficial por fecha); 2) DolarApi (oficial)
       const today = new Date();
       const yyyy = today.getFullYear();
       const mm = String(today.getMonth() + 1).padStart(2, "0");
       const dd = String(today.getDate()).padStart(2, "0");
 
       const urls = [
-        `https://api.argentinadatos.com/v1/cotizaciones/dolares/oficial/${yyyy}/${mm}/${dd}`,  // [1](https://argentinadatos.com/docs/operations/get-cotizaciones-dolares-casa-fecha.html)
-        `https://dolarapi.com/v1/dolares/oficial`                                               // [2](https://dolarapi.com/docs/argentina/operations/get-dolar-oficial)
+        `https://api.argentinadatos.com/v1/cotizaciones/dolares/oficial/${yyyy}/${mm}/${dd}`,  // ArgentinaDatos  [1](https://argentinadatos.com/docs/operations/get-cotizaciones-dolares-casa-fecha.html)
+        `https://dolarapi.com/v1/dolares/oficial`                                               // DolarApi       [2](https://dolarapi.com/docs/argentina/operations/get-dolar-oficial)
       ];
 
       for (const url of urls) {
@@ -605,14 +627,59 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
           const r = await fetch(url, { method: "GET" });
           if (!r.ok) continue;
           const data = await r.json();
-          const compra = typeof data?.compra === "number" ? data.compra : Number(data?.compra);
-          const venta  = typeof data?.venta  === "number" ? data.venta  : Number(data?.venta);
-          if (isFinite(venta) && venta > 0) {
+          const compra = Number(data?.compra);
+          const venta  = Number(data?.venta);
+          if (isFinite(venta) && isFinite(compra)) {
             return { compra, venta, source: url };
           }
-        } catch (e) {
-          // seguir con la próxima fuente
-        }
+        } catch {}
+      }
+      return null;
+    }
+
+    /* === Fetch genérico para tipos: mep, ccl, blue, mayorista, solidario, tarjeta, cripto === */
+    async function fetchTipoCambioAuto(kind) {
+      // Mapeo slugs
+      const slugDolarApi = {
+        mep: "mep",
+        ccl: "ccl",
+        blue: "blue",
+        mayorista: "mayorista",
+        solidario: "solidario",
+        tarjeta: "tarjeta",
+        cripto: "cripto" // puede no estar en DolarApi; fallback a ArgentinaDatos
+      };
+      const slugArgentinaDatos = {
+        mep: "bolsa",
+        ccl: "contadoconliqui",
+        blue: "blue",
+        mayorista: "mayorista",
+        solidario: "solidario",
+        tarjeta: "turista",
+        cripto: "cripto"
+      };
+
+      // Primero DolarApi, luego ArgentinaDatos por fecha
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+
+      const urls = [];
+      if (slugDolarApi[kind]) urls.push(`https://dolarapi.com/v1/dolares/${slugDolarApi[kind]}`); // [3](https://dolarapi.com/docs/argentina/)
+      if (slugArgentinaDatos[kind]) urls.push(`https://api.argentinadatos.com/v1/cotizaciones/dolares/${slugArgentinaDatos[kind]}/${yyyy}/${mm}/${dd}`); // [1](https://argentinadatos.com/docs/operations/get-cotizaciones-dolares-casa-fecha.html)
+
+      for (const url of urls) {
+        try {
+          const r = await fetch(url, { method: "GET" });
+          if (!r.ok) continue;
+          const data = await r.json();
+          const compra = Number(data?.compra);
+          const venta  = Number(data?.venta);
+          if (isFinite(venta) && isFinite(compra) && venta > 0) {
+            return { compra, venta, source: url };
+          }
+        } catch {}
       }
       return null;
     }
@@ -627,14 +694,12 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
         const van=Finance.npv(r, cfs);
         const { irr, warnMultipleIRR } = Finance.irr(cfs);
 
-        // ROI simple tomando c0 como inversión
         let roi = NaN;
-        if (cfs.length > 0 && cfs[0] !== 0) {
+        if (cfs.length > 0 && cfs[0] < 0) {
           const costo = Math.abs(cfs[0]);
-          roi = (cfs[0] < 0) ? ((cfs.reduce((a,v)=>a+v,0) / costo) - 1) : NaN;
+          roi = (cfs.reduce((a,v)=>a+v,0) / costo) - 1;
         }
 
-        // Payback simple
         let acumulado = 0, payback = null;
         for (let t=0; t<cfs.length; t++) {
           acumulado += cfs[t];
@@ -685,7 +750,7 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       return { calcular, render };
     })();
 
-    /* ========== Curva de bonos simple (SVG Yield vs Duración) ========== */
+    /* ========== Curva bonos (SVG) ========== */
     const CurvaBonos = (() => {
       function parseLines(raw) {
         const lines = raw.split(/\n+/).map(l=>l.trim()).filter(l=>l.length>0);
@@ -718,7 +783,7 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
         let html = `<strong>Bonos procesados:</strong>`;
         html += `<br><span class="chip">Puntos: ${bonds.length}</span>`;
         html += `<br><span style='font-size:0.85rem;color:#9ca3af'>Yield vs Duración (años). Frecuencia 2 por defecto.</span>`;
-        const w = svgNode.clientWidth || 600, h = svgNode.clientHeight || 220, padding = 30;
+        const w = svgNode.clientWidth || 600, h = svgNode.clientHeight || 240, padding = 30;
         const xs = bonds.map(b=>b.macaulay).filter(v=>isFinite(v));
         const ys = bonds.map(b=>b.ytmPct).filter(v=>isFinite(v));
         const minX = Math.min(...xs), maxX = Math.max(...xs);
@@ -817,183 +882,324 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       return { generar, render };
     })();
 
-    /* ========== Orquestación de paneles + montaje (App) ========== */
-    (() => {
-      const { $, getNumber, markError, setResult, formatPercent } = Util;
+    /* ========== Gráficos (PFUVA, Simulador, VAN) ========== */
+    function drawAxes(svg, padding = 30, xLabel = "", yLabel = "") {
+      const w = svg.clientWidth || 600;
+      const h = svg.clientHeight || 240;
 
-      // Desplegar paneles del índice
-      document.querySelectorAll(".index-item[data-panel]").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const panelId = btn.dataset.panel;
-          const panel = document.getElementById(panelId);
-          if (!panel) return;
-          const abrir = panel.hasAttribute("hidden");
-          panel.toggleAttribute("hidden", !abrir);
-          btn.setAttribute("aria-expanded", String(abrir));
-        });
+      svg.innerHTML = `
+        <rect x="0" y="0" width="${w}" height="${h}" fill="transparent"></rect>
+        <line x1="${padding}" y1="${h - padding}" x2="${w - padding}" y2="${h - padding}" stroke="#64748b" stroke-width="1"/>
+        <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${h - padding}" stroke="#64748b" stroke-width="1"/>
+        <text x="${w - padding - 40}" y="${h - padding + 12}">${xLabel}</text>
+        <text x="${padding - 22}" y="${padding - 8}" transform="rotate(-90 ${padding - 22}, ${padding - 8})">${yLabel}</text>
+      `;
+      return { w, h, padding };
+    }
+    function makeScale(min, max, outMin, outMax) { const span=(max-min)||1; return v => outMin + ((v-min)/span)*(outMax-outMin); }
+
+    function renderChartPFUVA({ montoPF, montoUVA, realPF, realUVA }) {
+      const svg = document.getElementById("pf-uva-chart"); if (!svg) return;
+      const { w, h, padding } = drawAxes(svg, 36, "Instrumento", "Monto");
+      const labels = ["PF nominal", "UVA nominal", "PF real", "UVA real"];
+      const values = [montoPF, montoUVA, realPF, realUVA];
+
+      const maxVal = Math.max(...values.filter(v => isFinite(v)));
+      const x0 = padding + 10, x1 = w - padding - 10, y0 = h - padding - 2, yTop = padding + 6;
+      const xStep = (x1 - x0) / values.length;
+      const yScale = makeScale(0, maxVal, y0, yTop);
+
+      values.forEach((val, i) => {
+        const x = x0 + i * xStep + 8;
+        const barWidth = Math.max(18, xStep * 0.6);
+        const y = yScale(val);
+
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.setAttribute("x", x); rect.setAttribute("y", y);
+        rect.setAttribute("width", barWidth); rect.setAttribute("height", Math.max(1, y0 - y));
+        rect.setAttribute("fill", i < 2 ? "#38bdf8" : "#f59e0b"); rect.setAttribute("rx", "4");
+        svg.appendChild(rect);
+
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("x", x + barWidth / 2); label.setAttribute("y", y0 + 14);
+        label.setAttribute("text-anchor", "middle"); label.textContent = labels[i];
+        svg.appendChild(label);
+
+        const valText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        valText.setAttribute("x", x + barWidth / 2); valText.setAttribute("y", y - 4);
+        valText.setAttribute("text-anchor", "middle"); valText.textContent = Util.formatMoney(val);
+        svg.appendChild(valText);
       });
+    }
 
-      // Montar/desmontar cards en los slots del índice
-      document.querySelectorAll(".index-item.mount-card").forEach(btn => {
-        btn.addEventListener("click", () => {
-          const cardId = btn.dataset.card;
-          const slot = btn.nextElementSibling && btn.nextElementSibling.classList.contains("mount-slot")
-            ? btn.nextElementSibling
-            : null;
-          if (!cardId || !slot) return;
-          Dock.mount(cardId, slot);
-        });
+    function buildSimSeries({ pvInicial, aporteFijo, aportesVars, ratePercent, n }) {
+      const i = ratePercent / 100;
+      const parse = raw => (!raw || !raw.trim()) ? [] :
+        raw.split(/[\n,;]+/g).map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v));
+      let lista = parse(aportesVars); let N = n;
+      if (lista.length > 0) N = lista.length; else lista = Array.from({ length: N }, () => aporteFijo || 0);
+
+      const series = []; let acc = pvInicial || 0;
+      for (let t = 1; t <= N; t++) { acc = acc * (1+i); acc += lista[t-1] || 0; series.push({ t, value: acc }); }
+      return series;
+    }
+    function renderSimChart(series) {
+      const svg = document.getElementById("sim-chart"); if (!svg || !series?.length) return;
+      const { w, h, padding } = drawAxes(svg, 36, "Período", "Acumulado");
+      const xs = series.map(p=>p.t), ys = series.map(p=>p.value);
+      const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+      const xScale = makeScale(minX, maxX, padding, w - padding);
+      const yScale = makeScale(minY, maxY, h - padding, padding);
+
+      for (let i=1;i<series.length;i++) {
+        const p0=series[i-1], p1=series[i];
+        const line=document.createElementNS("http://www.w3.org/2000/svg","line");
+        line.setAttribute("x1",xScale(p0.t)); line.setAttribute("y1",yScale(p0.value));
+        line.setAttribute("x2",xScale(p1.t)); line.setAttribute("y2",yScale(p1.value));
+        line.setAttribute("stroke","#10b981"); line.setAttribute("stroke-width","2");
+        svg.appendChild(line);
+      }
+      const step = Math.max(1, Math.floor(series.length/6));
+      series.forEach((p, idx) => {
+        const cx=xScale(p.t), cy=yScale(p.value);
+        const dot=document.createElementNS("http://www.w3.org/2000/svg","circle");
+        dot.setAttribute("cx",cx); dot.setAttribute("cy",cy); dot.setAttribute("r",3.5);
+        dot.setAttribute("fill","#10b981"); dot.setAttribute("stroke","#064e3b"); dot.setAttribute("stroke-width","1");
+        svg.appendChild(dot);
+        if (idx%step===0 || idx===series.length-1) {
+          const label=document.createElementNS("http://www.w3.org/2000/svg","text");
+          label.setAttribute("x",cx); label.setAttribute("y",cy-6); label.setAttribute("text-anchor","middle");
+          label.textContent = Util.formatMoney(p.value); svg.appendChild(label);
+        }
       });
+    }
 
-      // ==== Inversionistas ====
-      $("#btn-pf-uva")?.addEventListener("click", () => {
-        const monto=getNumber("pf-monto"), tnaPF=getNumber("pf-tna"), infl=getNumber("pf-inflacion"), plus=getNumber("pf-plus",true)||0, dias=getNumber("pf-dias");
-        const div=$("#pf-uva-result");
-        const inv=[]; if(isNaN(monto))inv.push("pf-monto"); if(isNaN(tnaPF))inv.push("pf-tna"); if(isNaN(infl))inv.push("pf-inflacion"); if(isNaN(dias)||dias<=0)inv.push("pf-dias");
-        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá monto, TNA, inflación y días (plus opcional)."); }
-        const out=PFUVA.comparar({monto,tnaPF,inflacion:infl,plus,dias}); PFUVA.render(out,div,dias);
+    function sweepVANvsTasa(cfs, minPct=0, maxPct=100, points=50) {
+      const arr=[]; for(let k=0;k<=points;k++){ const pct=minPct+(k*(maxPct-minPct))/points; const r=pct/100; const van=Finance.npv(r,cfs); arr.push({ pct, van }); }
+      return arr;
+    }
+    function renderVANChart(points) {
+      const svg=document.getElementById("van-chart"); if(!svg || !points?.length) return;
+      const { w, h, padding } = drawAxes(svg, 36, "Tasa (%)", "VAN");
+      const xs=points.map(p=>p.pct), ys=points.map(p=>p.van);
+      const minX=Math.min(...xs), maxX=Math.max(...xs), minY=Math.min(...ys), maxY=Math.max(...ys);
+      const xScale=makeScale(minX,maxX,padding,w-padding), yScale=makeScale(minY,maxY,h-padding,padding);
+      for(let i=1;i<points.length;i++){
+        const p0=points[i-1], p1=points[i];
+        const line=document.createElementNS("http://www.w3.org/2000/svg","line");
+        line.setAttribute("x1",xScale(p0.pct)); line.setAttribute("y1",yScale(p0.van));
+        line.setAttribute("x2",xScale(p1.pct)); line.setAttribute("y2",yScale(p1.van));
+        line.setAttribute("stroke","#8b5cf6"); line.setAttribute("stroke-width","2");
+        svg.appendChild(line);
+      }
+      const step=Math.max(1, Math.floor(points.length/10));
+      points.forEach((p,idx)=>{ if(idx%step===0 || idx===points.length-1){
+        const tx=document.createElementNS("http://www.w3.org/2000/svg","text");
+        tx.setAttribute("x",xScale(p.pct)); tx.setAttribute("y",h - padding + 12);
+        tx.setAttribute("text-anchor","middle"); tx.textContent = `${p.pct.toFixed(0)}%`; svg.appendChild(tx);
+      }});
+    }
+
+    /* ========== Orquestación + UI ========== */
+    document.getElementById("theme-toggle")?.addEventListener("click", () => {
+      document.body.classList.toggle("light");
+    });
+
+    // Desplegar paneles del índice
+    document.querySelectorAll(".index-item[data-panel]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const panelId = btn.dataset.panel;
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+        const abrir = panel.hasAttribute("hidden");
+        panel.toggleAttribute("hidden", !abrir);
+        btn.setAttribute("aria-expanded", String(abrir));
       });
+    });
 
-      $("#btn-rate-convert")?.addEventListener("click", () => {
-        const type=$("#rate-type").value, ratePercent=getNumber("rate-input"), div=$("#rate-result");
-        if(isNaN(ratePercent)){ markError("rate-input"); return setResult(div,"👀 Ingresá una tasa."); }
-        const conv=Tasas.convertir(type,ratePercent);
-        setResult(div, `<strong>Conversión de tasas:</strong><br>TNA ≈ ${formatPercent(conv.tna)}<br>TEA = ${formatPercent(conv.tea)}<br>TEM = ${formatPercent(conv.tem)}<br><span style='font-size:0.8rem;color:#9ca3af'>12 períodos/año, cap. mensual.</span>`);
+    // Montar/desmontar cards en los slots del índice
+    document.querySelectorAll(".index-item.mount-card").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const cardId = btn.dataset.card;
+        const slot = btn.nextElementSibling && btn.nextElementSibling.classList.contains("mount-slot")
+          ? btn.nextElementSibling
+          : null;
+        if (!cardId || !slot) return;
+        Dock.mount(cardId, slot);
       });
+    });
 
-      $("#btn-sim")?.addEventListener("click", () => {
-        const pvInicial=getNumber("sim-pv"), aporteFijo=getNumber("sim-pmt",true)||0, ratePercent=getNumber("sim-rate"), n=getNumber("sim-n",true)||0;
-        const period=$("#sim-period").value, aportesVars=$("#sim-aportes").value, div=$("#sim-result");
-        if(isNaN(ratePercent)){ markError("sim-rate"); return setResult(div,"👀 Completá la tasa por período."); }
-        if(!aportesVars.trim() && (isNaN(aporteFijo)||isNaN(n)||n<=0)){ markError("sim-pmt"); markError("sim-n"); return setResult(div,"👀 Aporte fijo + n, o lista variable."); }
-        if(isNaN(pvInicial)){ markError("sim-pv"); return setResult(div,"👀 PV debe ser número o vacío."); }
-        const out=Simulador.calcular({ pvInicial:pvInicial||0, aporteFijo, aportesVars, ratePercent, n }); Simulador.render(out,div,period,ratePercent);
-      });
+    // ==== PF vs UVA ====
+    document.getElementById("btn-pf-uva")?.addEventListener("click", () => {
+      const monto=Util.getNumber("pf-monto"), tnaPF=Util.getNumber("pf-tna"), infl=Util.getNumber("pf-inflacion"), plus=Util.getNumber("pf-plus",true)||0, dias=Util.getNumber("pf-dias");
+      const div=Util.$("pf-uva-result");
+      const inv=[]; if(isNaN(monto))inv.push("pf-monto"); if(isNaN(tnaPF))inv.push("pf-tna"); if(isNaN(infl))inv.push("pf-inflacion"); if(isNaN(dias)||dias<=0)inv.push("pf-dias");
+      if(inv.length){ inv.forEach(Util.markError); return Util.setResult(div,"👀 Completá monto, TNA, inflación y días (plus opcional)."); }
+      const out=PFUVA.comparar({monto,tnaPF,inflacion:infl,plus,dias}); PFUVA.render(out,div,dias); renderChartPFUVA(out);
+    });
 
-      $("#btn-obj")?.addEventListener("click", () => {
-        const fvObj=getNumber("obj-fv"), pvInicial=getNumber("obj-pv",true)||0, ratePercent=getNumber("obj-rate"), n=getNumber("obj-n");
-        const period=$("#obj-period").value, div=$("#obj-result");
-        const inv=[]; if(isNaN(fvObj))inv.push("obj-fv"); if(isNaN(ratePercent))inv.push("obj-rate"); if(isNaN(n)||n<=0)inv.push("obj-n");
-        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá FV, tasa y n."); }
-        const out=Objetivos.calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n }); Objetivos.render(out,div,period,ratePercent,n);
-      });
+    // ==== Tasas ====
+    document.getElementById("btn-rate-convert")?.addEventListener("click", () => {
+      const type=Util.$("rate-type").value, ratePercent=Util.getNumber("rate-input"), div=Util.$("rate-result");
+      if(isNaN(ratePercent)){ Util.markError("rate-input"); return Util.setResult(div,"👀 Ingresá una tasa."); }
+      const conv=Tasas.convertir(type,ratePercent);
+      Util.setResult(div, `<strong>Conversión de tasas:</strong><br>TNA ≈ ${Util.formatPercent(conv.tna)}<br>TEA = ${Util.formatPercent(conv.tea)}<br>TEM = ${Util.formatPercent(conv.tem)}<br><span style='font-size:0.8rem;color:#9ca3af'>12 períodos/año, cap. mensual.</span>`);
+    });
 
-      // ==== Tipo de cambio (BNA auto + conversión) ====
-      (function wireBNAControls() {
-        const tipoSel = $("#tc-tipo");
-        const btnBNA  = $("#btn-tc-bna");
-        const cotiz   = $("#tc-cotizacion");
-        const result  = $("#tc-result");
-        if (!tipoSel || !btnBNA || !cotiz || !result) return;
+    // ==== Simulador ====
+    document.getElementById("btn-sim")?.addEventListener("click", () => {
+      const pvInicial=Util.getNumber("sim-pv"), aporteFijo=Util.getNumber("sim-pmt",true)||0, ratePercent=Util.getNumber("sim-rate"), n=Util.getNumber("sim-n",true)||0;
+      const period=Util.$("sim-period").value, aportesVars=Util.$("sim-aportes").value, div=Util.$("sim-result");
+      if(isNaN(ratePercent)){ Util.markError("sim-rate"); return Util.setResult(div,"👀 Completá la tasa por período."); }
+      if(!aportesVars.trim() && (isNaN(aporteFijo)||isNaN(n)||n<=0)){ Util.markError("sim-pmt"); Util.markError("sim-n"); return Util.setResult(div,"👀 Aporte fijo + n, o lista variable."); }
+      if(isNaN(pvInicial)){ Util.markError("sim-pv"); return Util.setResult(div,"👀 PV debe ser número o vacío."); }
+      const out=Simulador.calcular({ pvInicial:pvInicial||0, aporteFijo, aportesVars, ratePercent, n }); Simulador.render(out,div,period,ratePercent);
+      const series = buildSimSeries({ pvInicial: pvInicial || 0, aporteFijo, aportesVars, ratePercent, n: out.nFinal }); renderSimChart(series);
+    });
 
-        const refreshBNAVisibility = () => {
-          const isBNA = tipoSel.value === "bna-auto";
-          btnBNA.style.display = isBNA ? "block" : "none";
-          if (isBNA) cotiz.value = "";
-        };
-        tipoSel.addEventListener("change", refreshBNAVisibility);
-        refreshBNAVisibility();
+    // ==== Objetivos ====
+    document.getElementById("btn-obj")?.addEventListener("click", () => {
+      const fvObj=Util.getNumber("obj-fv"), pvInicial=Util.getNumber("obj-pv",true)||0, ratePercent=Util.getNumber("obj-rate"), n=Util.getNumber("obj-n");
+      const period=Util.$("obj-period").value, div=Util.$("obj-result");
+      const inv=[]; if(isNaN(fvObj))inv.push("obj-fv"); if(isNaN(ratePercent))inv.push("obj-rate"); if(isNaN(n)||n<=0)inv.push("obj-n");
+      if(inv.length){ inv.forEach(Util.markError); return Util.setResult(div,"👀 Completá FV, tasa y n."); }
+      const out=Objetivos.calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n }); Objetivos.render(out,div,period,ratePercent,n);
+    });
 
-        btnBNA.addEventListener("click", async () => {
-          btnBNA.disabled = true;
-          btnBNA.textContent = "Consultando BNA...";
-          result.innerHTML = "⏳ Consultando cotización oficial...";
+    // ==== Tipo de cambio (multi auto) ====
+    (function wireTipoCambioAuto() {
+      const tipoSel = Util.$("tc-tipo");
+      const btnAuto = Util.$("btn-tc-auto");
+      const cotizEl = Util.$("tc-cotizacion");
+      const result  = Util.$("tc-result");
+      const direccionSel = Util.$("tc-direccion");
 
-          const out = await fetchBNAOficialHoy();
-          if (out && isFinite(out.venta)) {
-            cotiz.value = out.venta;
-            result.innerHTML = `<strong>Oficial BNA (venta):</strong> ${out.venta.toLocaleString("es-AR")} ARS/USD<br><span style="font-size:0.85rem;color:#9ca3af">Fuente: ${out.source}</span>`;
-          } else {
-            result.innerHTML = "⚠️ No pude obtener la cotización automáticamente. Ingresá la cotización manual y probemos de nuevo.";
-          }
-          btnBNA.disabled = false;
-          btnBNA.textContent = "Traer cotización BNA";
-        });
-      })();
+      if (!tipoSel || !btnAuto || !cotizEl || !result || !direccionSel) return;
 
-      $("#btn-tc")?.addEventListener("click", async () => {
-        const monto = getNumber("tc-monto");
-        const direccion = $("#tc-direccion")?.value;
-        const tipo = $("#tc-tipo")?.value;
-        const cotizEl = $("#tc-cotizacion");
-        const resultDiv = $("#tc-result");
+      const isAutoType = (val) => val && val.endsWith("-auto");
+      const kindFromType = (val) => {
+        if (val === "bna-auto") return "bna";
+        const k = val.replace("-auto", "");
+        return k; // mep, ccl, blue, mayorista, solidario, tarjeta, cripto
+      };
 
-        if (tipo === "bna-auto" && (!cotizEl.value || cotizEl.value.trim() === "")) {
-          const outAuto = await fetchBNAOficialHoy();
-          if (outAuto && isFinite(outAuto.venta)) {
-            cotizEl.value = outAuto.venta;
-            resultDiv.innerHTML = `<strong>Oficial BNA (venta):</strong> ${outAuto.venta.toLocaleString("es-AR")} ARS/USD<br><span style="font-size:0.85rem;color:#9ca3af">Fuente: ${outAuto.source}</span>`;
-          } else {
-            resultDiv.innerHTML = "⚠️ No pude obtener la cotización automáticamente. Ingresá la cotización manual y probemos de nuevo.";
-            return;
-          }
+      const refreshAutoVisibility = () => {
+        const show = isAutoType(tipoSel.value);
+        btnAuto.style.display = show ? "block" : "none";
+        if (show) cotizEl.value = "";
+      };
+      tipoSel.addEventListener("change", refreshAutoVisibility);
+      refreshAutoVisibility();
+
+      async function traerAutoCotizacion() {
+        const tipo = tipoSel.value;
+        const direccion = direccionSel.value; // ars-usd => venta; usd-ars => compra
+        result.innerHTML = "⏳ Consultando cotización…";
+        let data = null;
+        let fuente = "";
+
+        if (tipo === "bna-auto") {
+          data = await fetchBNAOficialHoy();
+          fuente = "BNA (via APIs públicas)";
+        } else {
+          const kind = kindFromType(tipo);
+          data = await fetchTipoCambioAuto(kind);
+          fuente = kind.toUpperCase();
         }
 
-        const cotizacion = parseFloat(cotizEl?.value);
-        if (isNaN(monto)) { markError("tc-monto"); resultDiv.innerHTML = "👀 Ingresá un monto."; return; }
-        if (isNaN(cotizacion) || cotizacion <= 0) { markError("tc-cotizacion"); resultDiv.innerHTML = "👀 Ingresá/traé una cotización válida (ARS por USD)."; return; }
+        if (data && isFinite(data.compra) && isFinite(data.venta)) {
+          // elegir compra/venta según dirección
+          const usar = (direccion === "usd-ars") ? data.compra : data.venta;
+          cotizEl.value = usar;
+          result.innerHTML = `<strong>${fuente}:</strong> Compra ${data.compra.toLocaleString("es-AR")} | Venta ${data.venta.toLocaleString("es-AR")} (ARS/USD)
+                              <br><span style="font-size:0.85rem;color:#9ca3af">Usando <b>${direccion==="usd-ars"?"compra":"venta"}</b> · Fuente: ${data.source}</span>`;
+        } else {
+          result.innerHTML = "⚠️ No pude obtener la cotización automáticamente. Ingresá la cotización manual y probemos de nuevo.";
+        }
+      }
+
+      btnAuto.addEventListener("click", traerAutoCotizacion);
+
+      document.getElementById("btn-tc")?.addEventListener("click", async () => {
+        const monto = Util.getNumber("tc-monto");
+        const direccion = direccionSel.value;
+        const tipo = tipoSel.value;
+
+        if (isNaN(monto)) { Util.markError("tc-monto"); return result.innerHTML = "👀 Ingresá un monto."; }
+
+        if (isAutoType(tipo) && (!cotizEl.value || cotizEl.value.trim() === "")) {
+          await traerAutoCotizacion();
+          if (!cotizEl.value) return; // si no hay valor tras intentar, salimos
+        }
+
+        const cotizacion = parseFloat(cotizEl.value);
+        if (isNaN(cotizacion) || cotizacion <= 0) {
+          Util.markError("tc-cotizacion");
+          return result.innerHTML = "👀 Ingresá/traé una cotización válida (ARS por USD).";
+        }
 
         const out = TipoCambio.convertir({ monto, direccion, cotizacion });
-        TipoCambio.render(out, resultDiv);
-      });
-
-      // ==== Corporativos ====
-      $("#btn-van-tir")?.addEventListener("click", () => {
-        const tasaPct=getNumber("cf-tasa"), lista=$("#cf-lista").value, div=$("#van-tir-result");
-        if(isNaN(tasaPct)){ markError("cf-tasa"); return setResult(div,"👀 Ingresá tasa de descuento."); }
-        const cfs=VAN_TIR.parseCFs(lista);
-        if(!cfs.length){ markError("cf-lista"); return setResult(div,"👀 Ingresá al menos un flujo."); }
-        const out=VAN_TIR.calcular({ tasaPct, cfs }); VAN_TIR.render(out, div);
-      });
-
-      $("#btn-duration")?.addEventListener("click", () => {
-        const face=getNumber("dur-face"), price=getNumber("dur-price"), couponPct=getNumber("dur-coupon"), ytmPct=getNumber("dur-yield",true), years=getNumber("dur-years"), freq=parseInt($("#dur-freq").value,10);
-        const div=$("#duration-result");
-        const inv=[]; if(isNaN(face)||face<=0)inv.push("dur-face"); if(isNaN(price)||price<=0)inv.push("dur-price"); if(isNaN(couponPct))inv.push("dur-coupon"); if(isNaN(years)||years<=0)inv.push("dur-years");
-        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá face, precio, cupón y años."); }
-        const out=DurationMod.calcular({ face, price, couponPct, ytmPct, years, freq }); DurationMod.render(out, div);
-      });
-
-      $("#btn-curva")?.addEventListener("click", () => {
-        const raw=$("#curva-lines").value, div=$("#curva-result"), svg=$("#curva-chart");
-        const parsed=CurvaBonos.parseLines(raw);
-        const enriched=parsed.map(CurvaBonos.enrich);
-        CurvaBonos.renderTableAndChart(enriched, div, svg);
-      });
-
-      $("#btn-paridad")?.addEventListener("click", () => {
-        const face=getNumber("par-face"), price=getNumber("par-price"), couponPct=getNumber("par-coupon"), ytmPct=getNumber("par-yield",true), years=getNumber("par-years"), freq=parseInt($("#par-freq").value,10);
-        const div=$("#paridad-result");
-        const inv=[]; if(isNaN(face)||face<=0)inv.push("par-face"); if(isNaN(price)||price<=0)inv.push("par-price"); if(isNaN(couponPct))inv.push("par-coupon"); if(isNaN(years)||years<=0)inv.push("par-years");
-        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá face, precio, cupón y años."); }
-        const out=ParidadBonos.calcular({ face, price, couponPct, ytmPct, years, freq }); ParidadBonos.render(out, div);
-      });
-
-      // ==== FV / PV / PMT / Amortización ====
-      $("#btn-fv")?.addEventListener("click", () => {
-        const pvVal=getNumber("fv-pv"), ratePercent=getNumber("fv-rate"), n=getNumber("fv-n"), period=$("#fv-period").value, div=$("#fv-result");
-        if([pvVal, ratePercent, n].some(x=>isNaN(x))){ ["fv-pv","fv-rate","fv-n"].forEach(markError); return setResult(div,"👀 Completá todos los campos."); }
-        const out=FV.calcular(pvVal, ratePercent, n); FV.render(out, div, period, ratePercent, n);
-      });
-
-      $("#btn-pv")?.addEventListener("click", () => {
-        const fvVal=getNumber("pv-fv"), ratePercent=getNumber("pv-rate"), n=getNumber("pv-n"), period=$("#pv-period").value, div=$("#pv-result");
-        if([fvVal, ratePercent, n].some(x=>isNaN(x))){ ["pv-fv","pv-rate","pv-n"].forEach(markError); return setResult(div,"👀 Completá todos los campos."); }
-        const out=PVCalc.calcular(fvVal, ratePercent, n); PVCalc.render(out, div, period, ratePercent, n);
-      });
-
-      $("#btn-pmt")?.addEventListener("click", () => {
-        const pvVal=getNumber("pmt-pv"), ratePercent=getNumber("pmt-rate"), n=getNumber("pmt-n"), period=$("#pmt-period").value, div=$("#pmt-result");
-        if([pvVal, ratePercent, n].some(x=>isNaN(x))){ ["pmt-pv","pmt-rate","pmt-n"].forEach(markError); return setResult(div,"👀 Completá todos los campos."); }
-        const out=PMTMod.calcular(pvVal, ratePercent, n); PMTMod.render(out, div, period, ratePercent, n);
-      });
-
-      $("#btn-loan")?.addEventListener("click", () => {
-        const amount=getNumber("loan-amount"), ratePercent=getNumber("loan-rate"), n=getNumber("loan-n"), system=$("#loan-system").value, div=$("#loan-result"), wrap=$("#loan-table-wrapper");
-        if(isNaN(amount)||isNaN(ratePercent)||isNaN(n)||n<=0){ ["loan-amount","loan-rate","loan-n"].forEach(markError); wrap.innerHTML=""; return setResult(div,"👀 Completá monto, tasa y n."); }
-        const { rows, resumen }=Amortizacion.generar(amount, ratePercent, n, system); Amortizacion.render(rows, resumen, div, wrap, ratePercent, n, system);
+        TipoCambio.render(out, result);
       });
     })();
+
+    // ==== Corporativos ====
+    document.getElementById("btn-van-tir")?.addEventListener("click", () => {
+      const tasaPct=Util.getNumber("cf-tasa"), raw=Util.$("cf-lista").value, div=Util.$("van-tir-result");
+      if(isNaN(tasaPct)){ Util.markError("cf-tasa"); return Util.setResult(div,"👀 Ingresá tasa de descuento."); }
+      const cfs=VAN_TIR.parseCFs(raw);
+      if(!cfs.length){ Util.markError("cf-lista"); return Util.setResult(div,"👀 Ingresá al menos un flujo."); }
+      const out=VAN_TIR.calcular({ tasaPct, cfs }); VAN_TIR.render(out, div);
+      const sweep = sweepVANvsTasa(cfs, 0, 100, 60); renderVANChart(sweep);
+    });
+
+    document.getElementById("btn-duration")?.addEventListener("click", () => {
+      const face=Util.getNumber("dur-face"), price=Util.getNumber("dur-price"), couponPct=Util.getNumber("dur-coupon"), ytmPct=Util.getNumber("dur-yield",true), years=Util.getNumber("dur-years"), freq=parseInt(Util.$("dur-freq").value,10);
+      const div=Util.$("duration-result");
+      const inv=[]; if(isNaN(face)||face<=0)inv.push("dur-face"); if(isNaN(price)||price<=0)inv.push("dur-price"); if(isNaN(couponPct))inv.push("dur-coupon"); if(isNaN(years)||years<=0)inv.push("dur-years");
+      if(inv.length){ inv.forEach(Util.markError); return Util.setResult(div,"👀 Completá face, precio, cupón y años."); }
+      const out=DurationMod.calcular({ face, price, couponPct, ytmPct, years, freq }); DurationMod.render(out, div);
+    });
+
+    document.getElementById("btn-curva")?.addEventListener("click", () => {
+      const raw=Util.$("curva-lines").value, div=Util.$("curva-result"), svg=Util.$("curva-chart");
+      const parsed=CurvaBonos.parseLines(raw);
+      const enriched=parsed.map(CurvaBonos.enrich);
+      CurvaBonos.renderTableAndChart(enriched, div, svg);
+    });
+
+    document.getElementById("btn-paridad")?.addEventListener("click", () => {
+      const face=Util.getNumber("par-face"), price=Util.getNumber("par-price"), couponPct=Util.getNumber("par-coupon"), ytmPct=Util.getNumber("par-yield",true), years=Util.getNumber("par-years"), freq=parseInt(Util.$("par-freq").value,10);
+      const div=Util.$("paridad-result");
+      const inv=[]; if(isNaN(face)||face<=0)inv.push("par-face"); if(isNaN(price)||price<=0)inv.push("par-price"); if(isNaN(couponPct))inv.push("par-coupon"); if(isNaN(years)||years<=0)inv.push("par-years");
+      if(inv.length){ inv.forEach(Util.markError); return Util.setResult(div,"👀 Completá face, precio, cupón y años."); }
+      const out=ParidadBonos.calcular({ face, price, couponPct, ytmPct, years, freq }); ParidadBonos.render(out, div);
+    });
+
+    // ==== FV / PV / PMT / Amortización ====
+    document.getElementById("btn-fv")?.addEventListener("click", () => {
+      const pvVal=Util.getNumber("fv-pv"), ratePercent=Util.getNumber("fv-rate"), n=Util.getNumber("fv-n"), period=Util.$("fv-period").value, div=Util.$("fv-result");
+      if([pvVal, ratePercent, n].some(x=>isNaN(x))){ ["fv-pv","fv-rate","fv-n"].forEach(Util.markError); return Util.setResult(div,"👀 Completá todos los campos."); }
+      const out=FV.calcular(pvVal, ratePercent, n); FV.render(out, div, period, ratePercent, n);
+    });
+
+    document.getElementById("btn-pv")?.addEventListener("click", () => {
+      const fvVal=Util.getNumber("pv-fv"), ratePercent=Util.getNumber("pv-rate"), n=Util.getNumber("pv-n"), period=Util.$("pv-period").value, div=Util.$("pv-result");
+      if([fvVal, ratePercent, n].some(x=>isNaN(x))){ ["pv-fv","pv-rate","pv-n"].forEach(Util.markError); return Util.setResult(div,"👀 Completá todos los campos."); }
+      const out=PVCalc.calcular(fvVal, ratePercent, n); PVCalc.render(out, div, period, ratePercent, n);
+    });
+
+    document.getElementById("btn-pmt")?.addEventListener("click", () => {
+      const pvVal=Util.getNumber("pmt-pv"), ratePercent=Util.getNumber("pmt-rate"), n=Util.getNumber("pmt-n"), period=Util.$("pmt-period").value, div=Util.$("pmt-result");
+      if([pvVal, ratePercent, n].some(x=>isNaN(x))){ ["pmt-pv","pmt-rate","pmt-n"].forEach(Util.markError); return Util.setResult(div,"👀 Completá todos los campos."); }
+      const out=PMTMod.calcular(pvVal, ratePercent, n); PMTMod.render(out, div, period, ratePercent, n);
+    });
+
+    document.getElementById("btn-loan")?.addEventListener("click", () => {
+      const amount=Util.getNumber("loan-amount"), ratePercent=Util.getNumber("loan-rate"), n=Util.getNumber("loan-n"), system=Util.$("loan-system").value, div=Util.$("loan-result"), wrap=Util.$("loan-table-wrapper");
+      if(isNaN(amount)||isNaN(ratePercent)||isNaN(n)||n<=0){ ["loan-amount","loan-rate","loan-n"].forEach(Util.markError); wrap.innerHTML=""; return Util.setResult(div,"👀 Completá monto, tasa y n."); }
+      const { rows, resumen }=Amortizacion.generar(amount, ratePercent, n, system); Amortizacion.render(rows, resumen, div, wrap, ratePercent, n, system);
+    });
   </script>
 </body>
 </html>
