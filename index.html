@@ -6,223 +6,72 @@
   <title>Calculadora Financiera - Caro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
+    * { box-sizing: border-box; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 
     :root {
-      --bg: #0f172a;
-      --card: rgba(15, 23, 42, 0.95);
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --brand: #a5b4fc;
-      --border: rgba(148, 163, 184, 0.25);
-      --accent1: #38bdf8;
-      --accent2: #8b5cf6;
-      --warning: #f97316;
-      --success: #22c55e;
-      --outline: #4b5563;
-      --flash: rgba(250, 204, 21, 0.18);
+      --bg: #0f172a; --card: rgba(15, 23, 42, 0.95); --text: #e5e7eb; --muted: #9ca3af;
+      --brand: #a5b4fc; --border: rgba(148, 163, 184, 0.25); --accent1: #38bdf8; --accent2: #8b5cf6;
+      --warning: #f97316; --success: #22c55e; --outline: #4b5563; --flash: rgba(250, 204, 21, 0.18);
     }
 
     body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--text);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
+      margin: 0; padding: 0; background: var(--bg); color: var(--text);
+      display: flex; justify-content: center; align-items: flex-start; min-height: 100vh;
     }
 
-    .app {
-      width: 100%;
-      max-width: 1100px;
-      padding: 24px 16px 40px;
-    }
-
+    .app { width: 100%; max-width: 1100px; padding: 24px 16px 40px; }
     header { margin-bottom: 16px; }
     h1 { text-align: center; margin-bottom: 4px; }
 
-    .subtitle {
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
+    .subtitle { text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 8px; }
+    .brand { text-align: center; font-size: 0.8rem; color: var(--brand); letter-spacing: 0.12em; text-transform: uppercase; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(148,163,184,0.5); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; }
 
-    .brand {
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--brand);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-
-    .tag {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-left: 6px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 16px;
-      margin-top: 16px;
-    }
-
-    .card {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 16px 18px 18px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-      border: 1px solid var(--border);
-    }
-
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+    .card { background: var(--card); border-radius: 16px; padding: 16px 18px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid var(--border); }
     .card h2 { margin-top: 0; margin-bottom: 6px; font-size: 1.05rem; }
     .card small { display: block; margin-bottom: 12px; color: var(--muted); }
 
-    label {
-      display: block;
-      margin-top: 8px;
-      margin-bottom: 4px;
-      font-size: 0.85rem;
-      color: #d1d5db;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid var(--outline);
-      background: #020617;
-      color: var(--text);
-      font-size: 0.9rem;
-      outline: none;
-    }
-
+    label { display: block; margin-top: 8px; margin-bottom: 4px; font-size: 0.85rem; color: #d1d5db; }
+    input, select, textarea { width: 100%; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--outline); background: #020617; color: var(--text); font-size: 0.9rem; outline: none; }
     textarea { min-height: 72px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { border-color: var(--accent1); box-shadow: 0 0 0 1px rgba(56,189,248,0.4); }
 
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--accent1);
-      box-shadow: 0 0 0 1px rgba(56,189,248,0.4);
-    }
-
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    button {
-      margin-top: 12px;
-      width: 100%;
-      padding: 9px 10px;
-      border-radius: 999px;
-      border: none;
-      background: linear-gradient(135deg, var(--accent1), var(--accent2));
-      color: white;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    button { margin-top: 12px; width: 100%; padding: 9px 10px; border-radius: 999px; border: none; background: linear-gradient(135deg, var(--accent1), var(--accent2)); color: white; font-size: 0.95rem; font-weight: 600; cursor: pointer; }
     button:hover { filter: brightness(1.05); }
 
-    .result {
-      margin-top: 10px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      background: rgba(15,23,42,0.9);
-      border: 1px dashed rgba(148,163,184,0.6);
-      font-size: 0.9rem;
-      min-height: 44px;
-    }
+    .result { margin-top: 10px; padding: 8px 10px; border-radius: 10px; background: rgba(15,23,42,0.9); border: 1px dashed rgba(148,163,184,0.6); font-size: 0.9rem; min-height: 44px; }
+    .result strong { display: block; font-size: 1rem; margin-bottom: 2px; color: #facc15; }
 
-    .result strong {
-      display: block;
-      font-size: 1rem;
-      margin-bottom: 2px;
-      color: #facc15;
-    }
-
-    .footer-note {
-      margin-top: 24px;
-      text-align: center;
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.4;
-    }
-
+    .footer-note { margin-top: 24px; text-align: center; font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
     .formula { display: block; margin-top: 4px; }
 
     /* Tabla amortización */
-    .amort-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-      font-size: 0.8rem;
-    }
-
-    .amort-table th, .amort-table td {
-      border-bottom: 1px solid #1f2937;
-      padding: 4px 6px;
-      text-align: right;
-    }
-
+    .amort-table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; }
+    .amort-table th, .amort-table td { border-bottom: 1px solid #1f2937; padding: 4px 6px; text-align: right; }
     .amort-table th:first-child, .amort-table td:first-child { text-align: center; }
     .amort-table tfoot td { font-weight: 600; border-top: 1px solid #4b5563; }
 
     /* Índice ocupa todo el ancho */
     .index-card { grid-column: 1 / -1; }
     .index-card ol { padding-left: 18px; margin: 0; font-size: 0.9rem; }
-    .index-card li { margin-bottom: 6px; }
+    .index-card li { margin-bottom: 8px; }
 
-    /* Botones del índice desplegable */
-    .index-item {
-      background: none; border: none; color: var(--text);
-      padding: 2px 0; text-align: left; font-size: 0.9rem; font-weight: 600;
-      cursor: pointer; width: 100%;
-    }
+    /* Botones del índice */
+    .index-item { background: none; border: none; color: var(--text); padding: 2px 0; text-align: left; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; }
     .index-item:hover { color: var(--accent1); }
 
-    .index-detail {
-      margin-top: 4px; margin-bottom: 8px;
-      padding-left: 8px; font-size: 0.85rem; color: #d1d5db;
-    }
+    .index-detail { margin-top: 6px; margin-bottom: 10px; padding-left: 8px; font-size: 0.85rem; color: #d1d5db; }
+    .mount-slot { margin-top: 8px; }
 
-    .index-detail span.estado {
-      display: inline-block; margin-top: 4px;
-      font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em;
-      padding: 2px 6px; border-radius: 999px; border: 1px solid var(--outline);
-    }
+    .input-error { border-color: #ef4444 !important; box-shadow: 0 0 0 1px rgba(239,68,68,0.4) !important; }
 
-    .estado-ok { border-color: var(--success); color: var(--success); }
-    .estado-pend { border-color: var(--warning); color: var(--warning); }
+    .flash { animation: flashBg 1.6s ease-out; }
+    @keyframes flashBg { 0% { box-shadow: 0 0 0 0 var(--flash); } 30% { box-shadow: 0 0 0 8px var(--flash); } 100% { box-shadow: 0 0 0 0 transparent; } }
 
-    /* Errores de input */
-    .input-error {
-      border-color: #ef4444 !important;
-      box-shadow: 0 0 0 1px rgba(239,68,68,0.4) !important;
-    }
-
-    /* Flash highlight al navegar desde el índice */
-    .flash {
-      animation: flashBg 1.6s ease-out;
-    }
-    @keyframes flashBg {
-      0% { box-shadow: 0 0 0 0 var(--flash); }
-      30% { box-shadow: 0 0 0 8px var(--flash); }
-      100% { box-shadow: 0 0 0 0 transparent; }
-    }
+    /* (Opcional) mini chip de ayuda */
+    .chip { display:inline-block; padding:2px 6px; border-radius:8px; border:1px solid rgba(148,163,184,0.45); font-size:0.75rem; color:#9ca3af; margin-right:6px; }
   </style>
 </head>
 <body>
@@ -237,12 +86,13 @@
     </header>
 
     <div class="cards">
-      <!-- ÍNDICE DE MÓDULOS (DESPLEGABLE) -->
+      <!-- ÍNDICE DE MÓDULOS -->
       <section class="card index-card" aria-label="Índice de módulos">
         <h2>Índice de módulos</h2>
-        <small>Hacé click en cada título para ver y usar la herramienta. 👇</small>
+        <small>Hacé click en cada título para usar la herramienta **acá mismo** o verla en la grilla.</small>
 
         <ol>
+          <!-- Panel Inversores -->
           <li>
             <strong>
               <button class="index-item" aria-expanded="false" aria-controls="panel-inversores" data-panel="panel-inversores">
@@ -252,365 +102,223 @@
             <div id="panel-inversores" class="index-detail" hidden>
               <ol>
                 <li>
-                  <button class="index-item go-card" data-target="pf-uva-card">
-                    Comparador de Plazo Fijo tradicional vs UVA
-                  </button>
+                  <button class="index-item mount-card" data-card="pf-uva-card">Comparador de Plazo Fijo tradicional vs UVA</button>
+                  <div class="mount-slot" id="slot-pf-uva"></div>
                 </li>
                 <li>
-                  <button class="index-item go-card" data-target="simulador-card">
-                    Simulador de interés compuesto con aportes variables
-                  </button>
+                  <button class="index-item mount-card" data-card="simulador-card">Simulador de interés compuesto con aportes variables</button>
+                  <div class="mount-slot" id="slot-simulador"></div>
                 </li>
                 <li>
-                  <button class="index-item go-card" data-target="objetivos-card">
-                    Plan de ahorro para objetivos
-                  </button>
+                  <button class="index-item mount-card" data-card="objetivos-card">Plan de ahorro para objetivos</button>
+                  <div class="mount-slot" id="slot-objetivos"></div>
                 </li>
                 <li>
-                  <button class="index-item go-card" data-target="tc-card">
-                    Calculadora de tipo de cambio
-                  </button>
+                  <button class="index-item mount-card" data-card="tc-card">Calculadora de tipo de cambio</button>
+                  <div class="mount-slot" id="slot-tc"></div>
                 </li>
               </ol>
             </div>
           </li>
 
+          <!-- Panel Corporativos -->
           <li style="margin-top:10px;">
-            <strong>Para analistas financieros / corporativos</strong>
-            <ol start="5">
-              <li>
-                <button class="index-item" aria-expanded="false" aria-controls="panel-van-tir" data-panel="panel-van-tir">
-                  VAN y TIR (Flujos de caja)
-                </button>
-                <div id="panel-van-tir" class="index-detail" hidden>
-                  Ingresar una serie de flujos.<br />
-                  Resultado esperado:<br />
-                  • Valor Actual Neto (VAN)<br />
-                  • Tasa Interna de Retorno (TIR)<br />
-                  • ROI<br />
-                  <span class="estado estado-pend">Funcionalidad pendiente</span>
-                </div>
-              </li>
-              <li>
-                <button class="index-item" aria-expanded="false" aria-controls="panel-duration" data-panel="panel-duration">
-                  Duración y Duration modificada (bonos)
-                </button>
-                <div id="panel-duration" class="index-detail" hidden>
-                  <span class="estado estado-pend">Funcionalidad pendiente</span>
-                </div>
-              </li>
-              <li>
-                <button class="index-item" aria-expanded="false" aria-controls="panel-curva-bonos" data-panel="panel-curva-bonos">
-                  Curva de bonos simple
-                </button>
-                <div id="panel-curva-bonos" class="index-detail" hidden>
-                  <span class="estado estado-pend">Funcionalidad pendiente</span>
-                </div>
-              </li>
-              <li>
-                <button class="index-item" aria-expanded="false" aria-controls="panel-paridad-bonos" data-panel="panel-paridad-bonos">
-                  Cálculo de paridad de bonos
-                </button>
-                <div id="panel-paridad-bonos" class="index-detail" hidden>
-                  <span class="estado estado-pend">Funcionalidad pendiente</span>
-                </div>
-              </li>
-            </ol>
+            <strong>
+              <button class="index-item" aria-expanded="false" aria-controls="panel-corporativos" data-panel="panel-corporativos">
+                Para analistas financieros / corporativos
+              </button>
+            </strong>
+            <div id="panel-corporativos" class="index-detail" hidden>
+              <ol start="5">
+                <li>
+                  <button class="index-item mount-card" data-card="van-tir-card">VAN y TIR (Flujos de caja)</button>
+                  <div class="mount-slot" id="slot-van-tir"></div>
+                </li>
+                <li>
+                  <button class="index-item mount-card" data-card="duration-card">Duración y Duration modificada (bonos)</button>
+                  <div class="mount-slot" id="slot-duration"></div>
+                </li>
+                <li>
+                  <button class="index-item mount-card" data-card="curva-card">Curva de bonos simple</button>
+                  <div class="mount-slot" id="slot-curva"></div>
+                </li>
+                <li>
+                  <button class="index-item mount-card" data-card="paridad-card">Cálculo de paridad de bonos</button>
+                  <div class="mount-slot" id="slot-paridad"></div>
+                </li>
+              </ol>
+            </div>
           </li>
         </ol>
       </section>
 
-      <!-- COMPARADOR PF TRADICIONAL VS UVA -->
+      <!-- === MÓDULOS (cards originales de la grilla) === -->
+      <!-- PF vs UVA -->
       <section class="card" id="pf-uva-card">
         <h2>Comparador PF tradicional vs UVA</h2>
         <small>Ingresá tu escenario y compará cuál rinde más, en términos nominales y reales.</small>
-
-        <label for="pf-monto">Monto a invertir</label>
-        <input id="pf-monto" type="number" inputmode="decimal" placeholder="Ej: 100000" />
-
-        <label for="pf-tna">TNA Plazo Fijo tradicional (%)</label>
-        <input id="pf-tna" type="number" step="0.01" inputmode="decimal" placeholder="Ej: 110" />
-
-        <label for="pf-inflacion">Inflación esperada anual (%)</label>
-        <input id="pf-inflacion" type="number" step="0.01" inputmode="decimal" placeholder="Ej: 180" />
-
-        <label for="pf-plus">Plus real UVA sobre inflación (opcional, % anual)</label>
-        <input id="pf-plus" type="number" step="0.01" inputmode="decimal" placeholder="Ej: 0 ó 5" />
-
-        <label for="pf-dias">Plazo en días</label>
-        <input id="pf-dias" type="number" inputmode="numeric" placeholder="Ej: 30, 60, 90, 180" />
-
+        <label for="pf-monto">Monto a invertir</label><input id="pf-monto" type="number" inputmode="decimal" placeholder="Ej: 100000" />
+        <label for="pf-tna">TNA Plazo Fijo tradicional (%)</label><input id="pf-tna" type="number" step="0.01" inputmode="decimal" placeholder="Ej: 110" />
+        <label for="pf-inflacion">Inflación esperada anual (%)</label><input id="pf-inflacion" type="number" step="0.01" inputmode="decimal" placeholder="Ej: 180" />
+        <label for="pf-plus">Plus real UVA sobre inflación (opcional, % anual)</label><input id="pf-plus" type="number" step="0.01" inputmode="decimal" placeholder="Ej: 0 ó 5" />
+        <label for="pf-dias">Plazo en días</label><input id="pf-dias" type="number" inputmode="numeric" placeholder="Ej: 30, 60, 90, 180" />
         <button id="btn-pf-uva">Comparar PF vs UVA</button>
-
-        <div class="result" id="pf-uva-result">
-          Ingresá los datos y te muestro cuánto terminarías con PF tradicional vs UVA, y quién gana en términos reales.
-        </div>
+        <div class="result" id="pf-uva-result">Ingresá los datos…</div>
       </section>
 
-      <!-- CONVERSOR DE TASAS -->
+      <!-- Conversor de tasas -->
       <section class="card" id="tasas-card">
         <h2>Conversor de tasas</h2>
         <small>TNA, TEA y TEM suponiendo capitalización mensual (12 períodos al año).</small>
-
         <label for="rate-type">Tipo de tasa conocida</label>
-        <select id="rate-type">
-          <option value="tna">TNA (nominal anual)</option>
-          <option value="tea">TEA (efectiva anual)</option>
-          <option value="tem">TEM (efectiva mensual)</option>
-        </select>
-
-        <label for="rate-input">Valor de la tasa (%)</label>
-        <input id="rate-input" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 97 (TNA) ó 8 (TEM)" />
-
+        <select id="rate-type"><option value="tna">TNA</option><option value="tea">TEA</option><option value="tem">TEM</option></select>
+        <label for="rate-input">Valor de la tasa (%)</label><input id="rate-input" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 97 (TNA) ó 8 (TEM)" />
         <button id="btn-rate-convert">Convertir</button>
-
-        <div class="result" id="rate-result">
-          Ingresá una tasa y convertí entre TNA, TEA y TEM (mensual).
-        </div>
+        <div class="result" id="rate-result">Ingresá una tasa…</div>
       </section>
 
-      <!-- SIMULADOR DE INVERSIÓN CON APORTES VARIABLES -->
+      <!-- Simulador con aportes variables -->
       <section class="card" id="simulador-card">
         <h2>Simulador inversión con aportes variables</h2>
         <small>Capital inicial + aportes por período con interés compuesto. Podés usar aporte fijo o lista variable.</small>
-
-        <label for="sim-pv">Capital inicial (opcional)</label>
-        <input id="sim-pv" type="number" inputmode="decimal" placeholder="Ej: 50000 (podés dejar en blanco)" />
-
-        <label for="sim-pmt">Aporte fijo por período (opcional)</label>
-        <input id="sim-pmt" type="number" inputmode="decimal" placeholder="Ej: 20000" />
-
-        <label for="sim-aportes">Aportes variables (opcional, separados por comas o líneas)</label>
-        <textarea id="sim-aportes" placeholder="Ej: 20000, 0, 15000, 50000"></textarea>
-
-        <label for="sim-rate">Tasa por período (%)</label>
-        <input id="sim-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5 (significa 5%)" />
-
+        <label for="sim-pv">Capital inicial (opcional)</label><input id="sim-pv" type="number" inputmode="decimal" placeholder="Ej: 50000" />
+        <label for="sim-pmt">Aporte fijo por período (opcional)</label><input id="sim-pmt" type="number" inputmode="decimal" placeholder="Ej: 20000" />
+        <label for="sim-aportes">Aportes variables (opcional, separados por comas o líneas)</label><textarea id="sim-aportes" placeholder="Ej: 20000, 0, 15000, 50000"></textarea>
+        <label for="sim-rate">Tasa por período (%)</label><input id="sim-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5" />
         <div class="row">
-          <div>
-            <label for="sim-n">Cantidad de períodos (n)</label>
-            <input id="sim-n" type="number" inputmode="numeric" placeholder="Ej: 12 (si cargas lista, se ignora)" />
-          </div>
-          <div>
-            <label for="sim-period">Período</label>
-            <select id="sim-period">
-              <option value="mensual">Mensual</option>
-              <option value="anual">Anual</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
+          <div><label for="sim-n">Cantidad de períodos (n)</label><input id="sim-n" type="number" inputmode="numeric" placeholder="Ej: 12" /></div>
+          <div><label for="sim-period">Período</label><select id="sim-period"><option value="mensual">Mensual</option><option value="anual">Anual</option><option value="otro">Otro</option></select></div>
         </div>
-
         <button id="btn-sim">Calcular inversión</button>
-
-        <div class="result" id="sim-result">
-          Cargá tasa, aportes (fijos o variables) y te muestro el valor futuro y cuánto aportaste en total.
-        </div>
+        <div class="result" id="sim-result">Cargá tasa, aportes…</div>
       </section>
 
-      <!-- PLAN DE AHORRO PARA OBJETIVOS -->
+      <!-- Objetivos -->
       <section class="card" id="objetivos-card">
         <h2>Plan de ahorro para objetivos</h2>
         <small>Calculá el aporte periódico necesario para alcanzar un objetivo.</small>
-
-        <label for="obj-fv">Objetivo a alcanzar (FV objetivo)</label>
-        <input id="obj-fv" type="number" inputmode="decimal" placeholder="Ej: 1000000" />
-
-        <label for="obj-pv">Capital inicial (PV, opcional)</label>
-        <input id="obj-pv" type="number" inputmode="decimal" placeholder="Ej: 50000 (podés dejarlo vacío)" />
-
-        <label for="obj-rate">Tasa por período (%)</label>
-        <input id="obj-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 4 (significa 4%)" />
-
+        <label for="obj-fv">Objetivo a alcanzar (FV)</label><input id="obj-fv" type="number" inputmode="decimal" placeholder="Ej: 1000000" />
+        <label for="obj-pv">Capital inicial (PV, opcional)</label><input id="obj-pv" type="number" inputmode="decimal" placeholder="Ej: 50000" />
+        <label for="obj-rate">Tasa por período (%)</label><input id="obj-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 4" />
         <div class="row">
-          <div>
-            <label for="obj-n">Cantidad de períodos (n)</label>
-            <input id="obj-n" type="number" inputmode="numeric" placeholder="Ej: 36" />
-          </div>
-          <div>
-            <label for="obj-period">Período</label>
-            <select id="obj-period">
-              <option value="mensual">Mensual</option>
-              <option value="anual">Anual</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
+          <div><label for="obj-n">Cantidad de períodos (n)</label><input id="obj-n" type="number" inputmode="numeric" placeholder="Ej: 36" /></div>
+          <div><label for="obj-period">Período</label><select id="obj-period"><option value="mensual">Mensual</option><option value="anual">Anual</option><option value="otro">Otro</option></select></div>
         </div>
-
         <button id="btn-obj">Calcular aporte necesario</button>
-
-        <div class="result" id="obj-result">
-          Ingresá objetivo, tasa y períodos para calcular el aporte por período requerido.
-        </div>
+        <div class="result" id="obj-result">Ingresá objetivo, tasa y n…</div>
       </section>
 
-      <!-- CALCULADORA DE TIPO DE CAMBIO -->
+      <!-- Tipo de cambio -->
       <section class="card" id="tc-card">
         <h2>Calculadora de tipo de cambio</h2>
         <small>Convertí entre ARS y USD según el tipo de cambio elegido (ingresá vos la cotización).</small>
-
-        <label for="tc-monto">Monto</label>
-        <input id="tc-monto" type="number" inputmode="decimal" placeholder="Ej: 100000" />
-
+        <label for="tc-monto">Monto</label><input id="tc-monto" type="number" inputmode="decimal" placeholder="Ej: 100000" />
         <div class="row">
-          <div>
-            <label for="tc-direccion">Dirección</label>
-            <select id="tc-direccion">
-              <option value="ars-usd">ARS → USD</option>
-              <option value="usd-ars">USD → ARS</option>
-            </select>
-          </div>
-          <div>
-            <label for="tc-tipo">Tipo de cambio</label>
-            <select id="tc-tipo">
-              <option value="oficial">Oficial</option>
-              <option value="mep">MEP</option>
-              <option value="ccl">CCL</option>
-              <option value="solidario">Solidario</option>
-              <option value="tarjeta">Tarjeta</option>
-              <option value="custom">Personalizado</option>
-            </select>
-          </div>
+          <div><label for="tc-direccion">Dirección</label><select id="tc-direccion"><option value="ars-usd">ARS → USD</option><option value="usd-ars">USD → ARS</option></select></div>
+          <div><label for="tc-tipo">Tipo de cambio</label><select id="tc-tipo"><option value="oficial">Oficial</option><option value="mep">MEP</option><option value="ccl">CCL</option><option value="solidario">Solidario</option><option value="tarjeta">Tarjeta</option><option value="custom">Personalizado</option></select></div>
         </div>
-
-        <label for="tc-cotizacion">Cotización seleccionada (ARS por USD)</label>
-        <input id="tc-cotizacion" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 1200" />
-
+        <label for="tc-cotizacion">Cotización seleccionada (ARS por USD)</label><input id="tc-cotizacion" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 1200" />
         <button id="btn-tc">Convertir</button>
-
-        <div class="result" id="tc-result">
-          Ingresá el monto, elegí dirección y tipo de cambio, y colocá la cotización.
-        </div>
+        <div class="result" id="tc-result">Ingresá el monto y la cotización…</div>
       </section>
 
-      <!-- VALOR FUTURO (FV) -->
+      <!-- VAN y TIR -->
+      <section class="card" id="van-tir-card">
+        <h2>VAN y TIR (Flujos de caja)</h2>
+        <small>Ingresá una serie de flujos y la tasa de descuento. El primer flujo suele ser la inversión inicial (negativo).</small>
+        <label for="cf-tasa">Tasa de descuento por período (%)</label><input id="cf-tasa" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 2" />
+        <label for="cf-lista">Flujos de caja (separados por comas o líneas)</label>
+        <textarea id="cf-lista" placeholder="Ej: -100000, 30000, 35000, 40000, 45000"></textarea>
+        <button id="btn-van-tir">Calcular VAN y TIR</button>
+        <div class="result" id="van-tir-result">Ingresá tasa y flujos…</div>
+      </section>
+
+      <!-- Duración y Duration modificada -->
+      <section class="card" id="duration-card">
+        <h2>Duración y Duration modificada (bonos)</h2>
+        <small>Bonos a tasa fija. Calcula Duración de Macaulay y Duration modificada.</small>
+        <div class="row">
+          <div><label for="dur-face">Valor técnico / Face</label><input id="dur-face" type="number" inputmode="decimal" placeholder="Ej: 100" /></div>
+          <div><label for="dur-price">Precio (clean)</label><input id="dur-price" type="number" inputmode="decimal" placeholder="Ej: 95" /></div>
+        </div>
+        <div class="row">
+          <div><label for="dur-coupon">Cupón anual (%)</label><input id="dur-coupon" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 8" /></div>
+          <div><label for="dur-yield">YTM / TIR anual (%)</label><input id="dur-yield" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 10" /></div>
+        </div>
+        <div class="row">
+          <div><label for="dur-years">Años al vencimiento</label><input id="dur-years" type="number" inputmode="decimal" placeholder="Ej: 5" /></div>
+          <div><label for="dur-freq">Frecuencia (pagos por año)</label><select id="dur-freq"><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="12">12</option></select></div>
+        </div>
+        <button id="btn-duration">Calcular duración</button>
+        <div class="result" id="duration-result">Ingresá parámetros del bono…</div>
+      </section>
+
+      <!-- Curva de bonos simple -->
+      <section class="card" id="curva-card">
+        <h2>Curva de bonos simple</h2>
+        <small>Cargá varios bonos (una línea por bono) y se grafica <span class="chip">Yield vs Duración</span>.</small>
+        <label for="curva-lines">Bonos (Ticker; Años; Cupón%; Precio; Yield%; Face)</label>
+        <textarea id="curva-lines" placeholder="Ej:
+AL30; 5; 5; 75; ; 100
+GD35; 10; 8; ; 14; 100
+TX26; 1.5; 0; 98; ; 100"></textarea>
+        <button id="btn-curva">Generar curva</button>
+        <div class="result" id="curva-result">Cargá bonos…</div>
+        <svg id="curva-chart" class="chart"></svg>
+      </section>
+
+      <!-- Paridad de bonos -->
+      <section class="card" id="paridad-card">
+        <h2>Cálculo de paridad de bonos</h2>
+        <small>Paridad (%) = Precio / Valor Técnico × 100. Si no ingresás TIR, se estima desde el precio.</small>
+        <div class="row">
+          <div><label for="par-face">Valor técnico / Face</label><input id="par-face" type="number" inputmode="decimal" placeholder="Ej: 100" /></div>
+          <div><label for="par-price">Precio (clean)</label><input id="par-price" type="number" inputmode="decimal" placeholder="Ej: 75" /></div>
+        </div>
+        <div class="row">
+          <div><label for="par-coupon">Cupón anual (%)</label><input id="par-coupon" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5" /></div>
+          <div><label for="par-yield">TIR anual (%) (opcional)</label><input id="par-yield" type="number" step="0.0001" inputmode="decimal" placeholder="Si lo dejás vacío, se estima" /></div>
+        </div>
+        <div class="row">
+          <div><label for="par-years">Años al vencimiento</label><input id="par-years" type="number" inputmode="decimal" placeholder="Ej: 5" /></div>
+          <div><label for="par-freq">Frecuencia</label><select id="par-freq"><option value="1">1</option><option value="2">2</option><option value="4">4</option><option value="12">12</option></select></div>
+        </div>
+        <button id="btn-paridad">Calcular paridad</button>
+        <div class="result" id="paridad-result">Ingresá precio y valor técnico…</div>
+      </section>
+
+      <!-- FV / PV / PMT / Amortización -->
       <section class="card" id="fv-card">
-        <h2>Valor Futuro (FV)</h2>
-        <small>¿Cuánto voy a tener al final si invierto hoy un monto a una tasa fija?</small>
-
-        <label for="fv-pv">Monto inicial (PV)</label>
-        <input id="fv-pv" type="number" inputmode="decimal" placeholder="Ej: 100000" />
-
-        <label for="fv-rate">Tasa por período (%)</label>
-        <input id="fv-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5 (significa 5%)" />
-
-        <div class="row">
-          <div>
-            <label for="fv-n">Cantidad de períodos (n)</label>
-            <input id="fv-n" type="number" inputmode="numeric" placeholder="Ej: 12" />
-          </div>
-          <div>
-            <label for="fv-period">Período</label>
-            <select id="fv-period">
-              <option value="mensual">Mensual</option>
-              <option value="anual">Anual</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
-
-        <button id="btn-fv">Calcular FV</button>
-
-        <div class="result" id="fv-result">
-          Ingresá los datos y calculá el valor futuro.
-        </div>
+        <h2>Valor Futuro (FV)</h2><small>¿Cuánto voy a tener al final si invierto hoy un monto a una tasa fija?</small>
+        <label for="fv-pv">Monto inicial (PV)</label><input id="fv-pv" type="number" inputmode="decimal" placeholder="Ej: 100000" />
+        <label for="fv-rate">Tasa por período (%)</label><input id="fv-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5" />
+        <div class="row"><div><label for="fv-n">Cantidad de períodos (n)</label><input id="fv-n" type="number" inputmode="numeric" placeholder="Ej: 12" /></div><div><label for="fv-period">Período</label><select id="fv-period"><option value="mensual">Mensual</option><option value="anual">Anual</option><option value="otro">Otro</option></select></div></div>
+        <button id="btn-fv">Calcular FV</button><div class="result" id="fv-result">Ingresá los datos…</div>
       </section>
 
-      <!-- VALOR PRESENTE (PV) -->
       <section class="card" id="pv-card">
-        <h2>Valor Presente (PV)</h2>
-        <small>¿Cuánto necesito hoy para alcanzar un monto futuro deseado?</small>
-
-        <label for="pv-fv">Monto futuro (FV)</label>
-        <input id="pv-fv" type="number" inputmode="decimal" placeholder="Ej: 500000" />
-
-        <label for="pv-rate">Tasa por período (%)</label>
-        <input id="pv-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 4 (significa 4%)" />
-
-        <div class="row">
-          <div>
-            <label for="pv-n">Cantidad de períodos (n)</label>
-            <input id="pv-n" type="number" inputmode="numeric" placeholder="Ej: 24" />
-          </div>
-          <div>
-            <label for="pv-period">Período</label>
-            <select id="pv-period">
-              <option value="mensual">Mensual</option>
-              <option value="anual">Anual</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
-
-        <button id="btn-pv">Calcular PV</button>
-
-        <div class="result" id="pv-result">
-          Ingresá los datos y calculá el valor presente.
-        </div>
+        <h2>Valor Presente (PV)</h2><small>¿Cuánto necesito hoy para alcanzar un monto futuro deseado?</small>
+        <label for="pv-fv">Monto futuro (FV)</label><input id="pv-fv" type="number" inputmode="decimal" placeholder="Ej: 500000" />
+        <label for="pv-rate">Tasa por período (%)</label><input id="pv-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 4" />
+        <div class="row"><div><label for="pv-n">Cantidad de períodos (n)</label><input id="pv-n" type="number" inputmode="numeric" placeholder="Ej: 24" /></div><div><label for="pv-period">Período</label><select id="pv-period"><option value="mensual">Mensual</option><option value="anual">Anual</option><option value="otro">Otro</option></select></div></div>
+        <button id="btn-pv">Calcular PV</button><div class="result" id="pv-result">Ingresá los datos…</div>
       </section>
 
-      <!-- CUOTA PMT -->
       <section class="card" id="pmt-card">
-        <h2>Cuota (PMT)</h2>
-        <small>Préstamo o inversión con pagos iguales (sistema francés clásico).</small>
-
-        <label for="pmt-pv">Monto del préstamo / inversión (PV)</label>
-        <input id="pmt-pv" type="number" inputmode="decimal" placeholder="Ej: 300000" />
-
-        <label for="pmt-rate">Tasa por período (%)</label>
-        <input id="pmt-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 6 (significa 6%)" />
-
-        <div class="row">
-          <div>
-            <label for="pmt-n">Cantidad de períodos (n)</label>
-            <input id="pmt-n" type="number" inputmode="numeric" placeholder="Ej: 36" />
-          </div>
-          <div>
-            <label for="pmt-period">Período</label>
-            <select id="pmt-period">
-              <option value="mensual">Mensual</option>
-              <option value="anual">Anual</option>
-              <option value="otro">Otro</option>
-            </select>
-          </div>
-        </div>
-
-        <button id="btn-pmt">Calcular cuota</button>
-
-        <div class="result" id="pmt-result">
-          Ingresá los datos y calculá la cuota periódica.
-        </div>
+        <h2>Cuota (PMT)</h2><small>Préstamo o inversión con pagos iguales (sistema francés clásico).</small>
+        <label for="pmt-pv">Monto del préstamo / inversión (PV)</label><input id="pmt-pv" type="number" inputmode="decimal" placeholder="Ej: 300000" />
+        <label for="pmt-rate">Tasa por período (%)</label><input id="pmt-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 6" />
+        <div class="row"><div><label for="pmt-n">Cantidad de períodos (n)</label><input id="pmt-n" type="number" inputmode="numeric" placeholder="Ej: 36" /></div><div><label for="pmt-period">Período</label><select id="pmt-period"><option value="mensual">Mensual</option><option value="anual">Anual</option><option value="otro">Otro</option></select></div></div>
+        <button id="btn-pmt">Calcular cuota</button><div class="result" id="pmt-result">Ingresá los datos…</div>
       </section>
 
-      <!-- CRÉDITOS Y TABLA DE AMORTIZACIÓN -->
       <section class="card" id="loan-card">
-        <h2>Créditos y tabla de amortización</h2>
-        <small>Generá el cuadro de cuotas según sistema Francés, Alemán o Americano.</small>
-
-        <label for="loan-amount">Monto del crédito</label>
-        <input id="loan-amount" type="number" inputmode="decimal" placeholder="Ej: 500000" />
-
-        <label for="loan-rate">Tasa por período (%)</label>
-        <input id="loan-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5 (significa 5%)" />
-
-        <div class="row">
-          <div>
-            <label for="loan-n">Cantidad de períodos (n)</label>
-            <input id="loan-n" type="number" inputmode="numeric" placeholder="Ej: 24" />
-          </div>
-          <div>
-            <label for="loan-system">Sistema</label>
-            <select id="loan-system">
-              <option value="frances">Francés (cuota fija)</option>
-              <option value="aleman">Alemán (amortización fija)</option>
-              <option value="americano">Americano (intereses + bullet)</option>
-            </select>
-          </div>
-        </div>
-
+        <h2>Créditos y tabla de amortización</h2><small>Generá el cuadro de cuotas según sistema Francés, Alemán o Americano.</small>
+        <label for="loan-amount">Monto del crédito</label><input id="loan-amount" type="number" inputmode="decimal" placeholder="Ej: 500000" />
+        <label for="loan-rate">Tasa por período (%)</label><input id="loan-rate" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 5" />
+        <div class="row"><div><label for="loan-n">Cantidad de períodos (n)</label><input id="loan-n" type="number" inputmode="numeric" placeholder="Ej: 24" /></div><div><label for="loan-system">Sistema</label><select id="loan-system"><option value="frances">Francés</option><option value="aleman">Alemán</option><option value="americano">Americano</option></select></div></div>
         <button id="btn-loan">Generar tabla</button>
-
-        <div class="result" id="loan-result">Completá los datos y generá la tabla de amortización.</div>
+        <div class="result" id="loan-result">Completá los datos…</div>
         <div id="loan-table-wrapper" aria-live="polite"></div>
       </section>
     </div>
@@ -623,437 +331,403 @@
     </div>
   </div>
 
-  <!-- JS: módulos (namespaces) en un solo archivo -->
+  <!-- JS: namespaces / módulos y gestor de montaje en un solo archivo -->
   <script type="module">
     /* ========== Utilidades (Util) ========== */
     const Util = (() => {
-      const $ = (idOrSelector) => {
-        if (idOrSelector.startsWith("#")) return document.querySelector(idOrSelector);
-        return document.getElementById(idOrSelector);
-      };
-
-      function formatMoneyARS(value) {
-        if (isNaN(value)) return "-";
-        return value.toLocaleString("es-AR", { style: "currency", currency: "ARS", maximumFractionDigits: 2 });
-      }
-      function formatMoneyUSD(value) {
-        if (isNaN(value)) return "-";
-        return value.toLocaleString("es-AR", { style: "currency", currency: "USD", maximumFractionDigits: 2 });
-      }
-      function formatMoney(value) { return formatMoneyARS(value); }
-
-      function formatPercent(value) {
-        if (isNaN(value)) return "-";
-        return (value * 100).toFixed(2) + "%";
-      }
-
-      function getNumber(id, allowEmpty = false) {
-        const el = $(id);
-        if (!el) return NaN;
-        const raw = el.value;
-        if (allowEmpty && raw === "") return NaN;
-        const num = parseFloat(raw);
-        return num;
-      }
-
-      function markError(id) {
-        const el = $(id);
-        if (!el) return;
-        el.classList.add("input-error");
-        setTimeout(() => el.classList.remove("input-error"), 1500);
-      }
-
-      function setResult(node, html) {
-        if (!node) return;
-        node.innerHTML = html;
-      }
-
-      function scrollToCard(cardId) {
-        const el = document.getElementById(cardId);
-        if (!el) return;
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-        el.classList.add("flash");
-        setTimeout(() => el.classList.remove("flash"), 1600);
-      }
-
-      return { $, formatMoney, formatPercent, formatMoneyARS, formatMoneyUSD, getNumber, markError, setResult, scrollToCard };
+      const $ = (sel) => sel.startsWith("#") ? document.querySelector(sel) : document.getElementById(sel);
+      const formatMoneyARS = (v) => isNaN(v) ? "-" : v.toLocaleString("es-AR", { style:"currency", currency:"ARS", maximumFractionDigits:2 });
+      const formatMoneyUSD = (v) => isNaN(v) ? "-" : v.toLocaleString("es-AR", { style:"currency", currency:"USD", maximumFractionDigits:2 });
+      const formatMoney = formatMoneyARS;
+      const formatPercent = (v) => isNaN(v) ? "-" : (v*100).toFixed(2) + "%";
+      const getNumber = (id, allowEmpty=false) => { const el=$(id); if(!el) return NaN; const raw=el.value; if(allowEmpty && raw==="") return NaN; return parseFloat(raw); };
+      const markError = (id) => { const el=$(id); if(!el) return; el.classList.add("input-error"); setTimeout(()=>el.classList.remove("input-error"),1500); };
+      const setResult = (node, html) => { if(node) node.innerHTML = html; };
+      const scrollToCard = (id) => { const el=document.getElementById(id); if(!el) return; el.scrollIntoView({behavior:"smooth", block:"start"}); el.classList.add("flash"); setTimeout(()=>el.classList.remove("flash"),1600); };
+      return { $, formatMoney, formatMoneyARS, formatMoneyUSD, formatPercent, getNumber, markError, setResult, scrollToCard };
     })();
 
-    /* ========== Fórmulas financieras (Finance) ========== */
-    const Finance = (() => {
-      const fv = (pv, i, n) => pv * Math.pow(1 + i, n);
-      const pv = (fvVal, i, n) => fvVal / Math.pow(1 + i, n);
-      const pmt = (pvVal, i, n) => (i === 0 ? pvVal / n : (pvVal * i) / (1 - Math.pow(1 + i, -n)));
+    /* ========== Gestor de montaje/desmontaje de módulos (Dock) ========== */
+    const Dock = (() => {
+      // Guarda el parent original y el siguiente hermano para reinsertar
+      const origins = new Map(); // cardId -> { parent, nextSibling }
+      const mountedAt = new Map(); // cardId -> containerEl
 
-      // FV de aportes variables: suma pmt_t · (1+i)^(n - t) para t=1..n (pagos al final del período)
-      const fvAportesVariables = (aportes, i) => {
-        const n = aportes.length;
-        let total = 0;
-        for (let t = 1; t <= n; t++) {
-          const pmt_t = aportes[t - 1] || 0;
-          total += pmt_t * Math.pow(1 + i, n - t);
+      function ensureOrigin(cardEl) {
+        const id = cardEl.id;
+        if (!origins.has(id)) {
+          const parent = cardEl.parentElement;
+          const nextSibling = cardEl.nextElementSibling;
+          origins.set(id, { parent, nextSibling });
         }
-        return total;
-      };
+      }
 
-      return { fv, pv, pmt, fvAportesVariables };
+      function mount(cardId, containerEl) {
+        const cardEl = document.getElementById(cardId);
+        if (!cardEl || !containerEl) return;
+        ensureOrigin(cardEl);
+
+        // Si ya está montado en algún lado
+        const currentContainer = mountedAt.get(cardId);
+        if (currentContainer && currentContainer !== containerEl) {
+          // primero desmontamos de donde está
+          unmount(cardId);
+        }
+
+        // Si el container ya contiene ese módulo, desmontamos (toggle)
+        if (containerEl.contains(cardEl)) {
+          unmount(cardId);
+          return;
+        }
+
+        // Montamos en el slot
+        containerEl.appendChild(cardEl);
+        mountedAt.set(cardId, containerEl);
+        // Expandimos el panel que lo contiene (por accesibilidad)
+        const panel = containerEl.closest(".index-detail");
+        const panelBtn = panel ? document.querySelector(`[data-panel="${panel.id}"]`) : null;
+        if (panel && panelBtn) {
+          panel.removeAttribute("hidden");
+          panelBtn.setAttribute("aria-expanded", "true");
+        }
+      }
+
+      function unmount(cardId) {
+        const cardEl = document.getElementById(cardId);
+        if (!cardEl) return;
+        const origin = origins.get(cardId);
+        if (!origin) return;
+
+        const { parent, nextSibling } = origin;
+        if (nextSibling && nextSibling.parentElement === parent) {
+          parent.insertBefore(cardEl, nextSibling);
+        } else {
+          parent.appendChild(cardEl);
+        }
+        mountedAt.delete(cardId);
+      }
+
+      return { mount, unmount };
     })();
 
-    /* ========== PF tradicional vs UVA (PFUVA) ========== */
+    /* ========== Núcleo financiero (Finance) ========== */
+    const Finance = (() => {
+      const fv = (pv, i, n) => pv * Math.pow(1+i, n);
+      const pv = (fvVal, i, n) => fvVal / Math.pow(1+i, n);
+      const pmt = (pvVal, i, n) => i===0 ? pvVal/n : (pvVal*i)/(1 - Math.pow(1+i, -n));
+      const fvAportesVariables = (aportes, i) => { const n=aportes.length; let total=0; for(let t=1;t<=n;t++) total += (aportes[t-1]||0) * Math.pow(1+i, n-t); return total; };
+      const npv = (rate, cfs) => cfs.reduce((acc, cf, t) => acc + cf / Math.pow(1+rate, t), 0);
+      const irr = (cfs) => {
+        const signChanges = cfs.reduce((acc, cf, idx, arr) => idx===0 ? acc : acc + ((cf===0 || arr[idx-1]===0) ? 0 : (Math.sign(cf) !== Math.sign(arr[idx-1]) ? 1 : 0)), 0);
+        const warnMultipleIRR = signChanges > 1;
+        const candidates = [];
+        const grid = [ -0.9, -0.5, -0.2, -0.1, 0, 0.05, 0.1, 0.2, 0.4, 0.8, 1.5, 3, 5, 10 ];
+        for (let i=0;i<grid.length-1;i++){ const a=grid[i], b=grid[i+1]; const na=npv(a,cfs), nb=npv(b,cfs); if(isFinite(na)&&isFinite(nb)&&na*nb<=0) candidates.push([a,b]); }
+        if (!candidates.length) return { irr: NaN, warnMultipleIRR };
+        let [a,b] = candidates[0]; let fa=npv(a,cfs), fb=npv(b,cfs);
+        if (fa===0) return { irr:a, warnMultipleIRR };
+        if (fb===0) return { irr:b, warnMultipleIRR };
+        for (let iter=0; iter<200; iter++) {
+          const m=(a+b)/2; const fm=npv(m,cfs);
+          if (Math.abs(fm) < 1e-8) return { irr:m, warnMultipleIRR };
+          if (fa*fm < 0) { b=m; fb=fm; } else { a=m; fa=fm; }
+        }
+        return { irr:(a+b)/2, warnMultipleIRR };
+      };
+      const bondPrice = ({ face=100, couponPct=0, ytmPct=0, years=1, freq=2 }) => {
+        const m=freq, n=Math.round(years*m), c=(couponPct/100)*face/m, y=ytmPct/100/m; let price=0;
+        for(let t=1;t<=n;t++) price += c / Math.pow(1+y, t); price += face / Math.pow(1+y, n); return price;
+      };
+      const bondYieldFromPrice = ({ face=100, price, couponPct=0, years=1, freq=2 }) => {
+        const m=freq, n=Math.round(years*m), c=(couponPct/100)*face/m;
+        let a=0.000001, b=5.0;
+        const ypv=(yAn)=>{ const y=yAn/m; let p=0; for(let t=1;t<=n;t++) p += c / Math.pow(1+y, t); p += face / Math.pow(1+y, n); return p; };
+        let fa=ypv(a)-price, fb=ypv(b)-price;
+        if (fa*fb>0){ b=20.0; fb=ypv(b)-price; if(fa*fb>0) return NaN; }
+        for(let iter=0;iter<200;iter++){ const mAn=(a+b)/2; const fm=ypv(mAn)-price; if(Math.abs(fm)<1e-8) return mAn; if(fa*fm<0){ b=mAn; fb=fm; } else { a=mAn; fa=fm; } }
+        return (a+b)/2;
+      };
+      const bondDuration = ({ face=100, price, couponPct=0, ytmPct=0, years=1, freq=2 }) => {
+        const m=freq, n=Math.round(years*m), c=(couponPct/100)*face/m, y=ytmPct/100/m;
+        let durNum=0, pvSum=0;
+        for(let t=1;t<=n;t++){ const cf=t<n ? c : (c+face); const pv = cf / Math.pow(1+y, t); pvSum += pv; durNum += (t/m)*pv; }
+        const macaulay = pvSum===0 ? NaN : (durNum / price);
+        const modified = macaulay / (1 + y);
+        return { macaulay, modified };
+      };
+      return { fv, pv, pmt, fvAportesVariables, npv, irr, bondPrice, bondYieldFromPrice, bondDuration };
+    })();
+
+    /* ========== PF tradicional vs UVA ========== */
     const PFUVA = (() => {
       function comparar({ monto, tnaPF, inflacion, plus, dias }) {
-        const tnaPFDecimal = tnaPF / 100;
-        const inflAnualDec = inflacion / 100;
-        const plusRealDec = plus / 100;
-
-        const interesPF = tnaPFDecimal * (dias / 365);
-        const montoPF = monto * (1 + interesPF);
-
-        const inflPeriodo = Math.pow(1 + inflAnualDec, dias / 365) - 1;
-
-        const tasaUVAAnual = (1 + inflAnualDec) * (1 + plusRealDec) - 1;
-        const tasaUVAPeriodo = Math.pow(1 + tasaUVAAnual, dias / 365) - 1;
-        const montoUVA = monto * (1 + tasaUVAPeriodo);
-
-        const factorInfl = 1 + inflPeriodo;
-        const realPF = montoPF / factorInfl;
-        const realUVA = montoUVA / factorInfl;
-
+        const tnaPFDecimal=tnaPF/100, inflAnualDec=inflacion/100, plusRealDec=plus/100;
+        const interesPF=tnaPFDecimal*(dias/365), montoPF=monto*(1+interesPF);
+        const inflPeriodo=Math.pow(1+inflAnualDec, dias/365)-1;
+        const tasaUVAAnual=(1+inflAnualDec)*(1+plusRealDec)-1;
+        const tasaUVAPeriodo=Math.pow(1+tasaUVAAnual, dias/365)-1;
+        const montoUVA=monto*(1+tasaUVAPeriodo);
+        const factorInfl=1+inflPeriodo, realPF=montoPF/factorInfl, realUVA=montoUVA/factorInfl;
         return { montoPF, montoUVA, inflPeriodo, realPF, realUVA };
       }
-
       function render(out, resultDiv, dias) {
         const { formatMoney } = Util;
         const { montoPF, montoUVA, inflPeriodo, realPF, realUVA } = out;
-
-        let ganadorNominal = "";
-        if (montoPF > montoUVA) ganadorNominal = "Plazo Fijo tradicional gana en términos nominales.";
-        else if (montoUVA > montoPF) ganadorNominal = "El Plazo Fijo UVA gana en términos nominales.";
-        else ganadorNominal = "Ambos rinden igual en términos nominales (según supuestos).";
-
-        let ganadorReal = "";
-        if (realPF > realUVA) ganadorReal = "Plazo Fijo tradicional gana en términos reales (descontando inflación).";
-        else if (realUVA > realPF) ganadorReal = "El Plazo Fijo UVA gana en términos reales (descontando inflación).";
-        else ganadorReal = "Ambos rinden igual en términos reales (según supuestos).";
-
+        const gn = montoPF>montoUVA ? "Plazo Fijo tradicional gana en términos nominales." : (montoUVA>montoPF ? "El Plazo Fijo UVA gana en términos nominales." : "Empate nominal (según supuestos).");
+        const gr = realPF>realUVA ? "Plazo Fijo tradicional gana en términos reales." : (realUVA>realPF ? "El Plazo Fijo UVA gana en términos reales." : "Empate real (según supuestos).");
         resultDiv.innerHTML =
           `<strong>Comparación PF tradicional vs UVA (${dias} días):</strong>
            <br>PF tradicional: ${formatMoney(montoPF)}
            <br>PF UVA (estimado): ${formatMoney(montoUVA)}
-           <br><br><strong>Ajustado por inflación del período (${(inflPeriodo * 100).toFixed(2)}%):</strong>
-           <br>PF tradicional en términos reales: ${formatMoney(realPF)}
-           <br>PF UVA en términos reales: ${formatMoney(realUVA)}
-           <br><br>
-           <span style='font-size:0.85rem;color:#9ca3af'>${ganadorNominal}<br>${ganadorReal}
-           <br>Supuesto: inflación y TNA constantes durante el período.</span>`;
+           <br><br><strong>Inflación del período (${(inflPeriodo*100).toFixed(2)}%):</strong>
+           <br>PF (real): ${formatMoney(realPF)} | UVA (real): ${formatMoney(realUVA)}
+           <br><br><span style='font-size:0.85rem;color:#9ca3af'>${gn}<br>${gr}<br>Supuesto: inflación y TNA constantes.</span>`;
       }
-
       return { comparar, render };
     })();
 
-    /* ========== Conversor de tasas (Tasas) ========== */
+    /* ========== Conversor de tasas ========== */
     const Tasas = (() => {
       function convertir(type, ratePercent) {
-        const r = ratePercent / 100;
-        let tem, tea, tna;
-
-        if (type === "tna") {
-          tna = r;
-          tem = tna / 12;
-          tea = Math.pow(1 + tem, 12) - 1;
-        } else if (type === "tea") {
-          tea = r;
-          tem = Math.pow(1 + tea, 1 / 12) - 1;
-          tna = tem * 12;
-        } else {
-          tem = r;
-          tea = Math.pow(1 + tem, 12) - 1;
-          tna = tem * 12;
-        }
+        const r=ratePercent/100; let tem, tea, tna;
+        if(type==="tna"){ tna=r; tem=tna/12; tea=Math.pow(1+tem,12)-1; }
+        else if(type==="tea"){ tea=r; tem=Math.pow(1+tea,1/12)-1; tna=tem*12; }
+        else { tem=r; tea=Math.pow(1+tem,12)-1; tna=tem*12; }
         return { tem, tea, tna };
       }
       return { convertir };
     })();
 
-    /* ========== Simulador con aportes variables (Simulador) ========== */
+    /* ========== Simulador (aportes variables) ========== */
     const Simulador = (() => {
-      function parseAportes(raw) {
-        if (!raw || !raw.trim()) return [];
-        return raw
-          .split(/[\n,;]+/g)
-          .map(s => parseFloat(s.trim()))
-          .filter(v => !isNaN(v));
-      }
-
+      const parseAportes = (raw) => (!raw || !raw.trim()) ? [] :
+        raw.split(/[\n,;]+/g).map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v));
       function calcular({ pvInicial, aporteFijo, aportesVars, ratePercent, n }) {
-        const i = ratePercent / 100;
-
-        // Si hay aportes variables, usamos su longitud como n
-        let lista = parseAportes(aportesVars);
-        let nFinal = n;
-        if (lista.length > 0) {
-          nFinal = lista.length;
-        } else {
-          // si no hay lista, usamos aporte fijo y n
-          lista = Array.from({ length: nFinal }, () => aporteFijo || 0);
-        }
-
-        const fvInicial = pvInicial > 0 ? Finance.fv(pvInicial, i, nFinal) : 0;
-        const fvAportes = i === 0
-          ? lista.reduce((acc, v) => acc + v, 0)
-          : Finance.fvAportesVariables(lista, i);
-
-        const fvTotal = fvInicial + fvAportes;
-        const totalAportado = (pvInicial || 0) + lista.reduce((acc, v) => acc + v, 0);
-
-        return { fvTotal, totalAportado, nFinal, i, usóVariables: parseAportes(aportesVars).length > 0 };
+        const i=ratePercent/100;
+        let lista=parseAportes(aportesVars), nFinal=n;
+        if(lista.length>0) nFinal=lista.length; else lista=Array.from({length:nFinal}, ()=>aporteFijo||0);
+        const fvInicial=pvInicial>0 ? Finance.fv(pvInicial, i, nFinal) : 0;
+        const fvAportes=i===0 ? lista.reduce((a,v)=>a+v,0) : Finance.fvAportesVariables(lista, i);
+        const fvTotal=fvInicial+fvAportes;
+        const totalAportado=(pvInicial||0)+lista.reduce((a,v)=>a+v,0);
+        return { fvTotal, totalAportado, nFinal, i, usóVariables: parseAportes(aportesVars).length>0 };
       }
-
       function render(out, node, period, ratePercent) {
-        const { formatMoney } = Util;
-        const { fvTotal, totalAportado, nFinal, usóVariables } = out;
-
         node.innerHTML =
-          `<strong>Valor futuro estimado:</strong>${formatMoney(fvTotal)}
-           <br><span style='font-size:0.85rem;color:#9ca3af'>
-           Período ${period}, tasa del ${ratePercent}%, ${nFinal} período(s). ${usóVariables ? "Aportes variables" : "Aporte fijo"}.
-           </span>
-           <br><span style='font-size:0.85rem;color:#9ca3af'>Total aportado: ${formatMoney(totalAportado)} (capital inicial + aportes)</span>`;
+          `<strong>Valor futuro estimado:</strong>${Util.formatMoney(out.fvTotal)}
+           <br><span style='font-size:0.85rem;color:#9ca3af'>Período ${period}, tasa ${ratePercent}%, ${out.nFinal} período(s). ${out.usóVariables ? "Aportes variables" : "Aporte fijo"}.</span>
+           <br><span style='font-size:0.85rem;color:#9ca3af'>Total aportado: ${Util.formatMoney(out.totalAportado)} (PV + aportes)</span>`;
       }
-
-      return { calcular };
+      return { calcular, render };
     })();
 
-    /* ========== Plan de ahorro para objetivos (Objetivos) ========== */
+    /* ========== Objetivos (aporte necesario) ========== */
     const Objetivos = (() => {
-      // Aporte necesario para alcanzar FV dado PV, i, n
-      // FV = PV*(1+i)^n + PMT * [((1+i)^n - 1) / i]  => PMT = (FV - PV*(1+i)^n) * i / ((1+i)^n - 1)
       function calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n }) {
-        const i = ratePercent / 100;
-        if (n <= 0) return { pmtNecesario: NaN, i, n };
-
-        const fvInicial = pvInicial > 0 ? Finance.fv(pvInicial, i, n) : 0;
-        if (i === 0) {
-          const resto = fvObj - fvInicial;
-          const pmtNecesario = resto / n;
-          return { pmtNecesario, i, n };
-        }
-        const numerador = (fvObj - fvInicial) * i;
-        const denominador = Math.pow(1 + i, n) - 1;
-        const pmtNecesario = numerador / denominador;
-        return { pmtNecesario, i, n };
+        const i=ratePercent/100; if(n<=0) return { pmtNecesario: NaN };
+        const fvInicial=pvInicial>0 ? Finance.fv(pvInicial, i, n) : 0;
+        if(i===0) return { pmtNecesario: (fvObj - fvInicial)/n };
+        const pmt=((fvObj - fvInicial)*i)/(Math.pow(1+i, n) - 1);
+        return { pmtNecesario: pmt };
       }
-
       function render({ pmtNecesario }, node, period, ratePercent, n) {
         node.innerHTML =
           `<strong>Aporte por período necesario:</strong>${Util.formatMoney(pmtNecesario)}
-           <br><span style='font-size:0.85rem;color:#9ca3af'>
-           Para alcanzar el objetivo en ${n} período(s), con capitalización ${period} y tasa del ${ratePercent}%.
-           </span>`;
+           <br><span style='font-size:0.85rem;color:#9ca3af'>${n} período(s), capitalización ${period}, tasa ${ratePercent}%.</span>`;
       }
-
       return { calcularPMTObjetivo, render };
     })();
 
-    /* ========== Calculadora de tipo de cambio (TipoCambio) ========== */
+    /* ========== Tipo de cambio ========== */
     const TipoCambio = (() => {
       function convertir({ monto, direccion, cotizacion }) {
-        if (direccion === "ars-usd") {
-          const usd = cotizacion > 0 ? (monto / cotizacion) : NaN;
-          return { origen: "ARS", destino: "USD", result: usd };
-        } else {
-          const ars = cotizacion > 0 ? (monto * cotizacion) : NaN;
-          return { origen: "USD", destino: "ARS", result: ars };
-        }
+        if(direccion==="ars-usd") return { origen:"ARS", destino:"USD", result: cotizacion>0 ? (monto/cotizacion) : NaN };
+        return { origen:"USD", destino:"ARS", result: cotizacion>0 ? (monto*cotizacion) : NaN };
       }
-
-      function render(out, node) {
-        const { origen, destino, result } = out;
-        const fmt = destino === "USD" ? Util.formatMoneyUSD : Util.formatMoneyARS;
-        node.innerHTML =
-          `<strong>Conversión ${origen} → ${destino}:</strong>${fmt(result)}
-           <br><span style='font-size:0.85rem;color:#9ca3af'>Resultado estimado según tu cotización ingresada.</span>`;
+      function render({ origen, destino, result }, node) {
+        const fmt = destino==="USD" ? Util.formatMoneyUSD : Util.formatMoneyARS;
+        node.innerHTML = `<strong>Conversión ${origen} → ${destino}:</strong>${fmt(result)}<br><span style='font-size:0.85rem;color:#9ca3af'>Según cotización ingresada.</span>`;
       }
-
       return { convertir, render };
     })();
 
-    /* ========== Valor Futuro (FV) ========== */
-    const FV = (() => {
-      function calcular(pvVal, ratePercent, n) {
-        const i = ratePercent / 100;
-        const fv = Finance.fv(pvVal, i, n);
-        return { fv };
+    /* ========== VAN / TIR (Flujos de caja) ========== */
+    const VAN_TIR = (() => {
+      const parseCFs = (raw) => (!raw || !raw.trim()) ? [] :
+        raw.split(/[\n,;]+/g).map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v));
+      function calcular({ tasaPct, cfs }) {
+        const r=tasaPct/100;
+        const van=Finance.npv(r, cfs);
+        const { irr, warnMultipleIRR } = Finance.irr(cfs);
+        return { van, irr, warnMultipleIRR };
       }
-
-      function render({ fv }, node, period, ratePercent, n) {
+      function render(out, node) {
+        const irrTxt = isNaN(out.irr) ? "No se pudo estimar (revisá signos/precios)" : Util.formatPercent(out.irr);
+        const warn = out.warnMultipleIRR ? "<br><span style='color:#f97316;font-size:0.85rem'>⚠️ Los flujos cambian de signo varias veces: puede existir más de una TIR.</span>" : "";
         node.innerHTML =
-          `<strong>Valor futuro estimado:</strong>${Util.formatMoney(fv)}
-           <br><span style='font-size:0.85rem;color:#9ca3af'>Asumiendo capitalización ${period} y tasa fija del ${ratePercent}% durante ${n} período(s).</span>`;
+          `<strong>Resultados:</strong>
+           <br>VAN: ${Util.formatMoney(out.van)}
+           <br>TIR: ${irrTxt}
+           ${warn}`;
       }
+      return { parseCFs, calcular, render };
+    })();
 
+    /* ========== Duración / Duration modificada (Bonos) ========== */
+    const DurationMod = (() => {
+      function calcular({ face, price, couponPct, ytmPct, years, freq }) {
+        let yAn = ytmPct;
+        if ((isNaN(yAn) || yAn<=0) && !isNaN(price) && price>0) yAn = Finance.bondYieldFromPrice({ face, price, couponPct, years, freq });
+        const { macaulay, modified } = Finance.bondDuration({ face, price, couponPct, ytmPct: yAn, years, freq });
+        const precioTeórico = Finance.bondPrice({ face, couponPct, ytmPct: yAn, years, freq });
+        return { macaulay, modified, ytmEstimado: yAn, precioTeorico: precioTeórico };
+      }
+      function render(out, node) {
+        node.innerHTML =
+          `<strong>Duración (Macaulay):</strong> ${isNaN(out.macaulay) ? "-" : out.macaulay.toFixed(4)} años
+           <br><strong>Duration modificada:</strong> ${isNaN(out.modified) ? "-" : out.modified.toFixed(6)} por unidad de tasa
+           <br><span style='font-size:0.85rem;color:#9ca3af'>YTM estimado: ${isNaN(out.ytmEstimado) ? "-" : Util.formatPercent(out.ytmEstimado/100)} · Precio teórico: ${Util.formatMoney(out.precioTeorico)}</span>`;
+      }
       return { calcular, render };
     })();
 
-    /* ========== Valor Presente (PV) ========== */
-    const PV = (() => {
-      function calcular(fvVal, ratePercent, n) {
-        const i = ratePercent / 100;
-        const pvCalc = Finance.pv(fvVal, i, n);
-        return { pvCalc };
+    /* ========== Curva de bonos simple (SVG Yield vs Duración) ========== */
+    const CurvaBonos = (() => {
+      function parseLines(raw) {
+        const lines = raw.split(/\n+/).map(l=>l.trim()).filter(l=>l.length>0);
+        return lines.map(line => {
+          const parts = line.split(";").map(p=>p.trim());
+          const [ticker, years, couponPct, price, ytmPct, face] = parts;
+          return {
+            ticker: ticker || "BONO",
+            years: parseFloat(years),
+            couponPct: parseFloat(couponPct),
+            price: price ? parseFloat(price) : NaN,
+            ytmPct: ytmPct ? parseFloat(ytmPct) : NaN,
+            face: face ? parseFloat(face) : 100,
+            freq: 2
+          };
+        }).filter(b => !isNaN(b.years) && !isNaN(b.couponPct));
       }
 
-      function render({ pvCalc }, node, period, ratePercent, n) {
-        node.innerHTML =
-          `<strong>Valor presente necesario:</strong>${Util.formatMoney(pvCalc)}
-           <br><span style='font-size:0.85rem;color:#9ca3af'>Asumiendo capitalización ${period} y tasa fija del ${ratePercent}% durante ${n} período(s).</span>`;
+      function enrich(bond) {
+        let ytm = bond.ytmPct;
+        let price = bond.price;
+        if (isNaN(ytm) && isFinite(price)) ytm = Finance.bondYieldFromPrice({ face: bond.face, price, couponPct: bond.couponPct, years: bond.years, freq: bond.freq });
+        if (isNaN(price) && isFinite(ytm)) price = Finance.bondPrice({ face: bond.face, couponPct: bond.couponPct, ytmPct: ytm, years: bond.years, freq: bond.freq });
+        const dur = Finance.bondDuration({ face: bond.face, price, couponPct: bond.couponPct, ytmPct: ytm, years: bond.years, freq: bond.freq });
+        return { ...bond, ytmPct: ytm, price, macaulay: dur.macaulay };
       }
 
-      return { calcular, render };
-    })();
-
-    /* ========== Cuota PMT (PMT) ========== */
-    const PMT = (() => {
-      function calcular(pvVal, ratePercent, n) {
-        const i = ratePercent / 100;
-        if (i === 0) {
-          const pmt = pvVal / n;
-          const totalPagos = pmt * n;
-          const intereses = totalPagos - pvVal;
-          return { pmt, totalPagos, intereses, sinInteres: true };
-        }
-        const pmt = Finance.pmt(pvVal, i, n);
-        const totalPagos = pmt * n;
-        const intereses = totalPagos - pvVal;
-        return { pmt, totalPagos, intereses, sinInteres: false };
-      }
-
-      function render(out, node, period, ratePercent, n) {
-        const { pmt, totalPagos, intereses, sinInteres } = out;
-        if (sinInteres) {
-          node.innerHTML =
-            `<strong>Cuota periódica (sin interés):</strong>${Util.formatMoney(pmt)}
-             <br><span style='font-size:0.85rem;color:#9ca3af'>Sin interés, simplemente PV / n.</span>`;
-          return;
-        }
-
-        node.innerHTML =
-          `<strong>Cuota periódica estimada:</strong>${Util.formatMoney(pmt)}
-           <br><span style='font-size:0.85rem;color:#9ca3af'>Período ${period}, tasa del ${ratePercent}%, ${n} período(s).</span>
-           <br><span style='font-size:0.85rem;color:#9ca3af'>Total abonado: ${Util.formatMoney(totalPagos)} &nbsp; | &nbsp; Intereses: ${Util.formatMoney(intereses)}.</span>`;
-      }
-
-      return { calcular, render };
-    })();
-
-    /* ========== Amortización de créditos (Amortizacion) ========== */
-    const Amortizacion = (() => {
-      function generar(amount, ratePercent, n, system) {
-        const i = ratePercent / 100;
-        let rows = [];
-        let saldo = amount;
-        let cuota = 0;
-        let totalCuotas = 0;
-        let totalIntereses = 0;
-
-        if (system === "frances") {
-          cuota = i === 0 ? amount / n : Finance.pmt(amount, i, n);
-
-          for (let k = 1; k <= n; k++) {
-            const interes = saldo * i;
-            const amortizacion = cuota - interes;
-            saldo = saldo - amortizacion;
-
-            rows.push({ periodo: k, cuota, interes, amortizacion, saldo: Math.max(saldo, 0) });
-            totalCuotas += cuota;
-            totalIntereses += interes;
-          }
-        } else if (system === "aleman") {
-          const amortizacionConstante = amount / n;
-
-          for (let k = 1; k <= n; k++) {
-            const interes = saldo * i;
-            const cuotaPer = amortizacionConstante + interes;
-            saldo = saldo - amortizacionConstante;
-
-            rows.push({ periodo: k, cuota: cuotaPer, interes, amortizacion: amortizacionConstante, saldo: Math.max(saldo, 0) });
-            totalCuotas += cuotaPer;
-            totalIntereses += interes;
-          }
-        } else if (system === "americano") {
-          const interesPer = amount * i;
-
-          for (let k = 1; k <= n; k++) {
-            let cuotaPer, interes, amortizacion;
-
-            if (k < n) {
-              interes = interesPer;
-              amortizacion = 0;
-              cuotaPer = interesPer;
-            } else {
-              interes = interesPer;
-              amortizacion = amount;
-              cuotaPer = interes + amortizacion;
-              saldo = 0;
-            }
-
-            rows.push({ periodo: k, cuota: cuotaPer, interes, amortizacion, saldo: Math.max(saldo, 0) });
-            totalCuotas += cuotaPer;
-            totalIntereses += interes;
-          }
-        }
-
-        const resumen = { totalCuotas, totalIntereses, amount };
-        return { rows, resumen };
-      }
-
-      function render(rows, resumen, resultDiv, tableWrapper, ratePercent, n, system) {
-        if (!rows.length) {
-          resultDiv.innerHTML = "No se pudo generar la tabla.";
-          tableWrapper.innerHTML = "";
-          return;
-        }
-
-        resultDiv.innerHTML =
-          `<strong>Resumen del crédito:</strong>
-           <br>Total de cuotas: ${Util.formatMoney(resumen.totalCuotas)}
-           <br>Total intereses: ${Util.formatMoney(resumen.totalIntereses)}
-           <br><span style='font-size:0.85rem;color:#9ca3af'>Sistema ${system.toUpperCase()} · tasa ${ratePercent}% · ${n} período(s).</span>`;
-
-        let html = `<table class="amort-table">
-            <thead><tr>
-              <th>#</th><th>Cuota</th><th>Interés</th><th>Amortización</th><th>Saldo</th>
-            </tr></thead><tbody>`;
-
-        rows.forEach(r => {
-          html += `<tr>
-            <td>${r.periodo}</td>
-            <td>${Util.formatMoney(resumen.totalCuotas ? r.cuota : 0)}</td>
-            <td>${Util.formatMoney(r.interes)}</td>
-            <td>${Util.formatMoney(r.amortizacion)}</td>
-            <td>${Util.formatMoney(r.saldo)}</td>
-          </tr>`;
+      function renderTableAndChart(bonds, resultNode, svgNode) {
+        if (!bonds.length) { resultNode.innerHTML = "No se encontraron bonos válidos."; svgNode.innerHTML=""; return; }
+        let html = `<strong>Bonos procesados:</strong>`;
+        html += `<br><span class="chip">Puntos: ${bonds.length}</span>`;
+        html += `<br><span style='font-size:0.85rem;color:#9ca3af'>Yield vs Duración (años). Frecuencia 2 por defecto.</span>`;
+        const w = svgNode.clientWidth || 600, h = svgNode.clientHeight || 220, padding = 30;
+        const xs = bonds.map(b=>b.macaulay).filter(v=>isFinite(v));
+        const ys = bonds.map(b=>b.ytmPct).filter(v=>isFinite(v));
+        const minX = Math.min(...xs), maxX = Math.max(...xs);
+        const minY = Math.min(...ys), maxY = Math.max(...ys);
+        const xScale = (x) => padding + ( (x - minX)/(maxX - minX || 1) ) * (w - 2*padding);
+        const yScale = (y) => h - padding - ( (y - minY)/(maxY - minY || 1) ) * (h - 2*padding);
+        svgNode.innerHTML = `
+          <rect x="0" y="0" width="${w}" height="${h}" fill="transparent"></rect>
+          <line x1="${padding}" y1="${h - padding}" x2="${w - padding}" y2="${h - padding}" stroke="#64748b" stroke-width="1"/>
+          <line x1="${padding}" y1="${padding}" x2="${padding}" y2="${h - padding}" stroke="#64748b" stroke-width="1"/>
+          <text x="${w - padding - 40}" y="${h - padding + 12}">Duración</text>
+          <text x="${padding - 22}" y="${padding - 8}" transform="rotate(-90 ${padding - 22}, ${padding - 8})">Yield (%)</text>
+        `;
+        bonds.forEach((b) => {
+          if (!isFinite(b.macaulay) || !isFinite(b.ytmPct)) return;
+          const cx = xScale(b.macaulay), cy = yScale(b.ytmPct);
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", cx); circle.setAttribute("cy", cy); circle.setAttribute("r", 4);
+          circle.setAttribute("fill", "#38bdf8"); circle.setAttribute("stroke", "#0ea5e9"); circle.setAttribute("stroke-width", "1");
+          svgNode.appendChild(circle);
         });
-
-        html += `</tbody><tfoot><tr>
-          <td></td>
-          <td>${Util.formatMoney(resumen.totalCuotas)}</td>
-          <td>${Util.formatMoney(resumen.totalIntereses)}</td>
-          <td>${Util.formatMoney(resumen.amount)}</td>
-          <td>${Util.formatMoney(0)}</td>
-        </tr></tfoot></table>`;
-
-        tableWrapper.innerHTML = html;
+        resultNode.innerHTML = html;
       }
 
+      return { parseLines, enrich, renderTableAndChart };
+    })();
+
+    /* ========== Paridad de bonos ========== */
+    const ParidadBonos = (() => {
+      function calcular({ face, price, couponPct, ytmPct, years, freq }) {
+        const paridadPct = (face>0) ? (price/face)*100 : NaN;
+        let tirAn = ytmPct;
+        if ((isNaN(tirAn) || tirAn<=0) && price>0) tirAn = Finance.bondYieldFromPrice({ face, price, couponPct, years, freq });
+        return { paridadPct, tirAn };
+      }
+      function render(out, node) {
+        node.innerHTML =
+          `<strong>Paridad:</strong> ${isNaN(out.paridadPct) ? "-" : out.paridadPct.toFixed(2)}%
+           <br><span style='font-size:0.85rem;color:#9ca3af'>TIR estimada: ${isNaN(out.tirAn) ? "-" : Util.formatPercent(out.tirAn/100)}</span>`;
+      }
+      return { calcular, render };
+    })();
+
+    /* ========== FV / PV / PMT / Amortización ========== */
+    const FV = (() => { function calcular(pvVal, ratePercent, n){ const i=ratePercent/100; return { fv: Finance.fv(pvVal,i,n) }; }
+      function render({fv}, node, period, ratePercent, n){ node.innerHTML = `<strong>Valor futuro:</strong>${Util.formatMoney(fv)}<br><span style='font-size:0.85rem;color:#9ca3af'>Cap. ${period}, tasa ${ratePercent}%, ${n} período(s).</span>`; }
+      return { calcular, render }; })();
+
+    const PVCalc = (() => { function calcular(fvVal, ratePercent, n){ const i=ratePercent/100; return { pvCalc: Finance.pv(fvVal,i,n) }; }
+      function render({pvCalc}, node, period, ratePercent, n){ node.innerHTML = `<strong>Valor presente:</strong>${Util.formatMoney(pvCalc)}<br><span style='font-size:0.85rem;color:#9ca3af'>Cap. ${period}, tasa ${ratePercent}%, ${n} período(s).</span>`; }
+      return { calcular, render }; })();
+
+    const PMTMod = (() => { function calcular(pvVal, ratePercent, n){
+        const i=ratePercent/100; if(i===0){ const pmt=pvVal/n; return { pmt, totalPagos:pmt*n, intereses:pmt*n-pvVal, sinInteres:true }; }
+        const pmt = Finance.pmt(pvVal,i,n); const totalPagos = pmt*n; const intereses = totalPagos - pvVal; return { pmt, totalPagos, intereses, sinInteres:false };
+      }
+      function render(out,node,period,ratePercent,n){
+        if(out.sinInteres){ node.innerHTML = `<strong>Cuota (sin interés):</strong>${Util.formatMoney(out.pmt)}<br><span style='font-size:0.85rem;color:#9ca3af'>PV / n.</span>`; return; }
+        node.innerHTML = `<strong>Cuota:</strong>${Util.formatMoney(out.pmt)}<br><span style='font-size:0.85rem;color:#9ca3af'>Período ${period}, tasa ${ratePercent}%, ${n} período(s).</span><br><span style='font-size:0.85rem;color:#9ca3af'>Total: ${Util.formatMoney(out.totalPagos)} | Intereses: ${Util.formatMoney(out.intereses)}</span>`;
+      }
+      return { calcular, render }; })();
+
+    const Amortizacion = (() => {
+      function generar(amount, ratePercent, n, system){
+        const i=ratePercent/100; let rows=[], saldo=amount, cuota=0, totalCuotas=0, totalIntereses=0;
+        if(system==="frances"){
+          cuota = i===0 ? amount/n : Finance.pmt(amount,i,n);
+          for(let k=1;k<=n;k++){ const interes=saldo*i; const amort=cuota-interes; saldo -= amort;
+            rows.push({periodo:k, cuota, interes, amortizacion:amort, saldo:Math.max(saldo,0)});
+            totalCuotas+=cuota; totalIntereses+=interes; }
+        } else if(system==="aleman"){
+          const amortConst=amount/n;
+          for(let k=1;k<=n;k++){ const interes=saldo*i; const cuotaPer=amortConst+interes; saldo -= amortConst;
+            rows.push({periodo:k, cuota:cuotaPer, interes, amortizacion:amortConst, saldo:Math.max(saldo,0)});
+            totalCuotas+=cuotaPer; totalIntereses+=interes; }
+        } else if(system==="americano"){
+          const interesPer=amount*i;
+          for(let k=1;k<=n;k++){ let cuotaPer, interes, amort;
+            if(k<n){ interes=interesPer; amort=0; cuotaPer=interesPer; }
+            else { interes=interesPer; amort=amount; cuotaPer=interes+amort; saldo=0; }
+            rows.push({periodo:k, cuota:cuotaPer, interes, amortizacion:amort, saldo:Math.max(saldo,0)});
+            totalCuotas+=cuotaPer; totalIntereses+=interes; }
+        }
+        return { rows, resumen:{ totalCuotas, totalIntereses, amount } };
+      }
+      function render(rows,resumen,resultDiv,wrapper,ratePercent,n,system){
+        if(!rows.length){ resultDiv.innerHTML="No se pudo generar la tabla."; wrapper.innerHTML=""; return; }
+        resultDiv.innerHTML =
+          `<strong>Resumen del crédito:</strong><br>Total cuotas: ${Util.formatMoney(resumen.totalCuotas)}<br>Total intereses: ${Util.formatMoney(resumen.totalIntereses)}
+           <br><span style='font-size:0.85rem;color:#9ca3af'>Sistema ${system.toUpperCase()} · tasa ${ratePercent}% · ${n} período(s).</span>`;
+        let html = `<table class="amort-table"><thead><tr><th>#</th><th>Cuota</th><th>Interés</th><th>Amortización</th><th>Saldo</th></tr></thead><tbody>`;
+        rows.forEach(r => { html += `<tr><td>${r.periodo}</td><td>${Util.formatMoney(r.cuota)}</td><td>${Util.formatMoney(r.interes)}</td><td>${Util.formatMoney(r.amortizacion)}</td><td>${Util.formatMoney(r.saldo)}</td></tr>`; });
+        html += `</tbody><tfoot><tr><td></td><td>${Util.formatMoney(resumen.totalCuotas)}</td><td>${Util.formatMoney(resumen.totalIntereses)}</td><td>${Util.formatMoney(resumen.amount)}</td><td>${Util.formatMoney(0)}</td></tr></tfoot></table>`;
+        wrapper.innerHTML = html;
+      }
       return { generar, render };
     })();
 
-    /* ========== Orquestación de eventos (App) ========== */
-    const App = (() => {
-      const { $, getNumber, markError, setResult, formatPercent, scrollToCard } = Util;
+    /* ========== Orquestación de eventos + montaje (App) ========== */
+    (() => {
+      const { $, getNumber, markError, setResult, formatPercent } = Util;
 
-      // Índice desplegable accesible
+      // Desplegar paneles del índice
       document.querySelectorAll(".index-item[data-panel]").forEach(btn => {
         btn.addEventListener("click", () => {
           const panelId = btn.dataset.panel;
@@ -1065,193 +739,114 @@
         });
       });
 
-      // Navegación: al tocar un item del índice, ir al card y resaltar
-      document.querySelectorAll(".index-item.go-card").forEach(btn => {
+      // Montar/desmontar cards en los slots del índice
+      document.querySelectorAll(".index-item.mount-card").forEach(btn => {
         btn.addEventListener("click", () => {
-          const target = btn.dataset.target;
-          if (target) scrollToCard(target);
+          const cardId = btn.dataset.card;
+          // El slot es el siguiente hermano .mount-slot del botón
+          const slot = btn.nextElementSibling && btn.nextElementSibling.classList.contains("mount-slot")
+            ? btn.nextElementSibling
+            : null;
+          if (!cardId || !slot) return;
+          Dock.mount(cardId, slot);
         });
       });
 
-      // PF vs UVA
+      // ==== Inversionistas ====
       $("#btn-pf-uva")?.addEventListener("click", () => {
-        const monto = getNumber("pf-monto");
-        const tnaPF = getNumber("pf-tna");
-        const inflacion = getNumber("pf-inflacion");
-        const plus = getNumber("pf-plus", true) || 0;
-        const dias = getNumber("pf-dias");
-        const resultDiv = $("#pf-uva-result");
-
-        const invalid = [];
-        if (isNaN(monto)) invalid.push("pf-monto");
-        if (isNaN(tnaPF)) invalid.push("pf-tna");
-        if (isNaN(inflacion)) invalid.push("pf-inflacion");
-        if (isNaN(dias) || dias <= 0) invalid.push("pf-dias");
-        if (invalid.length) {
-          invalid.forEach(markError);
-          return setResult(resultDiv, "👀 Completá monto, TNA, inflación y días (el plus UVA puede quedar vacío).");
-        }
-
-        const out = PFUVA.comparar({ monto, tnaPF, inflacion, plus, dias });
-        PFUVA.render(out, resultDiv, dias);
+        const monto=getNumber("pf-monto"), tnaPF=getNumber("pf-tna"), infl=getNumber("pf-inflacion"), plus=getNumber("pf-plus",true)||0, dias=getNumber("pf-dias");
+        const div=$("#pf-uva-result");
+        const inv=[]; if(isNaN(monto))inv.push("pf-monto"); if(isNaN(tnaPF))inv.push("pf-tna"); if(isNaN(infl))inv.push("pf-inflacion"); if(isNaN(dias)||dias<=0)inv.push("pf-dias");
+        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá monto, TNA, inflación y días (plus opcional)."); }
+        const out=PFUVA.comparar({monto,tnaPF,inflacion:infl,plus,dias}); PFUVA.render(out,div,dias);
       });
 
-      // Conversor de tasas
       $("#btn-rate-convert")?.addEventListener("click", () => {
-        const type = $("#rate-type").value;
-        const ratePercent = getNumber("rate-input");
-        const resultDiv = $("#rate-result");
-
-        if (isNaN(ratePercent)) {
-          markError("rate-input");
-          return setResult(resultDiv, "👀 Ingresá un valor de tasa.");
-        }
-
-        const conv = Tasas.convertir(type, ratePercent);
-        setResult(resultDiv,
-          `<strong>Conversión de tasas:</strong>
-           <br>TNA ≈ ${formatPercent(conv.tna)}
-           <br>TEA = ${formatPercent(conv.tea)}
-           <br>TEM (mensual) = ${formatPercent(conv.tem)}
-           <br><span style='font-size:0.8rem;color:#9ca3af'>Supuesto: 12 períodos al año y capitalización mensual.</span>`
-        );
+        const type=$("#rate-type").value, ratePercent=getNumber("rate-input"), div=$("#rate-result");
+        if(isNaN(ratePercent)){ markError("rate-input"); return setResult(div,"👀 Ingresá una tasa."); }
+        const conv=Tasas.convertir(type,ratePercent);
+        setResult(div, `<strong>Conversión de tasas:</strong><br>TNA ≈ ${formatPercent(conv.tna)}<br>TEA = ${formatPercent(conv.tea)}<br>TEM = ${formatPercent(conv.tem)}<br><span style='font-size:0.8rem;color:#9ca3af'>12 períodos/año, cap. mensual.</span>`);
       });
 
-      // Simulador (aportes variables)
       $("#btn-sim")?.addEventListener("click", () => {
-        const pvInicial = getNumber("sim-pv");
-        const aporteFijo = getNumber("sim-pmt", true) || 0;
-        const ratePercent = getNumber("sim-rate");
-        const n = getNumber("sim-n", true) || 0;
-        const period = $("#sim-period").value;
-        const aportesVars = $("#sim-aportes").value;
-        const resultDiv = $("#sim-result");
-
-        if (isNaN(ratePercent)) {
-          markError("sim-rate");
-          return setResult(resultDiv, "👀 Completá la tasa por período.");
-        }
-        if (!aportesVars.trim() && (isNaN(aporteFijo) || isNaN(n) || n <= 0)) {
-          markError("sim-pmt"); markError("sim-n");
-          return setResult(resultDiv, "👀 Cargá aporte fijo y cantidad de períodos, o una lista de aportes variables.");
-        }
-        if (isNaN(pvInicial)) {
-          markError("sim-pv");
-          return setResult(resultDiv, "👀 El capital inicial debe ser un número válido o dejarse vacío.");
-        }
-
-        const out = Simulador.calcular({ pvInicial: pvInicial || 0, aporteFijo, aportesVars, ratePercent, n });
-        Simulador.render(out, resultDiv, period, ratePercent);
+        const pvInicial=getNumber("sim-pv"), aporteFijo=getNumber("sim-pmt",true)||0, ratePercent=getNumber("sim-rate"), n=getNumber("sim-n",true)||0;
+        const period=$("#sim-period").value, aportesVars=$("#sim-aportes").value, div=$("#sim-result");
+        if(isNaN(ratePercent)){ markError("sim-rate"); return setResult(div,"👀 Completá la tasa por período."); }
+        if(!aportesVars.trim() && (isNaN(aporteFijo)||isNaN(n)||n<=0)){ markError("sim-pmt"); markError("sim-n"); return setResult(div,"👀 Aporte fijo + n, o lista variable."); }
+        if(isNaN(pvInicial)){ markError("sim-pv"); return setResult(div,"👀 PV debe ser número o vacío."); }
+        const out=Simulador.calcular({ pvInicial:pvInicial||0, aporteFijo, aportesVars, ratePercent, n }); Simulador.render(out,div,period,ratePercent);
       });
 
-      // Objetivos (aporte necesario)
       $("#btn-obj")?.addEventListener("click", () => {
-        const fvObj = getNumber("obj-fv");
-        const pvInicial = getNumber("obj-pv", true) || 0;
-        const ratePercent = getNumber("obj-rate");
-        const n = getNumber("obj-n");
-        const period = $("#obj-period").value;
-        const resultDiv = $("#obj-result");
-
-        const invalid = [];
-        if (isNaN(fvObj)) invalid.push("obj-fv");
-        if (isNaN(ratePercent)) invalid.push("obj-rate");
-        if (isNaN(n) || n <= 0) invalid.push("obj-n");
-
-        if (invalid.length) {
-          invalid.forEach(markError);
-          return setResult(resultDiv, "👀 Completá objetivo (FV), tasa y cantidad de períodos.");
-        }
-
-        const out = Objetivos.calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n });
-        Objetivos.render(out, resultDiv, period, ratePercent, n);
+        const fvObj=getNumber("obj-fv"), pvInicial=getNumber("obj-pv",true)||0, ratePercent=getNumber("obj-rate"), n=getNumber("obj-n");
+        const period=$("#obj-period").value, div=$("#obj-result");
+        const inv=[]; if(isNaN(fvObj))inv.push("obj-fv"); if(isNaN(ratePercent))inv.push("obj-rate"); if(isNaN(n)||n<=0)inv.push("obj-n");
+        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá FV, tasa y n."); }
+        const out=Objetivos.calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n }); Objetivos.render(out,div,period,ratePercent,n);
       });
 
-      // Tipo de cambio
       $("#btn-tc")?.addEventListener("click", () => {
-        const monto = getNumber("tc-monto");
-        const direccion = $("#tc-direccion").value;
-        const tipo = $("#tc-tipo").value;
-        const cotizacion = getNumber("tc-cotizacion");
-        const resultDiv = $("#tc-result");
-
-        if (isNaN(monto)) { markError("tc-monto"); return setResult(resultDiv, "👀 Ingresá un monto."); }
-        if (isNaN(cotizacion) || cotizacion <= 0) { markError("tc-cotizacion"); return setResult(resultDiv, "👀 Ingresá una cotización válida (ARS por USD)."); }
-
-        // Nota: 'tipo' está para semántica (elegís cuál estás usando), la cotización la ingresás vos.
-        const out = TipoCambio.convertir({ monto, direccion, cotizacion });
-        TipoCambio.render(out, resultDiv);
+        const monto=getNumber("tc-monto"), direccion=$("#tc-direccion").value, cotizacion=getNumber("tc-cotizacion"), div=$("#tc-result");
+        if(isNaN(monto)){ markError("tc-monto"); return setResult(div,"👀 Ingresá un monto."); }
+        if(isNaN(cotizacion)||cotizacion<=0){ markError("tc-cotizacion"); return setResult(div,"👀 Cotización válida (ARS/USD)."); }
+        const out=TipoCambio.convertir({ monto, direccion, cotizacion }); TipoCambio.render(out,div);
       });
 
-      // FV
+      // ==== Corporativos ====
+      $("#btn-van-tir")?.addEventListener("click", () => {
+        const tasaPct=getNumber("cf-tasa"), lista=$("#cf-lista").value, div=$("#van-tir-result");
+        if(isNaN(tasaPct)){ markError("cf-tasa"); return setResult(div,"👀 Ingresá tasa de descuento."); }
+        const cfs=VAN_TIR.parseCFs(lista);
+        if(!cfs.length){ markError("cf-lista"); return setResult(div,"👀 Ingresá al menos un flujo."); }
+        const out=VAN_TIR.calcular({ tasaPct, cfs }); VAN_TIR.render(out, div);
+      });
+
+      $("#btn-duration")?.addEventListener("click", () => {
+        const face=getNumber("dur-face"), price=getNumber("dur-price"), couponPct=getNumber("dur-coupon"), ytmPct=getNumber("dur-yield",true), years=getNumber("dur-years"), freq=parseInt($("#dur-freq").value,10);
+        const div=$("#duration-result");
+        const inv=[]; if(isNaN(face)||face<=0)inv.push("dur-face"); if(isNaN(price)||price<=0)inv.push("dur-price"); if(isNaN(couponPct))inv.push("dur-coupon"); if(isNaN(years)||years<=0)inv.push("dur-years");
+        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá face, precio, cupón y años."); }
+        const out=DurationMod.calcular({ face, price, couponPct, ytmPct, years, freq }); DurationMod.render(out, div);
+      });
+
+      $("#btn-curva")?.addEventListener("click", () => {
+        const raw=$("#curva-lines").value, div=$("#curva-result"), svg=$("#curva-chart");
+        const parsed=CurvaBonos.parseLines(raw);
+        const enriched=parsed.map(CurvaBonos.enrich);
+        CurvaBonos.renderTableAndChart(enriched, div, svg);
+      });
+
+      $("#btn-paridad")?.addEventListener("click", () => {
+        const face=getNumber("par-face"), price=getNumber("par-price"), couponPct=getNumber("par-coupon"), ytmPct=getNumber("par-yield",true), years=getNumber("par-years"), freq=parseInt($("#par-freq").value,10);
+        const div=$("#paridad-result");
+        const inv=[]; if(isNaN(face)||face<=0)inv.push("par-face"); if(isNaN(price)||price<=0)inv.push("par-price"); if(isNaN(couponPct))inv.push("par-coupon"); if(isNaN(years)||years<=0)inv.push("par-years");
+        if(inv.length){ inv.forEach(markError); return setResult(div,"👀 Completá face, precio, cupón y años."); }
+        const out=ParidadBonos.calcular({ face, price, couponPct, ytmPct, years, freq }); ParidadBonos.render(out, div);
+      });
+
+      // ==== FV / PV / PMT / Amortización ====
       $("#btn-fv")?.addEventListener("click", () => {
-        const pvVal = getNumber("fv-pv");
-        const ratePercent = getNumber("fv-rate");
-        const n = getNumber("fv-n");
-        const period = $("#fv-period").value;
-        const resultDiv = $("#fv-result");
-
-        if ([pvVal, ratePercent, n].some(x => isNaN(x))) {
-          ["fv-pv", "fv-rate", "fv-n"].forEach(markError);
-          return setResult(resultDiv, "👀 Completá todos los campos numéricos.");
-        }
-
-        const out = FV.calcular(pvVal, ratePercent, n);
-        FV.render(out, resultDiv, period, ratePercent, n);
+        const pvVal=getNumber("fv-pv"), ratePercent=getNumber("fv-rate"), n=getNumber("fv-n"), period=$("#fv-period").value, div=$("#fv-result");
+        if([pvVal, ratePercent, n].some(x=>isNaN(x))){ ["fv-pv","fv-rate","fv-n"].forEach(markError); return setResult(div,"👀 Completá todos los campos."); }
+        const out=FV.calcular(pvVal, ratePercent, n); FV.render(out, div, period, ratePercent, n);
       });
 
-      // PV
       $("#btn-pv")?.addEventListener("click", () => {
-        const fvVal = getNumber("pv-fv");
-        const ratePercent = getNumber("pv-rate");
-        const n = getNumber("pv-n");
-        const period = $("#pv-period").value;
-        const resultDiv = $("#pv-result");
-
-        if ([fvVal, ratePercent, n].some(x => isNaN(x))) {
-          ["pv-fv", "pv-rate", "pv-n"].forEach(markError);
-          return setResult(resultDiv, "👀 Completá todos los campos numéricos.");
-        }
-
-        const out = PV.calcular(fvVal, ratePercent, n);
-        PV.render(out, resultDiv, period, ratePercent, n);
+        const fvVal=getNumber("pv-fv"), ratePercent=getNumber("pv-rate"), n=getNumber("pv-n"), period=$("#pv-period").value, div=$("#pv-result");
+        if([fvVal, ratePercent, n].some(x=>isNaN(x))){ ["pv-fv","pv-rate","pv-n"].forEach(markError); return setResult(div,"👀 Completá todos los campos."); }
+        const out=PVCalc.calcular(fvVal, ratePercent, n); PVCalc.render(out, div, period, ratePercent, n);
       });
 
-      // PMT
       $("#btn-pmt")?.addEventListener("click", () => {
-        const pvVal = getNumber("pmt-pv");
-        const ratePercent = getNumber("pmt-rate");
-        const n = getNumber("pmt-n");
-        const period = $("#pmt-period").value;
-        const resultDiv = $("#pmt-result");
-
-        if ([pvVal, ratePercent, n].some(x => isNaN(x))) {
-          ["pmt-pv", "pmt-rate", "pmt-n"].forEach(markError);
-          return setResult(resultDiv, "👀 Completá todos los campos numéricos.");
-        }
-
-        const out = PMT.calcular(pvVal, ratePercent, n);
-        PMT.render(out, resultDiv, period, ratePercent, n);
+        const pvVal=getNumber("pmt-pv"), ratePercent=getNumber("pmt-rate"), n=getNumber("pmt-n"), period=$("#pmt-period").value, div=$("#pmt-result");
+        if([pvVal, ratePercent, n].some(x=>isNaN(x))){ ["pmt-pv","pmt-rate","pmt-n"].forEach(markError); return setResult(div,"👀 Completá todos los campos."); }
+        const out=PMTMod.calcular(pvVal, ratePercent, n); PMTMod.render(out, div, period, ratePercent, n);
       });
 
-      // Amortización
       $("#btn-loan")?.addEventListener("click", () => {
-        const amount = getNumber("loan-amount");
-        const ratePercent = getNumber("loan-rate");
-        const n = getNumber("loan-n");
-        const system = $("#loan-system").value;
-
-        const resultDiv = $("#loan-result");
-        const wrapper = $("#loan-table-wrapper");
-
-        if (isNaN(amount) || isNaN(ratePercent) || isNaN(n) || n <= 0) {
-          ["loan-amount", "loan-rate", "loan-n"].forEach(markError);
-          wrapper.innerHTML = "";
-          return setResult(resultDiv, "👀 Completá monto, tasa y cantidad de períodos.");
-        }
-
-        const { rows, resumen } = Amortizacion.generar(amount, ratePercent, n, system);
-        Amortizacion.render(rows, resumen, resultDiv, wrapper, ratePercent, n, system);
+        const amount=getNumber("loan-amount"), ratePercent=getNumber("loan-rate"), n=getNumber("loan-n"), system=$("#loan-system").value, div=$("#loan-result"), wrap=$("#loan-table-wrapper");
+        if(isNaN(amount)||isNaN(ratePercent)||isNaN(n)||n<=0){ ["loan-amount","loan-rate","loan-n"].forEach(markError); wrap.innerHTML=""; return setResult(div,"👀 Completá monto, tasa y n."); }
+        const { rows, resumen }=Amortizacion.generar(amount, ratePercent, n, system); Amortizacion.render(rows, resumen, div, wrap, ratePercent, n, system);
       });
     })();
   </script>
