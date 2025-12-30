@@ -25,7 +25,7 @@
 
     .subtitle { text-align: center; font-size: 0.9rem; color: var(--muted); margin-bottom: 8px; }
     .brand { text-align: center; font-size: 0.8rem; color: var(--brand); letter-spacing: 0.12em; text-transform: uppercase; }
-    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(148,163,184,0.5); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, 0.5); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; margin-left: 6px; }
 
     .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
     .card { background: var(--card); border-radius: 16px; padding: 16px 18px 18px; box-shadow: 0 10px 30px rgba(0,0,0,0.25); border: 1px solid var(--border); }
@@ -58,7 +58,6 @@
     .index-card ol { padding-left: 18px; margin: 0; font-size: 0.9rem; }
     .index-card li { margin-bottom: 8px; }
 
-    /* Botones del índice */
     .index-item { background: none; border: none; color: var(--text); padding: 2px 0; text-align: left; font-size: 0.9rem; font-weight: 600; cursor: pointer; width: 100%; }
     .index-item:hover { color: var(--accent1); }
 
@@ -70,7 +69,8 @@
     .flash { animation: flashBg 1.6s ease-out; }
     @keyframes flashBg { 0% { box-shadow: 0 0 0 0 var(--flash); } 30% { box-shadow: 0 0 0 8px var(--flash); } 100% { box-shadow: 0 0 0 0 transparent; } }
 
-    /* (Opcional) mini chip de ayuda */
+    .chart { width: 100%; height: 220px; border: 1px dashed rgba(148,163,184,0.35); border-radius: 8px; background: rgba(2,6,23,0.35); margin-top: 10px; }
+    .chart text { fill: #9ca3af; font-size: 10px; }
     .chip { display:inline-block; padding:2px 6px; border-radius:8px; border:1px solid rgba(148,163,184,0.45); font-size:0.75rem; color:#9ca3af; margin-right:6px; }
   </style>
 </head>
@@ -152,7 +152,7 @@
         </ol>
       </section>
 
-      <!-- === MÓDULOS (cards originales de la grilla) === -->
+      <!-- === MÓDULOS EN LA GRILLA (originales) === -->
       <!-- PF vs UVA -->
       <section class="card" id="pf-uva-card">
         <h2>Comparador PF tradicional vs UVA</h2>
@@ -208,18 +208,47 @@
         <div class="result" id="obj-result">Ingresá objetivo, tasa y n…</div>
       </section>
 
-      <!-- Tipo de cambio -->
+      <!-- Tipo de cambio (ACTUALIZADO con BNA auto) -->
       <section class="card" id="tc-card">
         <h2>Calculadora de tipo de cambio</h2>
-        <small>Convertí entre ARS y USD según el tipo de cambio elegido (ingresá vos la cotización).</small>
-        <label for="tc-monto">Monto</label><input id="tc-monto" type="number" inputmode="decimal" placeholder="Ej: 100000" />
+        <small>Convertí entre ARS y USD según el tipo de cambio elegido (ingresá vos la cotización o traela del BNA).</small>
+
+        <label for="tc-monto">Monto</label>
+        <input id="tc-monto" type="number" inputmode="decimal" placeholder="Ej: 10000" />
+
         <div class="row">
-          <div><label for="tc-direccion">Dirección</label><select id="tc-direccion"><option value="ars-usd">ARS → USD</option><option value="usd-ars">USD → ARS</option></select></div>
-          <div><label for="tc-tipo">Tipo de cambio</label><select id="tc-tipo"><option value="oficial">Oficial</option><option value="mep">MEP</option><option value="ccl">CCL</option><option value="solidario">Solidario</option><option value="tarjeta">Tarjeta</option><option value="custom">Personalizado</option></select></div>
+          <div>
+            <label for="tc-direccion">Dirección</label>
+            <select id="tc-direccion">
+              <option value="ars-usd">ARS → USD</option>
+              <option value="usd-ars" selected>USD → ARS</option>
+            </select>
+          </div>
+          <div>
+            <label for="tc-tipo">Tipo de cambio</label>
+            <select id="tc-tipo">
+              <option value="oficial">Oficial (manual)</option>
+              <option value="bna-auto">Oficial (BNA auto)</option> <!-- NUEVO -->
+              <option value="mep">MEP</option>
+              <option value="ccl">CCL</option>
+              <option value="solidario">Solidario</option>
+              <option value="tarjeta">Tarjeta</option>
+              <option value="custom">Personalizado</option>
+            </select>
+          </div>
         </div>
-        <label for="tc-cotizacion">Cotización seleccionada (ARS por USD)</label><input id="tc-cotizacion" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 1200" />
+
+        <label for="tc-cotizacion">Cotización seleccionada (ARS por USD)</label>
+        <input id="tc-cotizacion" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 1475" />
+
+        <!-- NUEVO: botón para consultar BNA -->
+        <button id="btn-tc-bna" style="display:none">Traer cotización BNA</button>
+
         <button id="btn-tc">Convertir</button>
-        <div class="result" id="tc-result">Ingresá el monto y la cotización…</div>
+
+        <div class="result" id="tc-result">
+          Ingresá el monto, elegí dirección y tipo de cambio, y colocá la cotización o traela del BNA.
+        </div>
       </section>
 
       <!-- VAN y TIR -->
@@ -236,14 +265,14 @@
       <!-- Duración y Duration modificada -->
       <section class="card" id="duration-card">
         <h2>Duración y Duration modificada (bonos)</h2>
-        <small>Bonos a tasa fija. Calcula Duración de Macaulay y Duration modificada.</small>
+        <small>Bonos a tasa fija. Calcula Duración de Macaulay, Duration modificada, DV01 y Convexidad.</small>
         <div class="row">
           <div><label for="dur-face">Valor técnico / Face</label><input id="dur-face" type="number" inputmode="decimal" placeholder="Ej: 100" /></div>
           <div><label for="dur-price">Precio (clean)</label><input id="dur-price" type="number" inputmode="decimal" placeholder="Ej: 95" /></div>
         </div>
         <div class="row">
           <div><label for="dur-coupon">Cupón anual (%)</label><input id="dur-coupon" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 8" /></div>
-          <div><label for="dur-yield">YTM / TIR anual (%)</label><input id="dur-yield" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 10" /></div>
+          <div><label for="dur-yield">YTM / TIR anual (%)</label><input id="dur-yield" type="number" step="0.0001" inputmode="decimal" placeholder="Ej: 10 (opcional si se estima desde precio)" /></div>
         </div>
         <div class="row">
           <div><label for="dur-years">Años al vencimiento</label><input id="dur-years" type="number" inputmode="decimal" placeholder="Ej: 5" /></div>
@@ -349,7 +378,6 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
 
     /* ========== Gestor de montaje/desmontaje de módulos (Dock) ========== */
     const Dock = (() => {
-      // Guarda el parent original y el siguiente hermano para reinsertar
       const origins = new Map(); // cardId -> { parent, nextSibling }
       const mountedAt = new Map(); // cardId -> containerEl
 
@@ -367,23 +395,18 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
         if (!cardEl || !containerEl) return;
         ensureOrigin(cardEl);
 
-        // Si ya está montado en algún lado
         const currentContainer = mountedAt.get(cardId);
         if (currentContainer && currentContainer !== containerEl) {
-          // primero desmontamos de donde está
           unmount(cardId);
         }
 
-        // Si el container ya contiene ese módulo, desmontamos (toggle)
         if (containerEl.contains(cardEl)) {
           unmount(cardId);
           return;
         }
 
-        // Montamos en el slot
         containerEl.appendChild(cardEl);
         mountedAt.set(cardId, containerEl);
-        // Expandimos el panel que lo contiene (por accesibilidad)
         const panel = containerEl.closest(".index-detail");
         const panelBtn = panel ? document.querySelector(`[data-panel="${panel.id}"]`) : null;
         if (panel && panelBtn) {
@@ -455,7 +478,20 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
         const modified = macaulay / (1 + y);
         return { macaulay, modified };
       };
-      return { fv, pv, pmt, fvAportesVariables, npv, irr, bondPrice, bondYieldFromPrice, bondDuration };
+      const bondConvexityAnnual = ({ face=100, price, couponPct=0, ytmPct=0, years=1, freq=2 }) => {
+        const m=freq, n=Math.round(years*m), c=(couponPct/100)*face/m, y=ytmPct/100/m;
+        let sum = 0;
+        for (let t=1; t<=n; t++) {
+          const cf = (t<n) ? c : (c + face);
+          sum += (cf * t * (t+1)) / Math.pow(1+y, t+2);
+        }
+        const convexityPerPeriod = price ? (sum / price) : NaN;
+        const convexityAnnual = isNaN(convexityPerPeriod) ? NaN : (convexityPerPeriod / (m*m));
+        return convexityAnnual;
+      };
+      const dv01FromModified = (modified, price) => (isNaN(modified) || isNaN(price)) ? NaN : (modified * price * 0.0001);
+
+      return { fv, pv, pmt, fvAportesVariables, npv, irr, bondPrice, bondYieldFromPrice, bondDuration, bondConvexityAnnual, dv01FromModified };
     })();
 
     /* ========== PF tradicional vs UVA ========== */
@@ -538,10 +574,10 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       return { calcularPMTObjetivo, render };
     })();
 
-    /* ========== Tipo de cambio ========== */
+    /* ========== Tipo de cambio (con soporte BNA auto) ========== */
     const TipoCambio = (() => {
       function convertir({ monto, direccion, cotizacion }) {
-        if(direccion==="ars-usd") return { origen:"ARS", destino:"USD", result: cotizacion>0 ? (monto/cotizacion) : NaN };
+        if (direccion==="ars-usd") return { origen:"ARS", destino:"USD", result: cotizacion>0 ? (monto/cotizacion) : NaN };
         return { origen:"USD", destino:"ARS", result: cotizacion>0 ? (monto*cotizacion) : NaN };
       }
       function render({ origen, destino, result }, node) {
@@ -551,41 +587,99 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       return { convertir, render };
     })();
 
-    /* ========== VAN / TIR (Flujos de caja) ========== */
+    /* === Fuente oficial BNA: helper para traer cotización === */
+    async function fetchBNAOficialHoy() {
+      // 1) ArgentinaDatos (oficial por fecha); 2) DolarApi (oficial)
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+
+      const urls = [
+        `https://api.argentinadatos.com/v1/cotizaciones/dolares/oficial/${yyyy}/${mm}/${dd}`,  // [1](https://argentinadatos.com/docs/operations/get-cotizaciones-dolares-casa-fecha.html)
+        `https://dolarapi.com/v1/dolares/oficial`                                               // [2](https://dolarapi.com/docs/argentina/operations/get-dolar-oficial)
+      ];
+
+      for (const url of urls) {
+        try {
+          const r = await fetch(url, { method: "GET" });
+          if (!r.ok) continue;
+          const data = await r.json();
+          const compra = typeof data?.compra === "number" ? data.compra : Number(data?.compra);
+          const venta  = typeof data?.venta  === "number" ? data.venta  : Number(data?.venta);
+          if (isFinite(venta) && venta > 0) {
+            return { compra, venta, source: url };
+          }
+        } catch (e) {
+          // seguir con la próxima fuente
+        }
+      }
+      return null;
+    }
+
+    /* ========== VAN / TIR (+ ROI + Payback) ========== */
     const VAN_TIR = (() => {
       const parseCFs = (raw) => (!raw || !raw.trim()) ? [] :
         raw.split(/[\n,;]+/g).map(s=>parseFloat(s.trim())).filter(v=>!isNaN(v));
+
       function calcular({ tasaPct, cfs }) {
         const r=tasaPct/100;
         const van=Finance.npv(r, cfs);
         const { irr, warnMultipleIRR } = Finance.irr(cfs);
-        return { van, irr, warnMultipleIRR };
+
+        // ROI simple tomando c0 como inversión
+        let roi = NaN;
+        if (cfs.length > 0 && cfs[0] !== 0) {
+          const costo = Math.abs(cfs[0]);
+          roi = (cfs[0] < 0) ? ((cfs.reduce((a,v)=>a+v,0) / costo) - 1) : NaN;
+        }
+
+        // Payback simple
+        let acumulado = 0, payback = null;
+        for (let t=0; t<cfs.length; t++) {
+          acumulado += cfs[t];
+          if (acumulado >= 0) { payback = t; break; }
+        }
+
+        return { van, irr, warnMultipleIRR, roi, payback };
       }
+
       function render(out, node) {
         const irrTxt = isNaN(out.irr) ? "No se pudo estimar (revisá signos/precios)" : Util.formatPercent(out.irr);
-        const warn = out.warnMultipleIRR ? "<br><span style='color:#f97316;font-size:0.85rem'>⚠️ Los flujos cambian de signo varias veces: puede existir más de una TIR.</span>" : "";
+        const roiTxt = isNaN(out.roi) ? "-" : Util.formatPercent(out.roi);
+        const pbTxt = (out.payback === null) ? "No recupera" : `${out.payback} período(s)`;
+        const warn = out.warnMultipleIRR ? "<br><span style='color:#f97316;font-size:0.85rem'>⚠️ Flujos con múltiples cambios de signo: puede existir más de una TIR.</span>" : "";
+
         node.innerHTML =
           `<strong>Resultados:</strong>
            <br>VAN: ${Util.formatMoney(out.van)}
            <br>TIR: ${irrTxt}
+           <br>ROI: ${roiTxt}
+           <br>Payback (simple): ${pbTxt}
            ${warn}`;
       }
       return { parseCFs, calcular, render };
     })();
 
-    /* ========== Duración / Duration modificada (Bonos) ========== */
+    /* ========== Duración / Modified + DV01 + Convexidad ========== */
     const DurationMod = (() => {
       function calcular({ face, price, couponPct, ytmPct, years, freq }) {
         let yAn = ytmPct;
         if ((isNaN(yAn) || yAn<=0) && !isNaN(price) && price>0) yAn = Finance.bondYieldFromPrice({ face, price, couponPct, years, freq });
+
         const { macaulay, modified } = Finance.bondDuration({ face, price, couponPct, ytmPct: yAn, years, freq });
         const precioTeórico = Finance.bondPrice({ face, couponPct, ytmPct: yAn, years, freq });
-        return { macaulay, modified, ytmEstimado: yAn, precioTeorico: precioTeórico };
+        const convexidadAnual = Finance.bondConvexityAnnual({ face, price, couponPct, ytmPct: yAn, years, freq });
+        const dv01 = Finance.dv01FromModified(modified, price);
+
+        return { macaulay, modified, ytmEstimado: yAn, precioTeorico: precioTeórico, convexidadAnual, dv01 };
       }
       function render(out, node) {
         node.innerHTML =
           `<strong>Duración (Macaulay):</strong> ${isNaN(out.macaulay) ? "-" : out.macaulay.toFixed(4)} años
            <br><strong>Duration modificada:</strong> ${isNaN(out.modified) ? "-" : out.modified.toFixed(6)} por unidad de tasa
+           <br><strong>DV01 (por bp):</strong> ${isNaN(out.dv01) ? "-" : Util.formatMoney(out.dv01)}
+           <br><strong>Convexidad (anual):</strong> ${isNaN(out.convexidadAnual) ? "-" : out.convexidadAnual.toFixed(6)}
            <br><span style='font-size:0.85rem;color:#9ca3af'>YTM estimado: ${isNaN(out.ytmEstimado) ? "-" : Util.formatPercent(out.ytmEstimado/100)} · Precio teórico: ${Util.formatMoney(out.precioTeorico)}</span>`;
       }
       return { calcular, render };
@@ -723,7 +817,7 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       return { generar, render };
     })();
 
-    /* ========== Orquestación de eventos + montaje (App) ========== */
+    /* ========== Orquestación de paneles + montaje (App) ========== */
     (() => {
       const { $, getNumber, markError, setResult, formatPercent } = Util;
 
@@ -743,7 +837,6 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
       document.querySelectorAll(".index-item.mount-card").forEach(btn => {
         btn.addEventListener("click", () => {
           const cardId = btn.dataset.card;
-          // El slot es el siguiente hermano .mount-slot del botón
           const slot = btn.nextElementSibling && btn.nextElementSibling.classList.contains("mount-slot")
             ? btn.nextElementSibling
             : null;
@@ -785,11 +878,63 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
         const out=Objetivos.calcularPMTObjetivo({ fvObj, pvInicial, ratePercent, n }); Objetivos.render(out,div,period,ratePercent,n);
       });
 
-      $("#btn-tc")?.addEventListener("click", () => {
-        const monto=getNumber("tc-monto"), direccion=$("#tc-direccion").value, cotizacion=getNumber("tc-cotizacion"), div=$("#tc-result");
-        if(isNaN(monto)){ markError("tc-monto"); return setResult(div,"👀 Ingresá un monto."); }
-        if(isNaN(cotizacion)||cotizacion<=0){ markError("tc-cotizacion"); return setResult(div,"👀 Cotización válida (ARS/USD)."); }
-        const out=TipoCambio.convertir({ monto, direccion, cotizacion }); TipoCambio.render(out,div);
+      // ==== Tipo de cambio (BNA auto + conversión) ====
+      (function wireBNAControls() {
+        const tipoSel = $("#tc-tipo");
+        const btnBNA  = $("#btn-tc-bna");
+        const cotiz   = $("#tc-cotizacion");
+        const result  = $("#tc-result");
+        if (!tipoSel || !btnBNA || !cotiz || !result) return;
+
+        const refreshBNAVisibility = () => {
+          const isBNA = tipoSel.value === "bna-auto";
+          btnBNA.style.display = isBNA ? "block" : "none";
+          if (isBNA) cotiz.value = "";
+        };
+        tipoSel.addEventListener("change", refreshBNAVisibility);
+        refreshBNAVisibility();
+
+        btnBNA.addEventListener("click", async () => {
+          btnBNA.disabled = true;
+          btnBNA.textContent = "Consultando BNA...";
+          result.innerHTML = "⏳ Consultando cotización oficial...";
+
+          const out = await fetchBNAOficialHoy();
+          if (out && isFinite(out.venta)) {
+            cotiz.value = out.venta;
+            result.innerHTML = `<strong>Oficial BNA (venta):</strong> ${out.venta.toLocaleString("es-AR")} ARS/USD<br><span style="font-size:0.85rem;color:#9ca3af">Fuente: ${out.source}</span>`;
+          } else {
+            result.innerHTML = "⚠️ No pude obtener la cotización automáticamente. Ingresá la cotización manual y probemos de nuevo.";
+          }
+          btnBNA.disabled = false;
+          btnBNA.textContent = "Traer cotización BNA";
+        });
+      })();
+
+      $("#btn-tc")?.addEventListener("click", async () => {
+        const monto = getNumber("tc-monto");
+        const direccion = $("#tc-direccion")?.value;
+        const tipo = $("#tc-tipo")?.value;
+        const cotizEl = $("#tc-cotizacion");
+        const resultDiv = $("#tc-result");
+
+        if (tipo === "bna-auto" && (!cotizEl.value || cotizEl.value.trim() === "")) {
+          const outAuto = await fetchBNAOficialHoy();
+          if (outAuto && isFinite(outAuto.venta)) {
+            cotizEl.value = outAuto.venta;
+            resultDiv.innerHTML = `<strong>Oficial BNA (venta):</strong> ${outAuto.venta.toLocaleString("es-AR")} ARS/USD<br><span style="font-size:0.85rem;color:#9ca3af">Fuente: ${outAuto.source}</span>`;
+          } else {
+            resultDiv.innerHTML = "⚠️ No pude obtener la cotización automáticamente. Ingresá la cotización manual y probemos de nuevo.";
+            return;
+          }
+        }
+
+        const cotizacion = parseFloat(cotizEl?.value);
+        if (isNaN(monto)) { markError("tc-monto"); resultDiv.innerHTML = "👀 Ingresá un monto."; return; }
+        if (isNaN(cotizacion) || cotizacion <= 0) { markError("tc-cotizacion"); resultDiv.innerHTML = "👀 Ingresá/traé una cotización válida (ARS por USD)."; return; }
+
+        const out = TipoCambio.convertir({ monto, direccion, cotizacion });
+        TipoCambio.render(out, resultDiv);
       });
 
       // ==== Corporativos ====
@@ -852,4 +997,3 @@ TX26; 1.5; 0; 98; ; 100"></textarea>
   </script>
 </body>
 </html>
-
